@@ -1,6 +1,5 @@
 import React from 'react';
 import styles from './header-link.module.css';
-import PropTypes from 'prop-types';
 import {
   BurgerIcon,
   ListIcon,
@@ -15,7 +14,7 @@ interface HeaderLinkProps {
 function HeaderLink({ icon, children }: HeaderLinkProps) {
   const IconComponent =
     icon == 'burger' ? (
-      <BurgerIcon type="primary" /> //в будещем type будет меняться динамически
+      <BurgerIcon type="primary" /> //в будущем type будет меняться динамически
     ) : icon == 'list' ? (
       <ListIcon type="primary" />
     ) : (

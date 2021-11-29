@@ -1,0 +1,9 @@
+.menu {
+  width: 100%;
+  max-width: 600px;
+  /* border: 0.5px dashed purple; */
+}
+
+.tab {
+  display: flex;
+}

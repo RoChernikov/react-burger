@@ -1,0 +1,8 @@
+.link {
+  display: flex;
+  align-items: center;
+  border-radius: 40px;
+  padding-top: 14px;
+  padding-bottom: 14px;
+  cursor: pointer;
+}

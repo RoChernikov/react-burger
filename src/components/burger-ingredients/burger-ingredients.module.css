@@ -1,0 +1,34 @@
+.constructor {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 600px;
+}
+
+.tab {
+  display: flex;
+}
+
+.ingredients {
+  overflow-y: scroll;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  flex: 1 1 auto;
+}
+
+.ingredients::-webkit-scrollbar {
+  width: 8px;
+  background: #2f2f37;
+}
+
+.ingredients::-webkit-scrollbar-thumb {
+  background: #8585ad;
+}
+
+.ingredients::-webkit-scrollbar-thumb:hover {
+  background: #8282da;
+}

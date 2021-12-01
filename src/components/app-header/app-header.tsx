@@ -1,25 +1,45 @@
-import React from 'react';
+import { useState } from 'react';
 import styles from './app-header.module.css';
 import { Logo } from '@ya.praktikum/react-developer-burger-ui-components';
 import HeaderLink from '../header-link/header-link';
 
 function AppHeader() {
+  const [page, setPage] = useState('constructor');
+
   return (
     <header className={`pt-4 pb-4 ${styles.header}`}>
       <nav className={styles.navigation}>
         <ul className={styles.list}>
           <li className="mr-2">
-            <HeaderLink icon="burger">Конструктор</HeaderLink>
+            <HeaderLink
+              icon="burger"
+              active={page === 'constructor' ? true : false}
+              onClick={() => setPage('constructor')}
+            >
+              Конструктор
+            </HeaderLink>
           </li>
           <li>
-            <HeaderLink icon="list">Лента заказов</HeaderLink>
+            <HeaderLink
+              icon="list"
+              active={page === 'orderList' ? true : false}
+              onClick={() => setPage('orderList')}
+            >
+              Лента заказов
+            </HeaderLink>
           </li>
         </ul>
         <div className={styles.logoWrapper}>
           <Logo />
         </div>
         <div className={styles.profileLinkWrapper}>
-          <HeaderLink icon="profile">Личный кабинет</HeaderLink>
+          <HeaderLink
+            icon="profile"
+            active={page === 'profile' ? true : false}
+            onClick={() => setPage('profile')}
+          >
+            Личный кабинет
+          </HeaderLink>
         </div>
       </nav>
     </header>

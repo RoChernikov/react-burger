@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './header-link.module.css';
-import PropTypes from 'prop-types';
+import { useState } from 'react';
 import {
   BurgerIcon,
   ListIcon,
@@ -9,23 +9,36 @@ import {
 
 interface HeaderLinkProps {
   icon: 'burger' | 'list' | 'profile';
+  active: boolean;
   children: string;
+  onClick: () => void;
 }
 
-function HeaderLink({ icon, children }: HeaderLinkProps) {
+function HeaderLink({ icon, active, children, onClick }: HeaderLinkProps) {
+  const [iconState, setIconState] = useState(false);
   const IconComponent =
-    icon == 'burger' ? (
-      <BurgerIcon type="primary" /> //в будещем type будет меняться динамически
-    ) : icon == 'list' ? (
-      <ListIcon type="primary" />
+    icon === 'burger' ? (
+      <BurgerIcon type={active || iconState ? 'primary' : 'secondary'} />
+    ) : icon === 'list' ? (
+      <ListIcon type={active || iconState ? 'primary' : 'secondary'} />
     ) : (
-      <ProfileIcon type="primary" />
+      <ProfileIcon type={active || iconState ? 'primary' : 'secondary'} />
     );
+
   return (
-    <a className={`pl-5 pr-5 ${styles.link}`}>
+    <button
+      className={
+        active
+          ? `pl-5 pr-5 ${styles.link} ${styles.link_active}`
+          : `pl-5 pr-5 ${styles.link}`
+      }
+      onClick={onClick}
+      onMouseEnter={() => setIconState(true)}
+      onMouseLeave={() => setIconState(false)}
+    >
       {IconComponent}
       <p className="text text_type_main-default ml-2">{children}</p>
-    </a>
+    </button>
   );
 }
 

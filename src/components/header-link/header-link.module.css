@@ -1,8 +1,24 @@
 .link {
   display: flex;
   align-items: center;
+  padding-top: 14px;
+  padding-bottom: 14px;
+  cursor: pointer;
+  color: #8585ad;
+  background: none;
+  border: none;
+}
+
+.link_active {
+  display: flex;
+  align-items: center;
   border-radius: 40px;
   padding-top: 14px;
   padding-bottom: 14px;
   cursor: pointer;
+  color: #f2f2f3;
+}
+
+.link:hover {
+  color: #f2f2f3;
 }

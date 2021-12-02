@@ -38,7 +38,7 @@ function BurgerIngredients() {
           Начинки
         </Tab>
       </div>
-      <div className={` ${styles.ingredients}`}>
+      <ul className={` ${styles.ingredients}`}>
         <IngredientsCategory
           title="Булки"
           ingredients={data.filter(item => item.type === 'bun')}
@@ -51,7 +51,7 @@ function BurgerIngredients() {
           title="Начинки"
           ingredients={data.filter(item => item.type === 'main')}
         />
-      </div>
+      </ul>
     </section>
   );
 }

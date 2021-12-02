@@ -1,4 +1,4 @@
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import styles from './IngredientsCategory.module.css';
 import BurgerIngredient from '../burger-ingredient/BurgerIngredient';
 
@@ -12,12 +12,14 @@ function IngredientsCategory(props) {
             <BurgerIngredient {...ingredient} />
           </li>
         ))}
-        {/* <li>
-          <BurgerIngredient {...props.ingredients[0]} />
-        </li> */}
       </ul>
     </>
   );
 }
+
+IngredientsCategory.propTypes = {
+  title: PropTypes.string.isRequired,
+  ingredients: PropTypes.array.isRequired
+};
 
 export default IngredientsCategory;

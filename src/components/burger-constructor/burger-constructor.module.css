@@ -1,5 +1,58 @@
 .constructor {
+  display: flex;
+  flex-direction: column;
   width: 100%;
   max-width: 600px;
-  border: 0.5px dashed purple;
+}
+
+.partsList {
+  list-style: none;
+  margin-bottom: 0;
+  padding: 0;
+}
+
+.partsListScroll {
+  padding-left: 0;
+  list-style: none;
+  line-height: 0;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  display: flex;
+  row-gap: 16px;
+  flex-direction: column;
+  width: 100%;
+  max-height: calc(100vh - 534px);
+}
+
+.partsListScroll::-webkit-scrollbar {
+  width: 8px;
+  background: #2f2f37;
+}
+
+.partsListScroll::-webkit-scrollbar-thumb {
+  background: #8585ad;
+}
+
+.partsListScroll::-webkit-scrollbar-thumb:hover {
+  background: #8282da;
+}
+
+.part {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  column-gap: 8px;
+}
+
+.order {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-bottom: 52px;
+}
+
+.order svg {
+  width: 36px;
+  height: auto;
 }

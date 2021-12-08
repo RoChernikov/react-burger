@@ -1,10 +1,18 @@
 import { useState } from 'react';
+import PropTypes from 'prop-types';
 import styles from './burger-ingredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import IngredientsCategory from '../ingredients-category/IngredientsCategory';
-import { data } from '../../utils/data';
+import { IngredientType } from '../../utils/types';
 
-function BurgerIngredients() {
+function BurgerIngredients({ ingredientsData }) {
+  const buns = ingredientsData.filter(ingredient => ingredient.type === 'bun');
+  const sauces = ingredientsData.filter(
+    ingredient => ingredient.type === 'sauce'
+  );
+  const mains = ingredientsData.filter(
+    ingredient => ingredient.type === 'main'
+  );
   const [selectedMeal, setSelectedMeal] = useState('buns');
   const handleMealChange = evt => {
     setSelectedMeal(evt);
@@ -39,21 +47,17 @@ function BurgerIngredients() {
         </Tab>
       </div>
       <ul className={` ${styles.ingredients}`}>
-        <IngredientsCategory
-          title="Булки"
-          ingredients={data.filter(item => item.type === 'bun')}
-        />
-        <IngredientsCategory
-          title="Соусы"
-          ingredients={data.filter(item => item.type === 'sauce')}
-        />
-        <IngredientsCategory
-          title="Начинки"
-          ingredients={data.filter(item => item.type === 'main')}
-        />
+        <IngredientsCategory title="Булки" ingredients={buns} />
+        <IngredientsCategory title="Соусы" ingredients={sauces} />
+        <IngredientsCategory title="Начинки" ingredients={mains} />
       </ul>
     </section>
   );
 }
+
+BurgerIngredients.propTypes = {
+  ingredientsData: PropTypes.arrayOf(PropTypes.shape(IngredientType).isRequired)
+    .isRequired
+};
 
 export default BurgerIngredients;

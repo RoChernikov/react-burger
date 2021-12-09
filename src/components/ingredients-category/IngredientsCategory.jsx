@@ -4,7 +4,7 @@ import styles from './IngredientsCategory.module.css';
 import BurgerIngredient from '../burger-ingredient/BurgerIngredient';
 
 const IngredientsCategory = forwardRef((props, ref) => (
-  <li className={styles.item} ref={ref} id={props.id}>
+  <li ref={ref} id={props.id}>
     <h2 className="text text_type_main-medium mt-10 mb-6">{props.title}</h2>
     <ul className={`ml-4 ${styles.list}`}>
       {props.ingredients.map(ingredient => (

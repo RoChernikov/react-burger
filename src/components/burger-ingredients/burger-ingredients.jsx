@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useInView } from 'react-intersection-observer';
 import PropTypes from 'prop-types';
 import styles from './burger-ingredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -6,17 +7,38 @@ import IngredientsCategory from '../ingredients-category/IngredientsCategory';
 import { IngredientType } from '../../utils/types';
 
 function BurgerIngredients({ ingredientsData }) {
-  const buns = ingredientsData.filter(ingredient => ingredient.type === 'bun');
-  const sauces = ingredientsData.filter(
+  const bun = ingredientsData.filter(ingredient => ingredient.type === 'bun');
+  const sauce = ingredientsData.filter(
     ingredient => ingredient.type === 'sauce'
   );
-  const mains = ingredientsData.filter(
-    ingredient => ingredient.type === 'main'
-  );
-  const [selectedMeal, setSelectedMeal] = useState('buns');
+  const main = ingredientsData.filter(ingredient => ingredient.type === 'main');
+
+  const [selectedMeal, setSelectedMeal] = useState('bun');
+
   const handleMealChange = evt => {
     setSelectedMeal(evt);
+    document.getElementById(evt)?.scrollIntoView();
   };
+
+  const inViewOptions = {
+    threshold: 0,
+    trackVisibility: true,
+    delay: 100
+  };
+
+  const [bunRef, inViewBun] = useInView(inViewOptions);
+  const [mainRef, inViewMain] = useInView(inViewOptions);
+  const [sauceRef, inViewSauce] = useInView(inViewOptions);
+
+  useEffect(() => {
+    if (inViewBun) {
+      setSelectedMeal('bun');
+    } else if (inViewSauce) {
+      setSelectedMeal('sauce');
+    } else if (inViewMain) {
+      setSelectedMeal('main');
+    }
+  }, [inViewBun, inViewMain, inViewSauce]);
 
   return (
     <section className={`mt-10 ml-5 ${styles.constructor}`}>
@@ -25,8 +47,8 @@ function BurgerIngredients({ ingredientsData }) {
       </h1>
       <div className={`mt-5 ${styles.tab}`}>
         <Tab
-          value="buns"
-          active={selectedMeal === 'buns'}
+          value="bun"
+          active={selectedMeal === 'bun'}
           onClick={handleMealChange}
         >
           Булки
@@ -47,9 +69,24 @@ function BurgerIngredients({ ingredientsData }) {
         </Tab>
       </div>
       <ul className={` ${styles.ingredients}`}>
-        <IngredientsCategory title="Булки" ingredients={buns} />
-        <IngredientsCategory title="Соусы" ingredients={sauces} />
-        <IngredientsCategory title="Начинки" ingredients={mains} />
+        <IngredientsCategory
+          id="bun"
+          title="Булки"
+          ingredients={bun}
+          ref={bunRef}
+        />
+        <IngredientsCategory
+          id="sauce"
+          title="Соусы"
+          ingredients={sauce}
+          ref={sauceRef}
+        />
+        <IngredientsCategory
+          id="main"
+          title="Начинки"
+          ingredients={main}
+          ref={mainRef}
+        />
       </ul>
     </section>
   );

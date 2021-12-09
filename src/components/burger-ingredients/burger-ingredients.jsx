@@ -17,11 +17,11 @@ function BurgerIngredients({ ingredientsData }) {
 
   const handleMealChange = evt => {
     setSelectedMeal(evt);
-    document.getElementById(evt)?.scrollIntoView();
+    document.getElementById(evt).scrollIntoView();
   };
 
   const inViewOptions = {
-    threshold: 0,
+    threshold: 0.1,
     trackVisibility: true,
     delay: 100
   };

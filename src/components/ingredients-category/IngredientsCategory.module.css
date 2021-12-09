@@ -9,3 +9,7 @@
   margin-bottom: 0;
   padding: 0;
 }
+
+.item {
+  scroll-margin-top: -1px;
+}

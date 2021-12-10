@@ -1,0 +1,34 @@
+.popup {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.popupContainer {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #1c1c21;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 720px;
+  border-radius: 40px;
+  z-index: 1;
+}
+
+.closeButton {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  align-self: flex-end;
+  padding: 0;
+}

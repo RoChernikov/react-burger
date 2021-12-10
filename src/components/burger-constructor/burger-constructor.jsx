@@ -6,7 +6,7 @@ import {
   ConstructorElement
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
-function BurgerConstructor() {
+function BurgerConstructor({ openModal }) {
   return (
     <section className={`mr-5 pl-4 ${styles.constructor}`}>
       <ul className={`mt-25 ${styles.partsList}`}>
@@ -79,7 +79,7 @@ function BurgerConstructor() {
         <span className="ml-2 mr-10">
           <CurrencyIcon type="primary" />
         </span>
-        <Button type="primary" size="large">
+        <Button type="primary" size="large" onClick={openModal}>
           Оформить заказ
         </Button>
       </div>

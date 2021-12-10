@@ -3,7 +3,7 @@ import styles from './app-header.module.css';
 import { Logo } from '@ya.praktikum/react-developer-burger-ui-components';
 import HeaderLink from '../header-link/header-link';
 
-function AppHeader() {
+const AppHeader = () => {
   const [page, setPage] = useState('constructor');
 
   return (
@@ -44,6 +44,6 @@ function AppHeader() {
       </nav>
     </header>
   );
-}
+};
 
 export default AppHeader;

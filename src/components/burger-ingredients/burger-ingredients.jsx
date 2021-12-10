@@ -6,7 +6,7 @@ import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import IngredientsCategory from '../ingredients-category/IngredientsCategory';
 import { IngredientType } from '../../utils/types';
 
-function BurgerIngredients({ ingredientsData }) {
+function BurgerIngredients({ ingredientsData, openModal }) {
   const bun = ingredientsData.filter(ingredient => ingredient.type === 'bun');
   const sauce = ingredientsData.filter(
     ingredient => ingredient.type === 'sauce'
@@ -73,18 +73,21 @@ function BurgerIngredients({ ingredientsData }) {
           id="bun"
           title="Булки"
           ingredients={bun}
+          openModal={openModal}
           ref={bunRef}
         />
         <IngredientsCategory
           id="sauce"
           title="Соусы"
           ingredients={sauce}
+          openModal={openModal}
           ref={sauceRef}
         />
         <IngredientsCategory
           id="main"
           title="Начинки"
           ingredients={main}
+          openModal={openModal}
           ref={mainRef}
         />
       </ul>
@@ -94,7 +97,8 @@ function BurgerIngredients({ ingredientsData }) {
 
 BurgerIngredients.propTypes = {
   ingredientsData: PropTypes.arrayOf(PropTypes.shape(IngredientType).isRequired)
-    .isRequired
+    .isRequired,
+  openModal: PropTypes.func.isRequired
 };
 
 export default BurgerIngredients;

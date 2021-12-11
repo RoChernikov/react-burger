@@ -1,7 +1,7 @@
+import styles from './burger-ingredients.module.css';
 import { useState, useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 import PropTypes from 'prop-types';
-import styles from './burger-ingredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import IngredientsCategory from '../ingredients-category/IngredientsCategory';
 import { IngredientType } from '../../utils/types';

@@ -1,10 +1,10 @@
+import styles from './BurgerIngredient.module.css';
 import PropTypes from 'prop-types';
-import { IngredientType } from '../../utils/types';
 import {
   Counter,
   CurrencyIcon
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import styles from './BurgerIngredient.module.css';
+import { IngredientType } from '../../utils/types';
 
 function BurgerIngredient({ ingredient, openModal }) {
   return (

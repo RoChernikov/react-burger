@@ -1,9 +1,8 @@
 import styles from './modal.module.css';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import ModalOverlay from '../modal-overlay/modal-overlay';
-import { useState } from 'react';
 
 const Modal = ({ closeModal, children }) => {
   const [closeIconState, setCloseIconState] = useState(false);

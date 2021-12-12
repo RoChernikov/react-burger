@@ -1,4 +1,5 @@
 import styles from './burger-constructor.module.css';
+import { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import {
   Button,
@@ -10,8 +11,9 @@ import { IngredientType } from '../../utils/types';
 
 function BurgerConstructor({ ingredientsData, openModal }) {
   const pickedBun = ingredientsData[0]; //hardcode
-  const filteredIngredients = ingredientsData.filter(
-    item => item.type !== 'bun'
+  const filteredIngredients = useMemo(
+    () => ingredientsData.filter(item => item.type !== 'bun'),
+    [ingredientsData]
   );
   return (
     <section className={`mr-5 pl-4 ${styles.constructor}`}>

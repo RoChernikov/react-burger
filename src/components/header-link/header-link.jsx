@@ -1,4 +1,5 @@
 import styles from './header-link.module.css';
+import PropTypes from 'prop-types';
 import { useState } from 'react';
 import {
   BurgerIcon,
@@ -6,14 +7,7 @@ import {
   ProfileIcon
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
-interface HeaderLinkProps {
-  icon: 'burger' | 'list' | 'profile';
-  active: boolean;
-  children: string;
-  onClick: () => void;
-}
-
-function HeaderLink({ icon, active, children, onClick }: HeaderLinkProps) {
+function HeaderLink({ icon, active, children, onClick }) {
   const [iconState, setIconState] = useState(false);
   const IconComponent =
     icon === 'burger' ? (
@@ -40,5 +34,12 @@ function HeaderLink({ icon, active, children, onClick }: HeaderLinkProps) {
     </button>
   );
 }
+
+HeaderLink.propTypes = {
+  icon: PropTypes.oneOf(['burger', 'list', 'profile']).isRequired,
+  active: PropTypes.bool.isRequired,
+  children: PropTypes.string.isRequired,
+  onClick: PropTypes.func.isRequired
+};
 
 export default HeaderLink;

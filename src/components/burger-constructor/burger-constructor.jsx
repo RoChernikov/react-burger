@@ -1,4 +1,5 @@
 import styles from './burger-constructor.module.css';
+import PropTypes from 'prop-types';
 import {
   Button,
   CurrencyIcon,
@@ -86,5 +87,9 @@ function BurgerConstructor({ openModal }) {
     </section>
   );
 }
+
+BurgerConstructor.propTypes = {
+  openModal: PropTypes.func.isRequired
+};
 
 export default BurgerConstructor;

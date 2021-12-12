@@ -10,7 +10,7 @@ import IngredientDetails from '../ingredient-details/ingredient-details';
 
 const App = () => {
   const [ingredients, setIngredients] = useState([]);
-  const [pickedItem, setpickedItem] = useState({});
+  const [pickedBunItem, setpickedBunItem] = useState({});
   const [isOrderDetailsModalOpen, setOrderDetailsModalOpen] = useState(false);
   const [isIngredientDetailsModalOpen, setIngredientDetailsModalOpen] =
     useState(false);
@@ -26,7 +26,7 @@ const App = () => {
 
   const openIngredientDetailsModal = ingredient => {
     setIngredientDetailsModalOpen(true);
-    setpickedItem(ingredient);
+    setpickedBunItem(ingredient);
   };
 
   useEffect(() => {
@@ -45,7 +45,10 @@ const App = () => {
           ingredientsData={ingredients}
           openModal={openIngredientDetailsModal}
         />
-        <BurgerConstructor openModal={openOrderDetailsModal} />
+        <BurgerConstructor
+          ingredientsData={ingredients}
+          openModal={openOrderDetailsModal}
+        />
       </main>
       {isOrderDetailsModalOpen && (
         <Modal closeModal={closeModal}>
@@ -55,7 +58,7 @@ const App = () => {
 
       {isIngredientDetailsModalOpen && (
         <Modal closeModal={closeModal}>
-          <IngredientDetails ingredient={pickedItem} />
+          <IngredientDetails ingredient={pickedBunItem} />
         </Modal>
       )}
     </>

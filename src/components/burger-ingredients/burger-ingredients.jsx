@@ -1,5 +1,5 @@
 import styles from './burger-ingredients.module.css';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useInView } from 'react-intersection-observer';
 import PropTypes from 'prop-types';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -7,11 +7,18 @@ import IngredientsCategory from '../ingredients-category/IngredientsCategory';
 import { IngredientType } from '../../utils/types';
 
 function BurgerIngredients({ ingredientsData, openModal }) {
-  const bun = ingredientsData.filter(ingredient => ingredient.type === 'bun');
-  const sauce = ingredientsData.filter(
-    ingredient => ingredient.type === 'sauce'
+  const bun = useMemo(
+    () => ingredientsData.filter(ingredient => ingredient.type === 'bun'),
+    [ingredientsData]
   );
-  const main = ingredientsData.filter(ingredient => ingredient.type === 'main');
+  const sauce = useMemo(
+    () => ingredientsData.filter(ingredient => ingredient.type === 'sauce'),
+    [ingredientsData]
+  );
+  const main = useMemo(
+    () => ingredientsData.filter(ingredient => ingredient.type === 'main'),
+    [ingredientsData]
+  );
 
   const [selectedMeal, setSelectedMeal] = useState('bun');
 

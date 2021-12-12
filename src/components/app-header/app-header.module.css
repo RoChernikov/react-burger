@@ -26,6 +26,11 @@
 
 .logoWrapper {
   justify-self: center;
+  transition: all 0.2s;
+}
+
+.logoWrapper:hover {
+  opacity: 0.6;
 }
 
 .profileLinkWrapper {

@@ -29,9 +29,9 @@ const AppHeader = () => {
             </HeaderLink>
           </li>
         </ul>
-        <div className={styles.logoWrapper}>
+        <a href="#" className={styles.logoWrapper}>
           <Logo />
-        </div>
+        </a>
         <div className={styles.profileLinkWrapper}>
           <HeaderLink
             icon="profile"

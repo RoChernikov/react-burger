@@ -1,46 +1,58 @@
-# Getting Started with Create React App
+<h1 align="center"><a  href="http://rochernikov.github.io/react-burger/" target="_blank"><img src="./readme_src/stellar-burger_header.jpg" width="100%" alt="шапка"></a></h1>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Краткое описание:
 
-## Available Scripts
+<p align="Left"> "Stellar Burgers" - одностраничное приложение, позволяющее собрать и заказать свой уникальный межгалактический бургер</p>
 
-In the project directory, you can run:
+[Открыть в браузере](http://rochernikov.github.io/react-burger/)
 
-### `npm start`
+### Функционал:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- На данный момент реализована верстка, в дальнейшем функцианал будет дополняться.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### Технологии, использованные при создании:
 
-### `npm test`
+- React.js (CRA)
+- JavaScript (ES6)
+- Flexbox
+- Grid Layout
+- CSS - animation
+- Семантическая верстка
+- Использована библиотека UI-компонентов [Яндекс.Практикум.Реакт](https://github.com/yandex-praktikum/react-developer-burger-ui-components)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Проект сверстан для настольных компьютеров (разрешение 1280x720 и выше, статическая верстка).
 
-### `npm run build`
+### Языки:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- HTML
+- CSS
+- JavaScript
+- JSX
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Внешние компоненты
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Для работы с проектом вам понадобятся git, NodeJS
 
-### `npm run eject`
+- [Как установить git.](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
+- [Как установить NodeJS.](https://nodejs.org/en/download/package-manager/)
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### Локальная установка:
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+В командной строке перейдите в папку, где будет развернут проект. После чего скопируйте его с GitHub:
+`$ git clone git@github.com:RoChernikov/react-burger.git`
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Далее переходим в папку с проектом и устанавливаем компоненты:
+`$ npm install`
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+Далее можно запускать проект на локальном сервере:
+`$ npm start`
 
-## Learn More
+## Ссылки:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+[Макет](<https://www.figma.com/file/Z8DHldjVbvhQXtrkmJR8CU/React-%2F-Проектные-задачи-(3-месяца)?node-id=0%3A1>)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- [Ссылка на GitHub Pages](http://rochernikov.github.io/react-burger/)
+
+- [По вопросам доработки сайта](https://t.me/ro_runner)
+
+## Проектная работа: "Ыеуддфк Игкпукы". Создана в рамках учебы в [Яндекс.Практикум](https://praktikum.yandex.ru/) на курсе ["Веб-разработчик плюс"](https://practicum.yandex.ru/web-plus/).

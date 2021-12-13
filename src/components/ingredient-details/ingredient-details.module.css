@@ -1,0 +1,30 @@
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.title {
+  align-self: flex-start;
+}
+
+.nutritionList {
+  width: 100%;
+  margin-bottom: 0;
+  display: flex;
+  list-style: none;
+  gap: 20px;
+}
+
+.nutritionItem {
+  min-width: 112px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.image {
+  max-width: 480px;
+  width: 100%;
+}

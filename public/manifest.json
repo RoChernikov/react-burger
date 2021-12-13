@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Stellar Burgers",
+  "name": "Educational React SPA",
   "icons": [
     {
       "src": "favicon.ico",

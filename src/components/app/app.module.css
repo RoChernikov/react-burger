@@ -1,0 +1,12 @@
+.main {
+  display: flex;
+  flex: 1 1 auto;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1280px;
+}
+
+.errorSubtitle {
+  text-align: center;
+  color: red;
+}

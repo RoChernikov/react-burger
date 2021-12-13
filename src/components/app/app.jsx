@@ -9,6 +9,7 @@ import OrderDetails from '../order-details/order-details';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 
 const App = () => {
+  const [isLoadingError, setisLoadingError] = useState(false);
   const [ingredients, setIngredients] = useState([]);
   const [pickedBunItem, setpickedBunItem] = useState({});
   const [isOrderDetailsModalOpen, setOrderDetailsModalOpen] = useState(false);
@@ -18,7 +19,7 @@ const App = () => {
   const closeModal = useCallback(() => {
     setOrderDetailsModalOpen(false);
     setIngredientDetailsModalOpen(false);
-  }, [setOrderDetailsModalOpen, setIngredientDetailsModalOpen]);
+  }, []);
 
   const openOrderDetailsModal = () => {
     setOrderDetailsModalOpen(true);
@@ -34,22 +35,38 @@ const App = () => {
       .then(res => {
         setIngredients(res.data);
       })
-      .catch(error => console.log(`Ошибка получения данных: ${error}`));
+      .catch(error => {
+        setisLoadingError(true);
+        console.log(`Ошибка получения данных: ${error}`);
+      });
   }, []);
 
   return (
     <>
       <AppHeader />
-      <main className={styles.main}>
-        <BurgerIngredients
-          ingredientsData={ingredients}
-          openModal={openIngredientDetailsModal}
-        />
-        <BurgerConstructor
-          ingredientsData={ingredients}
-          openModal={openOrderDetailsModal}
-        />
-      </main>
+      {!isLoadingError ? (
+        <main className={styles.main}>
+          <BurgerIngredients
+            ingredientsData={ingredients}
+            openModal={openIngredientDetailsModal}
+          />
+          <BurgerConstructor
+            ingredientsData={ingredients}
+            openModal={openOrderDetailsModal}
+          />
+        </main>
+      ) : (
+        <main>
+          <section aria-label="Сообщение об ошибке">
+            <h1 className="text text_type_main-large mt-20">
+              Что-то пошло не так :(
+            </h1>
+            <p className={`text text_type_main-small ${styles.errorSubtitle}`}>
+              не удалось загрузить данные с сервера
+            </p>
+          </section>
+        </main>
+      )}
       {isOrderDetailsModalOpen && (
         <Modal closeModal={closeModal}>
           <OrderDetails />

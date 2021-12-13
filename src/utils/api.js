@@ -1,4 +1,4 @@
-const API_URL = 'https://norma.nomoreparties.space/api/ingredients';
+const BASE_URL = 'https://norma.nomoreparties.space/api/';
 
 class Api {
   constructor({ baseUrl }) {
@@ -16,7 +16,7 @@ class Api {
   }
 
   getIngredients() {
-    return fetch(this._baseUrl, {
+    return fetch(this._baseUrl + 'ingredients', {
       method: 'GET',
       headers: this._headers
     }).then(this._getResponceData);
@@ -24,5 +24,5 @@ class Api {
 }
 
 export default new Api({
-  baseUrl: API_URL
+  baseUrl: BASE_URL
 });

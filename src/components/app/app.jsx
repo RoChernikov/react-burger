@@ -9,7 +9,7 @@ import OrderDetails from '../order-details/order-details';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 
 const App = () => {
-  const [isLoadingError, setisLoadingError] = useState(false);
+  const [isLoadingError, setIsLoadingError] = useState(false);
   const [ingredients, setIngredients] = useState([]);
   const [pickedBunItem, setpickedBunItem] = useState({});
   const [isOrderDetailsModalOpen, setOrderDetailsModalOpen] = useState(false);
@@ -36,7 +36,7 @@ const App = () => {
         setIngredients(res.data);
       })
       .catch(error => {
-        setisLoadingError(true);
+        setIsLoadingError(true);
         console.log(`Ошибка получения данных: ${error}`);
       });
   }, []);

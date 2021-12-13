@@ -1,6 +1,11 @@
 import styles from './app-header.module.css';
 import { useState } from 'react';
-import { Logo } from '@ya.praktikum/react-developer-burger-ui-components';
+import {
+  Logo,
+  BurgerIcon,
+  ListIcon,
+  ProfileIcon
+} from '@ya.praktikum/react-developer-burger-ui-components';
 import HeaderLink from '../header-link/header-link';
 
 const AppHeader = () => {
@@ -12,7 +17,11 @@ const AppHeader = () => {
         <ul className={styles.list}>
           <li className="mr-2">
             <HeaderLink
-              icon="burger"
+              IconComponent={
+                <BurgerIcon
+                  type={page === 'constructor' ? 'primary' : 'secondary'}
+                />
+              }
               active={page === 'constructor' ? true : false}
               onClick={() => setPage('constructor')}
             >
@@ -21,7 +30,11 @@ const AppHeader = () => {
           </li>
           <li>
             <HeaderLink
-              icon="list"
+              IconComponent={
+                <ListIcon
+                  type={page === 'orderList' ? 'primary' : 'secondary'}
+                />
+              }
               active={page === 'orderList' ? true : false}
               onClick={() => setPage('orderList')}
             >
@@ -34,7 +47,11 @@ const AppHeader = () => {
         </a>
         <div className={styles.profileLinkWrapper}>
           <HeaderLink
-            icon="profile"
+            IconComponent={
+              <ProfileIcon
+                type={page === 'profile' ? 'primary' : 'secondary'}
+              />
+            }
             active={page === 'profile' ? true : false}
             onClick={() => setPage('profile')}
           >

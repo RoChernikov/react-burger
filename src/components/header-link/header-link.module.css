@@ -7,6 +7,7 @@
   color: #8585ad;
   background: none;
   border: none;
+  text-decoration: none;
 }
 
 .link_active {
@@ -21,4 +22,8 @@
 
 .link:hover {
   color: #f2f2f3;
+}
+
+.link:hover svg {
+  fill: #f2f2f3;
 }

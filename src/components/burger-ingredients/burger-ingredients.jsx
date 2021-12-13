@@ -6,6 +6,12 @@ import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import IngredientsCategory from '../ingredients-category/IngredientsCategory';
 import { IngredientType } from '../../utils/types';
 
+const inViewOptions = {
+  threshold: 0.1,
+  trackVisibility: true,
+  delay: 100
+};
+
 function BurgerIngredients({ ingredientsData, openModal }) {
   const bun = useMemo(
     () => ingredientsData.filter(ingredient => ingredient.type === 'bun'),
@@ -25,12 +31,6 @@ function BurgerIngredients({ ingredientsData, openModal }) {
   const handleMealChange = evt => {
     setSelectedMeal(evt);
     document.getElementById(evt).scrollIntoView();
-  };
-
-  const inViewOptions = {
-    threshold: 0.1,
-    trackVisibility: true,
-    delay: 100
   };
 
   const [bunRef, inViewBun] = useInView(inViewOptions);

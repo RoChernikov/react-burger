@@ -16,7 +16,10 @@ function BurgerConstructor({ ingredientsData, openModal }) {
     [ingredientsData]
   );
   return (
-    <section className={`mr-5 pl-4 ${styles.constructor}`}>
+    <section
+      className={`mr-5 pl-4 ${styles.constructor}`}
+      aria-label="Конструктор бургера"
+    >
       <ul className={`mt-25 ${styles.partsList}`}>
         <li className={`mr-4 ${styles.part}`}>
           <ConstructorElement
@@ -31,9 +34,12 @@ function BurgerConstructor({ ingredientsData, openModal }) {
         <li>
           <ul className={`mt-4 mb-4 ${styles.partsListScroll}`}>
             {filteredIngredients
-              ? filteredIngredients.map(ingredient => {
+              ? filteredIngredients.map((ingredient, index) => {
                   return (
-                    <li key={ingredient._id} className={`mr-2 ${styles.part}`}>
+                    <li
+                      key={ingredient._id + index}
+                      className={`mr-2 ${styles.part}`}
+                    >
                       <DragIcon type="primary" />
                       <ConstructorElement
                         text={ingredient.name}
@@ -51,7 +57,7 @@ function BurgerConstructor({ ingredientsData, openModal }) {
           <ConstructorElement
             type="bottom"
             isLocked={true}
-            text={`${pickedBun ? pickedBun.name : 'булка'} (верх)`}
+            text={`${pickedBun ? pickedBun.name : 'булка'} (низ)`}
             price={pickedBun ? pickedBun.price : 0}
             thumbnail={pickedBun ? pickedBun.image : 'Изображение'}
           />

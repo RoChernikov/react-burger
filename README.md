@@ -55,4 +55,4 @@
 
 - [По вопросам доработки сайта](https://t.me/ro_runner)
 
-## Проектная работа: "Ыеуддфк Игкпукы". Создана в рамках учебы в [Яндекс.Практикум](https://praktikum.yandex.ru/) на курсе ["Веб-разработчик плюс"](https://practicum.yandex.ru/web-plus/).
+## Проектная работа: "Stellar Burgers". Создана в рамках учебы в [Яндекс.Практикум](https://praktikum.yandex.ru/) на курсе ["Веб-разработчик плюс"](https://practicum.yandex.ru/web-plus/).

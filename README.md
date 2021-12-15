@@ -47,6 +47,14 @@
 Далее можно запускать проект на локальном сервере:
 `$ npm start`
 
+### Деплой проекта:
+
+Устанавливаем пакет для выкладывания проекта на gh-pages:
+`$ npm install gh-pages --save-dev`
+
+Деплой:
+`$ npm run deploy`
+
 ## Ссылки:
 
 [Макет](<https://www.figma.com/file/Z8DHldjVbvhQXtrkmJR8CU/React-%2F-Проектные-задачи-(3-месяца)?node-id=0%3A1>)

@@ -4,7 +4,7 @@
 
 <p align="Left"> "Stellar Burgers" - одностраничное приложение, позволяющее собрать и заказать свой уникальный межгалактический бургер</p>
 
-<!-- [Открыть в браузере](http://rochernikov.github.io/react-burger/) -->
+[Открыть в браузере](http://rochernikov.github.io/react-burger/)
 
 ### Функционал:
 

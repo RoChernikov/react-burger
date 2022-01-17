@@ -1,10 +1,10 @@
 import styles from './burger-ingredients.module.css';
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useContext } from 'react';
 import { useInView } from 'react-intersection-observer';
 import PropTypes from 'prop-types';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import IngredientsCategory from '../ingredients-category/IngredientsCategory';
-import { IngredientType } from '../../utils/types';
+import { IngredientsContext } from '../../services/ingredients-context';
 
 const inViewOptions = {
   threshold: 0.1,
@@ -12,7 +12,8 @@ const inViewOptions = {
   delay: 100
 };
 
-function BurgerIngredients({ ingredientsData, openModal }) {
+function BurgerIngredients({ openModal }) {
+  const ingredientsData = useContext(IngredientsContext);
   const bun = useMemo(
     () => ingredientsData.filter(ingredient => ingredient.type === 'bun'),
     [ingredientsData]
@@ -56,22 +57,19 @@ function BurgerIngredients({ ingredientsData, openModal }) {
         <Tab
           value="bun"
           active={selectedMeal === 'bun'}
-          onClick={handleMealChange}
-        >
+          onClick={handleMealChange}>
           Булки
         </Tab>
         <Tab
           value="sauce"
           active={selectedMeal === 'sauce'}
-          onClick={handleMealChange}
-        >
+          onClick={handleMealChange}>
           Соусы
         </Tab>
         <Tab
           value="main"
           active={selectedMeal === 'main'}
-          onClick={handleMealChange}
-        >
+          onClick={handleMealChange}>
           Начинки
         </Tab>
       </div>
@@ -103,8 +101,6 @@ function BurgerIngredients({ ingredientsData, openModal }) {
 }
 
 BurgerIngredients.propTypes = {
-  ingredientsData: PropTypes.arrayOf(PropTypes.shape(IngredientType).isRequired)
-    .isRequired,
   openModal: PropTypes.func.isRequired
 };
 

@@ -7,11 +7,13 @@ import BurgerConstructor from '../burger-constructor/burger-constructor';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
 import IngredientDetails from '../ingredient-details/ingredient-details';
+import { IngredientsContext } from '../../services/ingredients-context';
 
 const App = () => {
   const [isLoadingError, setIsLoadingError] = useState(false);
   const [ingredients, setIngredients] = useState([]);
-  const [pickedBunItem, setpickedBunItem] = useState({});
+  const [pickedIngredientItem, setPickedIngredientItem] = useState(null);
+  const [orderNumber, setOrderNumber] = useState(null);
   const [isOrderDetailsModalOpen, setOrderDetailsModalOpen] = useState(false);
   const [isIngredientDetailsModalOpen, setIngredientDetailsModalOpen] =
     useState(false);
@@ -23,11 +25,14 @@ const App = () => {
 
   const openOrderDetailsModal = () => {
     setOrderDetailsModalOpen(true);
+    Api.sendOrder(ingredients.map(item => item._id)).then(({ order }) =>
+      setOrderNumber(order.number)
+    );
   };
 
   const openIngredientDetailsModal = ingredient => {
     setIngredientDetailsModalOpen(true);
-    setpickedBunItem(ingredient);
+    setPickedIngredientItem(ingredient);
   };
 
   useEffect(() => {
@@ -46,14 +51,13 @@ const App = () => {
       <AppHeader />
       {!isLoadingError ? (
         <main className={styles.main}>
-          <BurgerIngredients
-            ingredientsData={ingredients}
-            openModal={openIngredientDetailsModal}
-          />
-          <BurgerConstructor
-            ingredientsData={ingredients}
-            openModal={openOrderDetailsModal}
-          />
+          <IngredientsContext.Provider value={ingredients}>
+            <BurgerIngredients openModal={openIngredientDetailsModal} />
+            <BurgerConstructor
+              ingredientsData={ingredients}
+              openModal={openOrderDetailsModal}
+            />
+          </IngredientsContext.Provider>
         </main>
       ) : (
         <main>
@@ -69,13 +73,13 @@ const App = () => {
       )}
       {isOrderDetailsModalOpen && (
         <Modal closeModal={closeModal}>
-          <OrderDetails />
+          <OrderDetails order={orderNumber} />
         </Modal>
       )}
 
       {isIngredientDetailsModalOpen && (
         <Modal closeModal={closeModal}>
-          <IngredientDetails ingredient={pickedBunItem} />
+          <IngredientDetails ingredient={pickedIngredientItem} />
         </Modal>
       )}
     </>

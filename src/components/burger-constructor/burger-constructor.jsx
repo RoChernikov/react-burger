@@ -1,5 +1,5 @@
 import styles from './burger-constructor.module.css';
-import { useMemo } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
 import {
   Button,
@@ -7,19 +7,30 @@ import {
   DragIcon,
   ConstructorElement
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { IngredientType } from '../../utils/types';
+import { IngredientsContext } from '../../services/ingredients-context';
 
-function BurgerConstructor({ ingredientsData, openModal }) {
-  const pickedBun = ingredientsData[0]; //hardcode
-  const filteredIngredients = useMemo(
-    () => ingredientsData.filter(item => item.type !== 'bun'),
-    [ingredientsData]
-  );
+function BurgerConstructor({ openModal }) {
+  const ingredientsData = useContext(IngredientsContext);
+  const [totalSum, setTotalSum] = useState(0);
+  const [filteredIngredients, setFilteredIngredients] = useState([]);
+  const [pickedBun, setPickedBun] = useState({});
+
+  useEffect(() => {
+    setFilteredIngredients(ingredientsData.filter(item => item.type !== 'bun'));
+    const bun = ingredientsData.find(item => item.type === 'bun');
+    if (bun) setPickedBun(bun);
+  }, [ingredientsData]);
+
+  useEffect(() => {
+    const pricesList = filteredIngredients.map(item => Number(item.price));
+    const bunPrice = pickedBun.price ? pickedBun.price * 2 : 0;
+    setTotalSum(pricesList.reduce((prev, cur) => prev + cur, bunPrice));
+  }, [filteredIngredients, pickedBun]);
+
   return (
     <section
       className={`mr-5 pl-4 ${styles.constructor}`}
-      aria-label="Конструктор бургера"
-    >
+      aria-label="Конструктор бургера">
       <ul className={`mt-25 ${styles.partsList}`}>
         <li className={`mr-4 ${styles.part}`}>
           <ConstructorElement
@@ -38,8 +49,7 @@ function BurgerConstructor({ ingredientsData, openModal }) {
                   return (
                     <li
                       key={ingredient._id + index}
-                      className={`mr-2 ${styles.part}`}
-                    >
+                      className={`mr-2 ${styles.part}`}>
                       <DragIcon type="primary" />
                       <ConstructorElement
                         text={ingredient.name}
@@ -64,7 +74,7 @@ function BurgerConstructor({ ingredientsData, openModal }) {
         </li>
       </ul>
       <div className={`mt-10 mr-4 ${styles.order}`}>
-        <p className="text text_type_digits-medium">610</p>
+        <p className="text text_type_digits-medium">{totalSum}</p>
         <span className="ml-2 mr-10">
           <CurrencyIcon type="primary" />
         </span>
@@ -77,8 +87,6 @@ function BurgerConstructor({ ingredientsData, openModal }) {
 }
 
 BurgerConstructor.propTypes = {
-  ingredientsData: PropTypes.arrayOf(PropTypes.shape(IngredientType).isRequired)
-    .isRequired,
   openModal: PropTypes.func.isRequired
 };
 

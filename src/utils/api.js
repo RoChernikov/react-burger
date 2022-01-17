@@ -16,8 +16,16 @@ class Api {
   }
 
   getIngredients() {
-    return fetch(this._baseUrl + 'ingredients', {
+    return fetch(`${BASE_URL}ingredients`, {
       method: 'GET',
+      headers: this._headers
+    }).then(this._getResponceData);
+  }
+
+  sendOrder(ingredients) {
+    return fetch(`${BASE_URL}orders`, {
+      method: 'POST',
+      body: JSON.stringify({ ingredients }),
       headers: this._headers
     }).then(this._getResponceData);
   }

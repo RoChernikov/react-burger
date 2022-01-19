@@ -7,6 +7,11 @@
   align-items: center;
   justify-content: flex-start;
   cursor: pointer;
+  transition: all 0.2s;
+}
+
+.ingredient:hover {
+  transform: scale(1.04);
 }
 
 .priceContainer {

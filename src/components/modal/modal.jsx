@@ -27,8 +27,7 @@ const Modal = ({ closeModal, children }) => {
           onClick={closeModal}
           className={`mt-15 mr-10 ${styles.closeButton}`}
           onMouseEnter={() => setCloseIconState(true)}
-          onMouseLeave={() => setCloseIconState(false)}
-        >
+          onMouseLeave={() => setCloseIconState(false)}>
           <CloseIcon type={closeIconState ? 'secondary' : 'primary'} />
         </button>
         {children}

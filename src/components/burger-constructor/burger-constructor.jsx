@@ -1,5 +1,5 @@
 import styles from './burger-constructor.module.css';
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useCallback, useContext } from 'react';
 import PropTypes from 'prop-types';
 import {
   Button,
@@ -8,8 +8,10 @@ import {
   ConstructorElement
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { IngredientsContext } from '../../services/ingredients-context';
+import { useDispatch, useSelector } from 'react-redux';
 
 function BurgerConstructor({ openModal }) {
+  const dispatch = useDispatch();
   const ingredientsData = useContext(IngredientsContext);
   const [totalSum, setTotalSum] = useState(0);
   const [filteredIngredients, setFilteredIngredients] = useState([]);
@@ -26,6 +28,13 @@ function BurgerConstructor({ openModal }) {
     const bunPrice = pickedBun.price ? pickedBun.price * 2 : 0;
     setTotalSum(pricesList.reduce((prev, cur) => prev + cur, bunPrice));
   }, [filteredIngredients, pickedBun]);
+
+  const handleSubmit = useCallback(() => {
+    if (!pickedBun) {
+      return;
+    }
+    openModal(ingredientsData); //-------------------------------тут будут выбранные ингредиенты
+  }, [openModal, ingredientsData, pickedBun]);
 
   return (
     <section
@@ -78,7 +87,7 @@ function BurgerConstructor({ openModal }) {
         <span className="ml-2 mr-10">
           <CurrencyIcon type="primary" />
         </span>
-        <Button type="primary" size="large" onClick={openModal}>
+        <Button type="primary" size="large" onClick={handleSubmit}>
           Оформить заказ
         </Button>
       </div>

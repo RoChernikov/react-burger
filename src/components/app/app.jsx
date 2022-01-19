@@ -13,7 +13,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   SELECT_INGREDIENT,
   UNSELECT_INGREDIENT,
-  getIngredientsApi
+  getIngredientsApi,
+  getOrderNumber,
+  DELETE_ORDER
 } from '../../services/actions/actions';
 
 const App = () => {
@@ -22,7 +24,8 @@ const App = () => {
     ingredients,
     selectedIngredient,
     ingredientsFailed,
-    ingredientsRequest
+    ingredientsRequest,
+    order
   } = useSelector(
     ({
       ingredients: {
@@ -30,23 +33,18 @@ const App = () => {
         selectedIngredient,
         ingredientsFailed,
         ingredientsRequest
-      }
+      },
+      order: { order }
     }) => {
       return {
         ingredients,
         selectedIngredient,
         ingredientsFailed,
-        ingredientsRequest
+        ingredientsRequest,
+        order
       };
     }
   );
-
-  const [orderNumber, setOrderNumber] = useState(null);
-  const [isOrderDetailsModalOpen, setOrderDetailsModalOpen] = useState(false);
-
-  const closeModal = useCallback(() => {
-    setOrderDetailsModalOpen(false);
-  }, []);
 
   const openIngredientDetailsModal = useCallback(
     ingredient => {
@@ -66,12 +64,20 @@ const App = () => {
     });
   }, [dispatch]);
 
-  const openOrderDetailsModal = () => {
-    setOrderDetailsModalOpen(true);
-    Api.sendOrder(ingredients.map(item => item._id)).then(({ order }) =>
-      setOrderNumber(order.number)
-    );
-  };
+  const openOrderDetailsModal = useCallback(
+    selectedIngredients => {
+      dispatch(
+        getOrderNumber(selectedIngredients.map(ingredient => ingredient._id))
+      );
+    },
+    [dispatch]
+  );
+
+  const closeOrderDetailsModal = useCallback(() => {
+    dispatch({
+      type: DELETE_ORDER
+    });
+  }, [dispatch]);
 
   useEffect(() => {
     dispatch(getIngredientsApi());
@@ -109,9 +115,9 @@ const App = () => {
           <IngredientDetails ingredient={selectedIngredient} />
         </Modal>
       )}
-      {isOrderDetailsModalOpen && (
-        <Modal closeModal={closeModal}>
-          <OrderDetails order={orderNumber} />
+      {order && (
+        <Modal closeModal={closeOrderDetailsModal}>
+          <OrderDetails order={order.number} />
         </Modal>
       )}
     </>

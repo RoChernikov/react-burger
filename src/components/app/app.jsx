@@ -1,6 +1,7 @@
 import styles from './app.module.css';
 import { useEffect, useState, useCallback } from 'react';
 import Api from '../../utils/api';
+import Loader from '../loader/loader';
 import AppHeader from '../app-header/app-header';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
@@ -8,20 +9,62 @@ import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import { IngredientsContext } from '../../services/ingredients-context';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  SELECT_INGREDIENT,
+  UNSELECT_INGREDIENT,
+  getIngredientsApi
+} from '../../services/actions/actions';
 
 const App = () => {
-  const [isLoadingError, setIsLoadingError] = useState(false);
-  const [ingredients, setIngredients] = useState([]);
-  const [pickedIngredientItem, setPickedIngredientItem] = useState(null);
+  const dispatch = useDispatch();
+  const {
+    ingredients,
+    selectedIngredient,
+    ingredientsFailed,
+    ingredientsRequest
+  } = useSelector(
+    ({
+      ingredients: {
+        ingredients,
+        selectedIngredient,
+        ingredientsFailed,
+        ingredientsRequest
+      }
+    }) => {
+      return {
+        ingredients,
+        selectedIngredient,
+        ingredientsFailed,
+        ingredientsRequest
+      };
+    }
+  );
+
   const [orderNumber, setOrderNumber] = useState(null);
   const [isOrderDetailsModalOpen, setOrderDetailsModalOpen] = useState(false);
-  const [isIngredientDetailsModalOpen, setIngredientDetailsModalOpen] =
-    useState(false);
 
   const closeModal = useCallback(() => {
     setOrderDetailsModalOpen(false);
-    setIngredientDetailsModalOpen(false);
   }, []);
+
+  const openIngredientDetailsModal = useCallback(
+    ingredient => {
+      dispatch({
+        type: SELECT_INGREDIENT,
+        payload: {
+          ingredient: ingredient
+        }
+      });
+    },
+    [dispatch]
+  );
+
+  const closeIngredientDetailsModal = useCallback(() => {
+    dispatch({
+      type: UNSELECT_INGREDIENT
+    });
+  }, [dispatch]);
 
   const openOrderDetailsModal = () => {
     setOrderDetailsModalOpen(true);
@@ -30,26 +73,16 @@ const App = () => {
     );
   };
 
-  const openIngredientDetailsModal = ingredient => {
-    setIngredientDetailsModalOpen(true);
-    setPickedIngredientItem(ingredient);
-  };
-
   useEffect(() => {
-    Api.getIngredients()
-      .then(res => {
-        setIngredients(res.data);
-      })
-      .catch(error => {
-        setIsLoadingError(true);
-        console.log(`Ошибка получения данных: ${error}`);
-      });
-  }, []);
+    dispatch(getIngredientsApi());
+  }, [dispatch]);
 
-  return (
+  return ingredientsRequest ? (
+    <Loader />
+  ) : (
     <>
       <AppHeader />
-      {!isLoadingError ? (
+      {!ingredientsFailed ? (
         <main className={styles.main}>
           <IngredientsContext.Provider value={ingredients}>
             <BurgerIngredients openModal={openIngredientDetailsModal} />
@@ -71,15 +104,14 @@ const App = () => {
           </section>
         </main>
       )}
+      {selectedIngredient && (
+        <Modal closeModal={closeIngredientDetailsModal}>
+          <IngredientDetails ingredient={selectedIngredient} />
+        </Modal>
+      )}
       {isOrderDetailsModalOpen && (
         <Modal closeModal={closeModal}>
           <OrderDetails order={orderNumber} />
-        </Modal>
-      )}
-
-      {isIngredientDetailsModalOpen && (
-        <Modal closeModal={closeModal}>
-          <IngredientDetails ingredient={pickedIngredientItem} />
         </Modal>
       )}
     </>

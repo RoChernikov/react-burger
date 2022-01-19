@@ -1,4 +1,4 @@
-const BASE_URL = 'https://norma.nomoreparties.space/api/';
+const BASE_URL = 'https://norma.nomoreparties.space/api';
 
 class Api {
   constructor({ baseUrl }) {
@@ -16,18 +16,26 @@ class Api {
   }
 
   getIngredients() {
-    return fetch(`${BASE_URL}ingredients`, {
+    return fetch(`${BASE_URL}/ingredients`, {
       method: 'GET',
       headers: this._headers
-    }).then(this._getResponceData);
+    })
+      .then(this._getResponceData)
+      .catch(err => {
+        console.log(`${err}`);
+      });
   }
 
   sendOrder(ingredients) {
-    return fetch(`${BASE_URL}orders`, {
+    return fetch(`${BASE_URL}/orders`, {
       method: 'POST',
       body: JSON.stringify({ ingredients }),
       headers: this._headers
-    }).then(this._getResponceData);
+    })
+      .then(this._getResponceData)
+      .catch(err => {
+        console.log(`${err}`);
+      });
   }
 }
 

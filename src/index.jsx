@@ -14,11 +14,11 @@ const composeEnhancers =
     : compose;
 
 const enhancer = composeEnhancers(applyMiddleware(thunk));
-const store = createStore(rootReducer, enhancer);
+const state = createStore(rootReducer, enhancer);
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={store}>
+    <Provider store={state}>
       <App />
     </Provider>
   </React.StrictMode>,

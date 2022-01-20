@@ -1,5 +1,5 @@
 import styles from './burger-constructor.module.css';
-import { useState, useEffect, useCallback, useContext } from 'react';
+import { useEffect, useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import {
   Button,
@@ -7,34 +7,78 @@ import {
   DragIcon,
   ConstructorElement
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { IngredientsContext } from '../../services/ingredients-context';
 import { useDispatch, useSelector } from 'react-redux';
 
 function BurgerConstructor({ openModal }) {
   const dispatch = useDispatch();
-  const ingredientsData = useContext(IngredientsContext);
-  const [totalSum, setTotalSum] = useState(0);
-  const [filteredIngredients, setFilteredIngredients] = useState([]);
-  const [pickedBun, setPickedBun] = useState({});
 
-  useEffect(() => {
-    setFilteredIngredients(ingredientsData.filter(item => item.type !== 'bun'));
-    const bun = ingredientsData.find(item => item.type === 'bun');
-    if (bun) setPickedBun(bun);
-  }, [ingredientsData]);
+  // const selectedIngredients = useSelector(
+  //   state => state.burgerConstructor.selectedIngredients
+  // );
+  // const selectedBun = useSelector(state => state.burgerConstructor.selectedBun);
 
-  useEffect(() => {
-    const pricesList = filteredIngredients.map(item => Number(item.price));
-    const bunPrice = pickedBun.price ? pickedBun.price * 2 : 0;
-    setTotalSum(pricesList.reduce((prev, cur) => prev + cur, bunPrice));
-  }, [filteredIngredients, pickedBun]);
+  //HARDCODE--HARDCODE--HARDCODE--HARDCODE--HARDCODE--HARDCODE--HARDCODE--HARDCODE--HARDCODE--
+  const selectedIngredients = [
+    {
+      _id: '60d3b41abdacab0026a733c8',
+      name: 'Филе Люминесцентного тетраодонтимформа',
+      type: 'main',
+      proteins: 44,
+      fat: 26,
+      carbohydrates: 85,
+      calories: 643,
+      price: 988,
+      image: 'https://code.s3.yandex.net/react/code/meat-03.png',
+      image_mobile: 'https://code.s3.yandex.net/react/code/meat-03-mobile.png',
+      image_large: 'https://code.s3.yandex.net/react/code/meat-03-large.png',
+      __v: 0
+    },
+    {
+      _id: '60d3b41abdacab0026a733cb',
+      name: 'Биокотлета из марсианской Магнолии',
+      type: 'main',
+      proteins: 420,
+      fat: 142,
+      carbohydrates: 242,
+      calories: 4242,
+      price: 424,
+      image: 'https://code.s3.yandex.net/react/code/meat-01.png',
+      image_mobile: 'https://code.s3.yandex.net/react/code/meat-01-mobile.png',
+      image_large: 'https://code.s3.yandex.net/react/code/meat-01-large.png',
+      __v: 0
+    }
+  ];
+  const selectedBun = {
+    _id: '60d3b41abdacab0026a733c6',
+    name: 'Краторная булка N-200i',
+    type: 'bun',
+    proteins: 80,
+    fat: 24,
+    carbohydrates: 53,
+    calories: 420,
+    price: 1255,
+    image: 'https://code.s3.yandex.net/react/code/bun-02.png',
+    image_mobile: 'https://code.s3.yandex.net/react/code/bun-02-mobile.png',
+    image_large: 'https://code.s3.yandex.net/react/code/bun-02-large.png',
+    __v: 0
+  };
+  //HARDCODE--HARDCODE--HARDCODE--HARDCODE--HARDCODE--HARDCODE--HARDCODE--HARDCODE--HARDCODE--
+
+  const totalSum = useMemo(
+    () =>
+      selectedIngredients.reduce(
+        (sum, ingredient) => sum + ingredient.price,
+        selectedBun ? selectedBun.price * 2 : 0
+      ),
+    [selectedIngredients, selectedBun]
+  );
 
   const handleSubmit = useCallback(() => {
-    if (!pickedBun) {
+    if (!selectedBun) {
       return;
     }
-    openModal(ingredientsData); //-------------------------------тут будут выбранные ингредиенты
-  }, [openModal, ingredientsData, pickedBun]);
+    openModal(selectedIngredients); //-------------------------------тут будут выбранные ингредиенты
+  }, [openModal, selectedIngredients, selectedBun]);
 
   return (
     <section
@@ -45,16 +89,16 @@ function BurgerConstructor({ openModal }) {
           <ConstructorElement
             isLocked={true}
             type="top"
-            text={`${pickedBun ? pickedBun.name : 'булка'} (верх)`}
-            price={pickedBun ? pickedBun.price : 0}
-            thumbnail={pickedBun ? pickedBun.image : 'Изображение'}
+            text={`${selectedBun ? selectedBun.name : 'булка'} (верх)`}
+            price={selectedBun ? selectedBun.price : 0}
+            thumbnail={selectedBun ? selectedBun.image : 'Изображение'}
           />
         </li>
 
         <li>
           <ul className={`mt-4 mb-4 ${styles.partsListScroll}`}>
-            {filteredIngredients
-              ? filteredIngredients.map((ingredient, index) => {
+            {selectedIngredients
+              ? selectedIngredients.map((ingredient, index) => {
                   return (
                     <li
                       key={ingredient._id + index}
@@ -76,9 +120,9 @@ function BurgerConstructor({ openModal }) {
           <ConstructorElement
             type="bottom"
             isLocked={true}
-            text={`${pickedBun ? pickedBun.name : 'булка'} (низ)`}
-            price={pickedBun ? pickedBun.price : 0}
-            thumbnail={pickedBun ? pickedBun.image : 'Изображение'}
+            text={`${selectedBun ? selectedBun.name : 'булка'} (низ)`}
+            price={selectedBun ? selectedBun.price : 0}
+            thumbnail={selectedBun ? selectedBun.image : 'Изображение'}
           />
         </li>
       </ul>

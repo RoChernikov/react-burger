@@ -1,6 +1,5 @@
 import styles from './app.module.css';
-import { useEffect, useState, useCallback } from 'react';
-import Api from '../../utils/api';
+import { useEffect, useCallback } from 'react';
 import Loader from '../loader/loader';
 import AppHeader from '../app-header/app-header';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
@@ -8,7 +7,6 @@ import BurgerConstructor from '../burger-constructor/burger-constructor';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
 import IngredientDetails from '../ingredient-details/ingredient-details';
-import { IngredientsContext } from '../../services/ingredients-context';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   SELECT_INGREDIENT,
@@ -90,13 +88,11 @@ const App = () => {
       <AppHeader />
       {!ingredientsFailed ? (
         <main className={styles.main}>
-          <IngredientsContext.Provider value={ingredients}>
-            <BurgerIngredients openModal={openIngredientDetailsModal} />
-            <BurgerConstructor
-              ingredientsData={ingredients}
-              openModal={openOrderDetailsModal}
-            />
-          </IngredientsContext.Provider>
+          <BurgerIngredients openModal={openIngredientDetailsModal} />
+          <BurgerConstructor
+            ingredientsData={ingredients}
+            openModal={openOrderDetailsModal}
+          />
         </main>
       ) : (
         <main>

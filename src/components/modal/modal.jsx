@@ -3,7 +3,8 @@ import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import PropTypes from 'prop-types';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import ModalOverlay from './components/modal-overlay';
+import ModalOverlay from './components/modal-overlay/modal-overlay';
+//--------------------------------------------------------------------------------
 
 const Modal = ({ closeModal, children }) => {
   const [closeIconState, setCloseIconState] = useState(false);

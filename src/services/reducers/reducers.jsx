@@ -12,6 +12,7 @@ import {
   DELETE_IGREDIENT,
   REORDER_IGREDIENT
 } from '../actions/actions';
+//--------------------------------------------------------------------------------
 
 //--------------------------------------------------------------------------------ingredients
 const ingredientsInitialState = {

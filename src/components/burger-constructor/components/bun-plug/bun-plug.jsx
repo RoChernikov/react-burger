@@ -1,5 +1,6 @@
 import styles from './bun-plug.module.css';
 import PropTypes from 'prop-types';
+//--------------------------------------------------------------------------------
 
 const BunPlug = ({ children, position }) => {
   return (
@@ -16,6 +17,9 @@ const BunPlug = ({ children, position }) => {
   );
 };
 
-BunPlug.propTypes = { position: PropTypes.string, children: PropTypes.string };
+BunPlug.propTypes = {
+  position: PropTypes.string,
+  children: PropTypes.string
+};
 
 export default BunPlug;

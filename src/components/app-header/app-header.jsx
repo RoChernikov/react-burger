@@ -6,7 +6,8 @@ import {
   ListIcon,
   ProfileIcon
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import HeaderLink from './components/header-link';
+import HeaderLink from './components/header-link/header-link';
+//--------------------------------------------------------------------------------
 
 const AppHeader = () => {
   const [page, setPage] = useState('constructor');

@@ -1,7 +1,8 @@
 import styles from './IngredientsCategory.module.css';
 import { forwardRef } from 'react';
 import PropTypes from 'prop-types';
-import BurgerIngredient from './BurgerIngredient';
+import BurgerIngredientDraggable from '../burger-ingredient-draggable/burger-ingredient-draggable';
+//--------------------------------------------------------------------------------
 
 const IngredientsCategory = forwardRef(
   ({ id, title, ingredients, openModal }, ref) => (
@@ -9,7 +10,7 @@ const IngredientsCategory = forwardRef(
       <h2 className="text text_type_main-medium mt-10 mb-6">{title}</h2>
       <ul className={`ml-4 ${styles.list}`}>
         {ingredients.map(ingredient => (
-          <BurgerIngredient
+          <BurgerIngredientDraggable
             ingredient={ingredient}
             openModal={openModal}
             key={ingredient._id}

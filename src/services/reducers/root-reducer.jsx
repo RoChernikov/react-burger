@@ -4,6 +4,7 @@ import {
   orderReducer,
   burgerConstructorReducer
 } from './reducers';
+//--------------------------------------------------------------------------------
 
 export const rootReducer = combineReducers({
   ingredients: ingredientsReducer,

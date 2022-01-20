@@ -1,6 +1,7 @@
 import styles from './order-details.module.css';
 import PropTypes from 'prop-types';
-//hardcode
+//--------------------------------------------------------------------------------
+
 const OrderDetails = ({ order }) => {
   return (
     <div className={styles.orderDetails}>

@@ -1,5 +1,5 @@
 import styles from './burger-constructor.module.css';
-import { useEffect, useCallback, useMemo } from 'react';
+import { useEffect, useCallback, useMemo, forwardRef } from 'react';
 import PropTypes from 'prop-types';
 import {
   Button,
@@ -7,11 +7,13 @@ import {
   DragIcon,
   ConstructorElement
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import BunPlug from './components/bun-plug';
-import IngredientsPlug from './components/ingredients-plug';
+import BunPlug from './components/bun-plug/bun-plug';
+import IngredientsPlug from './components/ingredients-plug/ingredients-plug';
 import { useDispatch, useSelector } from 'react-redux';
+import { DELETE_IGREDIENT } from '../../services/actions/actions';
+//--------------------------------------------------------------------------------
 
-function BurgerConstructor({ openModal }) {
+const BurgerConstructor = forwardRef(({ openModal, isHover }, ref) => {
   const dispatch = useDispatch();
 
   const selectedIngredients = useSelector(
@@ -35,11 +37,22 @@ function BurgerConstructor({ openModal }) {
     openModal(selectedIngredients);
   }, [openModal, selectedIngredients, selectedBun]);
 
+  const background = isHover
+    ? `radial-gradient(
+  circle,
+  rgba(87, 0, 255, 0.5480567226890756) 0%,
+  rgba(19, 19, 22, 1) 65%
+)`
+    : 'transparent';
+
   return (
     <section
       className={`mr-5 pl-4 ${styles.constructor}`}
       aria-label="Конструктор бургера">
-      <ul className={`mt-25 ${styles.partsList}`}>
+      <ul
+        className={`mt-25 ${styles.partsList}`}
+        style={{ background }}
+        ref={ref}>
         <li className={`mr-4 ${styles.part}`}>
           {!selectedBun ? (
             <BunPlug position="top">Добавьте булочку</BunPlug>
@@ -104,57 +117,11 @@ function BurgerConstructor({ openModal }) {
       </div>
     </section>
   );
-}
+});
 
 BurgerConstructor.propTypes = {
-  openModal: PropTypes.func.isRequired
+  openModal: PropTypes.func.isRequired,
+  isHover: PropTypes.bool
 };
 
 export default BurgerConstructor;
-
-//HARDCODE--HARDCODE--HARDCODE--HARDCODE--HARDCODE--HARDCODE--HARDCODE--HARDCODE--HARDCODE--
-// const selectedIngredients = [
-//   {
-//     _id: '60d3b41abdacab0026a733c8',
-//     name: 'Филе Люминесцентного тетраодонтимформа',
-//     type: 'main',
-//     proteins: 44,
-//     fat: 26,
-//     carbohydrates: 85,
-//     calories: 643,
-//     price: 988,
-//     image: 'https://code.s3.yandex.net/react/code/meat-03.png',
-//     image_mobile: 'https://code.s3.yandex.net/react/code/meat-03-mobile.png',
-//     image_large: 'https://code.s3.yandex.net/react/code/meat-03-large.png',
-//     __v: 0
-//   },
-//   {
-//     _id: '60d3b41abdacab0026a733cb',
-//     name: 'Биокотлета из марсианской Магнолии',
-//     type: 'main',
-//     proteins: 420,
-//     fat: 142,
-//     carbohydrates: 242,
-//     calories: 4242,
-//     price: 424,
-//     image: 'https://code.s3.yandex.net/react/code/meat-01.png',
-//     image_mobile: 'https://code.s3.yandex.net/react/code/meat-01-mobile.png',
-//     image_large: 'https://code.s3.yandex.net/react/code/meat-01-large.png',
-//     __v: 0
-//   }
-// ];
-// const selectedBun = {
-//   _id: '60d3b41abdacab0026a733c6',
-//   name: 'Краторная булка N-200i',
-//   type: 'bun',
-//   proteins: 80,
-//   fat: 24,
-//   carbohydrates: 53,
-//   calories: 420,
-//   price: 1255,
-//   image: 'https://code.s3.yandex.net/react/code/bun-02.png',
-//   image_mobile: 'https://code.s3.yandex.net/react/code/bun-02-mobile.png',
-//   image_large: 'https://code.s3.yandex.net/react/code/bun-02-large.png',
-//   __v: 0
-// };
-//HARDCODE--HARDCODE--HARDCODE--HARDCODE--HARDCODE--HARDCODE--HARDCODE--HARDCODE--HARDCODE--

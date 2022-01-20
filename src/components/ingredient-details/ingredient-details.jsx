@@ -1,6 +1,7 @@
 import styles from './ingredient-details.module.css';
 import PropTypes from 'prop-types';
 import { IngredientType } from '../../utils/types';
+//--------------------------------------------------------------------------------
 
 const IngredientDetails = ({ ingredient }) => {
   return (

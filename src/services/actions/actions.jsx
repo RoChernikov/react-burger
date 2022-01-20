@@ -1,5 +1,4 @@
 import Api from '../../utils/api';
-
 export const GET_INGREDIENTS_REQUEST = 'GET_INGREDIENTS_REQUEST';
 export const GET_INGREDIENTS_SUCCESS = 'GET_INGREDIENTS_SUCCESS';
 export const GET_INGREDIENTS_FAILED = 'GET_INGREDIENTS_FAILED';
@@ -12,6 +11,7 @@ export const DELETE_ORDER = 'DELETE_ORDER';
 export const DROP_INGREDIENT = 'DROP_INGREDIENT';
 export const DELETE_IGREDIENT = 'DELETE_IGREDIENT';
 export const REORDER_IGREDIENT = 'REORDER_IGREDIENT';
+//--------------------------------------------------------------------------------
 
 export function getIngredientsApi() {
   return dispatch => {

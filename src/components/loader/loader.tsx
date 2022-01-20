@@ -1,5 +1,6 @@
 import loaderStyles from './loader.module.css';
 import logo from '../../images/logo.png';
+//--------------------------------------------------------------------------------
 
 const Loader = () => {
   return (

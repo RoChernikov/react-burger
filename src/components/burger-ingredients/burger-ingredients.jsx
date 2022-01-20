@@ -3,7 +3,7 @@ import { useState, useEffect, useMemo } from 'react';
 import { useInView } from 'react-intersection-observer';
 import PropTypes from 'prop-types';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-import IngredientsCategory from '../ingredients-category/IngredientsCategory';
+import IngredientsCategory from './components/IngredientsCategory';
 import { useSelector } from 'react-redux';
 
 const inViewOptions = {

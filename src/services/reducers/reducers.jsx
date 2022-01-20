@@ -7,7 +7,10 @@ import {
   GET_ORDER_NUMBER_REQUEST,
   GET_ORDER_NUMBER_SUCCESS,
   GET_ORDER_NUMBER_FAILED,
-  DELETE_ORDER
+  DELETE_ORDER,
+  DROP_INGREDIENT,
+  DELETE_IGREDIENT,
+  REORDER_IGREDIENT
 } from '../actions/actions';
 
 //--------------------------------------------------------------------------------ingredients
@@ -96,5 +99,46 @@ export const orderReducer = (state = orderInitialState, action) => {
     }
     default:
       return state;
+  }
+};
+
+//--------------------------------------------------------------------------------burger constructor
+const burgerConstructorInitialState = {
+  selectedIngredients: [],
+  selectedBun: null
+};
+
+export const burgerConstructorReducer = (
+  state = burgerConstructorInitialState,
+  action
+) => {
+  switch (action.type) {
+    case DROP_INGREDIENT: {
+      const { ingredient } = action.payload;
+      if (ingredient.type === 'bun') {
+        return {
+          ...state,
+          selectedBun: ingredient
+        };
+      }
+      return {
+        ...state,
+        selectedIngredients: [...state.selectedIngredients, ingredient]
+      };
+    }
+    case DELETE_IGREDIENT: {
+      const { ingredient } = action.payload;
+      return {
+        ...state,
+        selectedIngredients: state.selectedIngredients.filter(
+          (item, index) => index !== ingredient.deleteIndex
+        )
+      };
+    }
+    case REORDER_IGREDIENT: {
+    }
+    default: {
+      return state;
+    }
   }
 };

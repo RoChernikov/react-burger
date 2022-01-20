@@ -1,10 +1,10 @@
 import styles from './burger-ingredients.module.css';
-import { useState, useEffect, useMemo, useContext } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useInView } from 'react-intersection-observer';
 import PropTypes from 'prop-types';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import IngredientsCategory from '../ingredients-category/IngredientsCategory';
-import { IngredientsContext } from '../../services/ingredients-context';
+import { useSelector } from 'react-redux';
 
 const inViewOptions = {
   threshold: 0.1,
@@ -13,7 +13,7 @@ const inViewOptions = {
 };
 
 function BurgerIngredients({ openModal }) {
-  const ingredientsData = useContext(IngredientsContext);
+  const ingredientsData = useSelector(state => state.ingredients.ingredients);
   const bun = useMemo(
     () => ingredientsData.filter(ingredient => ingredient.type === 'bun'),
     [ingredientsData]

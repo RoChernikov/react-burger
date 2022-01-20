@@ -7,62 +7,17 @@ import {
   DragIcon,
   ConstructorElement
 } from '@ya.praktikum/react-developer-burger-ui-components';
+import BunPlug from './components/bun-plug';
+import IngredientsPlug from './components/ingredients-plug';
 import { useDispatch, useSelector } from 'react-redux';
 
 function BurgerConstructor({ openModal }) {
   const dispatch = useDispatch();
 
-  // const selectedIngredients = useSelector(
-  //   state => state.burgerConstructor.selectedIngredients
-  // );
-  // const selectedBun = useSelector(state => state.burgerConstructor.selectedBun);
-
-  //HARDCODE--HARDCODE--HARDCODE--HARDCODE--HARDCODE--HARDCODE--HARDCODE--HARDCODE--HARDCODE--
-  const selectedIngredients = [
-    {
-      _id: '60d3b41abdacab0026a733c8',
-      name: 'Филе Люминесцентного тетраодонтимформа',
-      type: 'main',
-      proteins: 44,
-      fat: 26,
-      carbohydrates: 85,
-      calories: 643,
-      price: 988,
-      image: 'https://code.s3.yandex.net/react/code/meat-03.png',
-      image_mobile: 'https://code.s3.yandex.net/react/code/meat-03-mobile.png',
-      image_large: 'https://code.s3.yandex.net/react/code/meat-03-large.png',
-      __v: 0
-    },
-    {
-      _id: '60d3b41abdacab0026a733cb',
-      name: 'Биокотлета из марсианской Магнолии',
-      type: 'main',
-      proteins: 420,
-      fat: 142,
-      carbohydrates: 242,
-      calories: 4242,
-      price: 424,
-      image: 'https://code.s3.yandex.net/react/code/meat-01.png',
-      image_mobile: 'https://code.s3.yandex.net/react/code/meat-01-mobile.png',
-      image_large: 'https://code.s3.yandex.net/react/code/meat-01-large.png',
-      __v: 0
-    }
-  ];
-  const selectedBun = {
-    _id: '60d3b41abdacab0026a733c6',
-    name: 'Краторная булка N-200i',
-    type: 'bun',
-    proteins: 80,
-    fat: 24,
-    carbohydrates: 53,
-    calories: 420,
-    price: 1255,
-    image: 'https://code.s3.yandex.net/react/code/bun-02.png',
-    image_mobile: 'https://code.s3.yandex.net/react/code/bun-02-mobile.png',
-    image_large: 'https://code.s3.yandex.net/react/code/bun-02-large.png',
-    __v: 0
-  };
-  //HARDCODE--HARDCODE--HARDCODE--HARDCODE--HARDCODE--HARDCODE--HARDCODE--HARDCODE--HARDCODE--
+  const selectedIngredients = useSelector(
+    state => state.burgerConstructor.selectedIngredients
+  );
+  const selectedBun = useSelector(state => state.burgerConstructor.selectedBun);
 
   const totalSum = useMemo(
     () =>
@@ -77,7 +32,7 @@ function BurgerConstructor({ openModal }) {
     if (!selectedBun) {
       return;
     }
-    openModal(selectedIngredients); //-------------------------------тут будут выбранные ингредиенты
+    openModal(selectedIngredients);
   }, [openModal, selectedIngredients, selectedBun]);
 
   return (
@@ -86,44 +41,56 @@ function BurgerConstructor({ openModal }) {
       aria-label="Конструктор бургера">
       <ul className={`mt-25 ${styles.partsList}`}>
         <li className={`mr-4 ${styles.part}`}>
-          <ConstructorElement
-            isLocked={true}
-            type="top"
-            text={`${selectedBun ? selectedBun.name : 'булка'} (верх)`}
-            price={selectedBun ? selectedBun.price : 0}
-            thumbnail={selectedBun ? selectedBun.image : 'Изображение'}
-          />
+          {!selectedBun ? (
+            <BunPlug position="top">Добавьте булочку</BunPlug>
+          ) : (
+            <ConstructorElement
+              isLocked={true}
+              type="top"
+              text={`${selectedBun ? selectedBun.name : 'булка'} (верх)`}
+              price={selectedBun ? selectedBun.price : 0}
+              thumbnail={selectedBun ? selectedBun.image : 'Изображение'}
+            />
+          )}
         </li>
 
-        <li>
-          <ul className={`mt-4 mb-4 ${styles.partsListScroll}`}>
-            {selectedIngredients
-              ? selectedIngredients.map((ingredient, index) => {
-                  return (
-                    <li
-                      key={ingredient._id + index}
-                      className={`mr-2 ${styles.part}`}>
-                      <DragIcon type="primary" />
-                      <ConstructorElement
-                        text={ingredient.name}
-                        price={ingredient.price}
-                        thumbnail={ingredient.image}
-                      />
-                    </li>
-                  );
-                })
-              : null}
-          </ul>
+        <li className={styles.container}>
+          {selectedIngredients.length === 0 ? (
+            <IngredientsPlug>Добавьте начинку</IngredientsPlug>
+          ) : (
+            <ul className={`mt-4 mb-4 ${styles.partsListScroll}`}>
+              {selectedIngredients
+                ? selectedIngredients.map((ingredient, index) => {
+                    return (
+                      <li
+                        key={ingredient._id + index}
+                        className={`mr-2 ${styles.part}`}>
+                        <DragIcon type="primary" />
+                        <ConstructorElement
+                          text={ingredient.name}
+                          price={ingredient.price}
+                          thumbnail={ingredient.image}
+                        />
+                      </li>
+                    );
+                  })
+                : null}
+            </ul>
+          )}
         </li>
 
         <li className={`mr-4 ${styles.part}`}>
-          <ConstructorElement
-            type="bottom"
-            isLocked={true}
-            text={`${selectedBun ? selectedBun.name : 'булка'} (низ)`}
-            price={selectedBun ? selectedBun.price : 0}
-            thumbnail={selectedBun ? selectedBun.image : 'Изображение'}
-          />
+          {!selectedBun ? (
+            <BunPlug position="bottom" />
+          ) : (
+            <ConstructorElement
+              type="bottom"
+              isLocked={true}
+              text={`${selectedBun ? selectedBun.name : 'булка'} (низ)`}
+              price={selectedBun ? selectedBun.price : 0}
+              thumbnail={selectedBun ? selectedBun.image : 'Изображение'}
+            />
+          )}
         </li>
       </ul>
       <div className={`mt-10 mr-4 ${styles.order}`}>
@@ -144,3 +111,50 @@ BurgerConstructor.propTypes = {
 };
 
 export default BurgerConstructor;
+
+//HARDCODE--HARDCODE--HARDCODE--HARDCODE--HARDCODE--HARDCODE--HARDCODE--HARDCODE--HARDCODE--
+// const selectedIngredients = [
+//   {
+//     _id: '60d3b41abdacab0026a733c8',
+//     name: 'Филе Люминесцентного тетраодонтимформа',
+//     type: 'main',
+//     proteins: 44,
+//     fat: 26,
+//     carbohydrates: 85,
+//     calories: 643,
+//     price: 988,
+//     image: 'https://code.s3.yandex.net/react/code/meat-03.png',
+//     image_mobile: 'https://code.s3.yandex.net/react/code/meat-03-mobile.png',
+//     image_large: 'https://code.s3.yandex.net/react/code/meat-03-large.png',
+//     __v: 0
+//   },
+//   {
+//     _id: '60d3b41abdacab0026a733cb',
+//     name: 'Биокотлета из марсианской Магнолии',
+//     type: 'main',
+//     proteins: 420,
+//     fat: 142,
+//     carbohydrates: 242,
+//     calories: 4242,
+//     price: 424,
+//     image: 'https://code.s3.yandex.net/react/code/meat-01.png',
+//     image_mobile: 'https://code.s3.yandex.net/react/code/meat-01-mobile.png',
+//     image_large: 'https://code.s3.yandex.net/react/code/meat-01-large.png',
+//     __v: 0
+//   }
+// ];
+// const selectedBun = {
+//   _id: '60d3b41abdacab0026a733c6',
+//   name: 'Краторная булка N-200i',
+//   type: 'bun',
+//   proteins: 80,
+//   fat: 24,
+//   carbohydrates: 53,
+//   calories: 420,
+//   price: 1255,
+//   image: 'https://code.s3.yandex.net/react/code/bun-02.png',
+//   image_mobile: 'https://code.s3.yandex.net/react/code/bun-02-mobile.png',
+//   image_large: 'https://code.s3.yandex.net/react/code/bun-02-large.png',
+//   __v: 0
+// };
+//HARDCODE--HARDCODE--HARDCODE--HARDCODE--HARDCODE--HARDCODE--HARDCODE--HARDCODE--HARDCODE--

@@ -1,7 +1,7 @@
 import styles from './IngredientsCategory.module.css';
 import { forwardRef } from 'react';
 import PropTypes from 'prop-types';
-import BurgerIngredient from '../burger-ingredient/BurgerIngredient';
+import BurgerIngredient from './BurgerIngredient';
 
 const IngredientsCategory = forwardRef(
   ({ id, title, ingredients, openModal }, ref) => (

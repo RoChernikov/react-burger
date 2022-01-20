@@ -4,7 +4,7 @@ import {
   Counter,
   CurrencyIcon
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { IngredientType } from '../../utils/types';
+import { IngredientType } from '../../../utils/types';
 
 function BurgerIngredient({ ingredient, openModal }) {
   return (

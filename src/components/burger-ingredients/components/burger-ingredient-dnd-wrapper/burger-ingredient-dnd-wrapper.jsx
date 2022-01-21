@@ -4,7 +4,7 @@ import BurgerIngredient from '../burger-ingredient/BurgerIngredient';
 import { IngredientType } from '../../../../utils/types';
 //--------------------------------------------------------------------------------
 
-function BurgerIngredientDraggable({ ingredient, openModal }) {
+function BurgerIngredientDndWrapper({ ingredient, openModal }) {
   const [{ isDrag }, dragRef] = useDrag({
     type: 'ingredient',
     item: { ingredient },
@@ -22,9 +22,9 @@ function BurgerIngredientDraggable({ ingredient, openModal }) {
   );
 }
 
-BurgerIngredientDraggable.propTypes = {
+BurgerIngredientDndWrapper.propTypes = {
   ingredient: PropTypes.shape(IngredientType).isRequired,
   openModal: PropTypes.func.isRequired
 };
 
-export default BurgerIngredientDraggable;
+export default BurgerIngredientDndWrapper;

@@ -39,7 +39,7 @@ const BurgerIngredient = forwardRef(
             selectedIngredient => selectedIngredient._id === ingredient._id
           ).length
         };
-      }, {});
+      }, 0);
     }, [ingredients, selectedIngredients, selectedBun]);
 
     return (

@@ -5,7 +5,7 @@ import BurgerConstructor from '../../burger-constructor';
 import { DROP_INGREDIENT } from '../../../../services/actions/actions';
 //--------------------------------------------------------------------------------
 
-function BurgerConstructorDroppable({ openModal }) {
+function BurgerConstructorDndWrapper({ openModal }) {
   const dispatch = useDispatch();
   const [{ isHover }, dropTarget] = useDrop({
     accept: 'ingredient',
@@ -26,8 +26,8 @@ function BurgerConstructorDroppable({ openModal }) {
   );
 }
 
-BurgerConstructorDroppable.propTypes = {
+BurgerConstructorDndWrapper.propTypes = {
   openModal: PropTypes.func.isRequired
 };
 
-export default BurgerConstructorDroppable;
+export default BurgerConstructorDndWrapper;

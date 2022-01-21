@@ -128,11 +128,10 @@ export const burgerConstructorReducer = (
       };
     }
     case DELETE_IGREDIENT: {
-      const { ingredient } = action.payload;
       return {
         ...state,
         selectedIngredients: state.selectedIngredients.filter(
-          (item, index) => index !== ingredient.deleteIndex
+          (item, index) => index !== action.payload
         )
       };
     }

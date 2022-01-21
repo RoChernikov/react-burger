@@ -4,13 +4,12 @@ import PropTypes from 'prop-types';
 import {
   Button,
   CurrencyIcon,
-  DragIcon,
   ConstructorElement
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import BunPlug from './components/bun-plug/bun-plug';
 import IngredientsPlug from './components/ingredients-plug/ingredients-plug';
 import { useDispatch, useSelector } from 'react-redux';
-import { DELETE_IGREDIENT } from '../../services/actions/actions';
+import ConstructorItem from './components/constructor-item/constructor-item';
 //--------------------------------------------------------------------------------
 
 const BurgerConstructor = forwardRef(({ openModal, isHover }, ref) => {
@@ -34,7 +33,7 @@ const BurgerConstructor = forwardRef(({ openModal, isHover }, ref) => {
     if (!selectedBun) {
       return;
     }
-    openModal(selectedIngredients);
+    openModal(selectedIngredients.concat(selectedBun));
   }, [openModal, selectedIngredients, selectedBun]);
 
   const background = isHover
@@ -75,16 +74,11 @@ const BurgerConstructor = forwardRef(({ openModal, isHover }, ref) => {
               {selectedIngredients
                 ? selectedIngredients.map((ingredient, index) => {
                     return (
-                      <li
+                      <ConstructorItem
+                        ingredient={ingredient}
                         key={ingredient._id + index}
-                        className={`mr-2 ${styles.part}`}>
-                        <DragIcon type="primary" />
-                        <ConstructorElement
-                          text={ingredient.name}
-                          price={ingredient.price}
-                          thumbnail={ingredient.image}
-                        />
-                      </li>
+                        index={index}
+                      />
                     );
                   })
                 : null}

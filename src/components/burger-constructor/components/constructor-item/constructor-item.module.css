@@ -1,0 +1,14 @@
+.item {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  column-gap: 8px;
+}
+
+.dragIcon {
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  border: none;
+  cursor: grab;
+}

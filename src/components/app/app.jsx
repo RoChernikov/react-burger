@@ -3,7 +3,7 @@ import { useEffect, useCallback } from 'react';
 import Loader from '../loader/loader';
 import AppHeader from '../app-header/app-header';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
-import BurgerConstructorDroppable from '../burger-constructor/components/burger-constructor-droppable/burger-constructor-droppable';
+import BurgerConstructorDndWrapper from '../burger-constructor/components/burger-constructor-dnd-wrapper/burger-constructor-dnd-wrapper';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
 import IngredientDetails from '../ingredient-details/ingredient-details';
@@ -93,7 +93,7 @@ const App = () => {
         {!ingredientsFailed ? (
           <main className={styles.main}>
             <BurgerIngredients openModal={openIngredientDetailsModal} />
-            <BurgerConstructorDroppable openModal={openOrderDetailsModal} />
+            <BurgerConstructorDndWrapper openModal={openOrderDetailsModal} />
           </main>
         ) : (
           <main>

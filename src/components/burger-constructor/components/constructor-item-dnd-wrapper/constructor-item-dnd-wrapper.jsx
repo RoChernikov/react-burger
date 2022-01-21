@@ -3,11 +3,11 @@ import { useRef, useEffect } from 'react';
 import { IngredientType } from '../../../../utils/types.js';
 import { useDrag, useDrop } from 'react-dnd';
 import { useDispatch } from 'react-redux';
-import { REORDER_IGREDIENT } from '../../../../services/actions/actions.jsx';
+import { REORDER_INGREDIENT } from '../../../../services/actions/actions.jsx';
 import ConstructorItem from '../constructor-item/constructor-item';
 //--------------------------------------------------------------------------------
 
-function ConstructorItemDndWrapper({ ingredient, index }) {
+function ConstructorItemDndWrapper({ ingredient, index, handleDelete }) {
   const dispatch = useDispatch();
 
   const ref = useRef(null);
@@ -24,7 +24,7 @@ function ConstructorItemDndWrapper({ ingredient, index }) {
     accept: 'constructor-item',
     drop({ dragIndex }) {
       dispatch({
-        type: REORDER_IGREDIENT,
+        type: REORDER_INGREDIENT,
         payload: {
           targetIndex: index,
           dragIndex: dragIndex
@@ -43,23 +43,22 @@ function ConstructorItemDndWrapper({ ingredient, index }) {
     [dragRef, dropTarget]
   );
 
-  console.log();
-
   return (
-    !isDrag && (
-      <ConstructorItem
-        ingredient={ingredient}
-        index={index}
-        isHover={isHover}
-        ref={ref}
-      />
-    )
+    <ConstructorItem
+      ingredient={ingredient}
+      index={index}
+      isHover={isHover}
+      isDrag={isDrag}
+      handleDelete={handleDelete}
+      ref={ref}
+    />
   );
 }
 
 ConstructorItemDndWrapper.propTypes = {
   ingredient: PropTypes.shape(IngredientType).isRequired,
-  index: PropTypes.number.isRequired
+  index: PropTypes.number.isRequired,
+  handleDelete: PropTypes.func.isRequired
 };
 
 export default ConstructorItemDndWrapper;

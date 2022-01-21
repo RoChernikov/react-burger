@@ -1,5 +1,5 @@
 import styles from './burger-ingredients.module.css';
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 import { useInView } from 'react-intersection-observer';
 import PropTypes from 'prop-types';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -14,26 +14,40 @@ const inViewOptions = {
 };
 
 function BurgerIngredients({ openModal }) {
-  const ingredientsData = useSelector(state => state.ingredients.ingredients);
+  const { ingredients, selectedIngredients, selectedBun } = useSelector(
+    ({
+      ingredients: { ingredients },
+      burgerConstructor: { selectedIngredients, selectedBun }
+    }) => {
+      return {
+        ingredients,
+        selectedIngredients,
+        selectedBun
+      };
+    }
+  );
   const bun = useMemo(
-    () => ingredientsData.filter(ingredient => ingredient.type === 'bun'),
-    [ingredientsData]
+    () => ingredients.filter(ingredient => ingredient.type === 'bun'),
+    [ingredients]
   );
   const sauce = useMemo(
-    () => ingredientsData.filter(ingredient => ingredient.type === 'sauce'),
-    [ingredientsData]
+    () => ingredients.filter(ingredient => ingredient.type === 'sauce'),
+    [ingredients]
   );
   const main = useMemo(
-    () => ingredientsData.filter(ingredient => ingredient.type === 'main'),
-    [ingredientsData]
+    () => ingredients.filter(ingredient => ingredient.type === 'main'),
+    [ingredients]
   );
 
   const [selectedMeal, setSelectedMeal] = useState('bun');
 
-  const handleMealChange = evt => {
-    setSelectedMeal(evt);
-    document.getElementById(evt).scrollIntoView();
-  };
+  const handleMealChange = useCallback(
+    evt => {
+      setSelectedMeal(evt);
+      document.getElementById(evt).scrollIntoView();
+    },
+    [setSelectedMeal]
+  );
 
   const [bunRef, inViewBun] = useInView(inViewOptions);
   const [mainRef, inViewMain] = useInView(inViewOptions);
@@ -48,6 +62,24 @@ function BurgerIngredients({ openModal }) {
       setSelectedMeal('main');
     }
   }, [inViewBun, inViewMain, inViewSauce]);
+
+  const counter = useMemo(() => {
+    return ingredients.reduce((acc, ingredient) => {
+      if (ingredient.type === 'bun') {
+        return {
+          ...acc,
+          [ingredient._id]:
+            selectedBun && ingredient._id === selectedBun._id ? 1 : 0
+        };
+      }
+      return {
+        ...acc,
+        [ingredient._id]: selectedIngredients.filter(
+          selectedIngredient => selectedIngredient._id === ingredient._id
+        ).length
+      };
+    }, {});
+  }, [ingredients, selectedIngredients, selectedBun]);
 
   return (
     <section className={`mt-10 ml-5 ${styles.constructor}`}>
@@ -80,6 +112,7 @@ function BurgerIngredients({ openModal }) {
           title="Булки"
           ingredients={bun}
           openModal={openModal}
+          counts={counter}
           ref={bunRef}
         />
         <IngredientsCategory
@@ -87,6 +120,7 @@ function BurgerIngredients({ openModal }) {
           title="Соусы"
           ingredients={sauce}
           openModal={openModal}
+          counts={counter}
           ref={sauceRef}
         />
         <IngredientsCategory
@@ -94,6 +128,7 @@ function BurgerIngredients({ openModal }) {
           title="Начинки"
           ingredients={main}
           openModal={openModal}
+          counts={counter}
           ref={mainRef}
         />
       </ul>

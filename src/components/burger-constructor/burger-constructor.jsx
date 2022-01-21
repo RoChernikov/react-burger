@@ -1,5 +1,5 @@
 import styles from './burger-constructor.module.css';
-import { useEffect, useCallback, useMemo, forwardRef } from 'react';
+import { useCallback, useMemo, forwardRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import {
   Button,
@@ -10,10 +10,13 @@ import ConstructorItemDndWrapper from './components/constructor-item-dnd-wrapper
 import BunPlug from './components/bun-plug/bun-plug';
 import IngredientsPlug from './components/ingredients-plug/ingredients-plug';
 import { useDispatch, useSelector } from 'react-redux';
+import { DELETE_IGREDIENT } from '../../services/actions/actions';
 //--------------------------------------------------------------------------------
 
 const BurgerConstructor = forwardRef(({ openModal, isHover }, ref) => {
   const dispatch = useDispatch();
+
+  const [bunPlugBorder, setBunPlugBorder] = useState('white');
 
   const selectedIngredients = useSelector(
     state => state.burgerConstructor.selectedIngredients
@@ -29,8 +32,19 @@ const BurgerConstructor = forwardRef(({ openModal, isHover }, ref) => {
     [selectedIngredients, selectedBun]
   );
 
+  const handleDelete = useCallback(
+    index => {
+      dispatch({ type: DELETE_IGREDIENT, payload: { index } });
+    },
+    [dispatch]
+  );
+
   const handleSubmit = useCallback(() => {
     if (!selectedBun) {
+      setBunPlugBorder('red');
+      setTimeout(() => {
+        setBunPlugBorder('white');
+      }, 400);
       return;
     }
     openModal(selectedIngredients.concat(selectedBun));
@@ -54,7 +68,9 @@ const BurgerConstructor = forwardRef(({ openModal, isHover }, ref) => {
         ref={ref}>
         <li className={`mr-4 ${styles.part}`}>
           {!selectedBun ? (
-            <BunPlug position="top">Добавьте булочку</BunPlug>
+            <BunPlug position="top" border={bunPlugBorder}>
+              Добавьте булочку
+            </BunPlug>
           ) : (
             <ConstructorElement
               isLocked={true}
@@ -76,6 +92,7 @@ const BurgerConstructor = forwardRef(({ openModal, isHover }, ref) => {
                     return (
                       <ConstructorItemDndWrapper
                         ingredient={ingredient}
+                        handleDelete={handleDelete}
                         key={ingredient._id + index}
                         index={index}
                       />
@@ -88,7 +105,7 @@ const BurgerConstructor = forwardRef(({ openModal, isHover }, ref) => {
 
         <li className={`mr-4 ${styles.part}`}>
           {!selectedBun ? (
-            <BunPlug position="bottom" />
+            <BunPlug position="bottom" border={bunPlugBorder} />
           ) : (
             <ConstructorElement
               type="bottom"

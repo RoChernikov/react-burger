@@ -10,7 +10,7 @@ export const GET_ORDER_NUMBER_FAILED = 'GET_ORDER_NUMBER_FAILED';
 export const DELETE_ORDER = 'DELETE_ORDER';
 export const DROP_INGREDIENT = 'DROP_INGREDIENT';
 export const DELETE_IGREDIENT = 'DELETE_IGREDIENT';
-export const REORDER_IGREDIENT = 'REORDER_IGREDIENT';
+export const REORDER_INGREDIENT = 'REORDER_INGREDIENT';
 //--------------------------------------------------------------------------------
 
 export function getIngredientsApi() {

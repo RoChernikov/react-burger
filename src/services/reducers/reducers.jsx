@@ -10,7 +10,7 @@ import {
   DELETE_ORDER,
   DROP_INGREDIENT,
   DELETE_IGREDIENT,
-  REORDER_IGREDIENT
+  REORDER_INGREDIENT
 } from '../actions/actions';
 //--------------------------------------------------------------------------------
 
@@ -131,11 +131,11 @@ export const burgerConstructorReducer = (
       return {
         ...state,
         selectedIngredients: state.selectedIngredients.filter(
-          (item, index) => index !== action.payload
+          (item, index) => index !== action.payload.index
         )
       };
     }
-    case REORDER_IGREDIENT: {
+    case REORDER_INGREDIENT: {
       const { dragIndex, targetIndex } = action.payload;
       const itemsArray = [...state.selectedIngredients];
 
@@ -154,7 +154,6 @@ export const burgerConstructorReducer = (
           : itemsArray.filter(
               (item, index) => index >= targetIndex && index !== dragIndex
             );
-
       return {
         ...state,
         selectedIngredients: [

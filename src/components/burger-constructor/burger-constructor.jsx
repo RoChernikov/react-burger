@@ -6,10 +6,10 @@ import {
   CurrencyIcon,
   ConstructorElement
 } from '@ya.praktikum/react-developer-burger-ui-components';
+import ConstructorItemDndWrapper from './components/constructor-item-dnd-wrapper/constructor-item-dnd-wrapper';
 import BunPlug from './components/bun-plug/bun-plug';
 import IngredientsPlug from './components/ingredients-plug/ingredients-plug';
 import { useDispatch, useSelector } from 'react-redux';
-import ConstructorItem from './components/constructor-item/constructor-item';
 //--------------------------------------------------------------------------------
 
 const BurgerConstructor = forwardRef(({ openModal, isHover }, ref) => {
@@ -74,7 +74,7 @@ const BurgerConstructor = forwardRef(({ openModal, isHover }, ref) => {
               {selectedIngredients
                 ? selectedIngredients.map((ingredient, index) => {
                     return (
-                      <ConstructorItem
+                      <ConstructorItemDndWrapper
                         ingredient={ingredient}
                         key={ingredient._id + index}
                         index={index}

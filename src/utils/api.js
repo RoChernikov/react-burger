@@ -19,11 +19,7 @@ class Api {
     return fetch(`${BASE_URL}/ingredients`, {
       method: 'GET',
       headers: this._headers
-    })
-      .then(this._getResponceData)
-      .catch(err => {
-        console.log(`${err}`);
-      });
+    }).then(this._getResponceData);
   }
 
   sendOrder(ingredients) {
@@ -31,11 +27,7 @@ class Api {
       method: 'POST',
       body: JSON.stringify({ ingredients }),
       headers: this._headers
-    })
-      .then(this._getResponceData)
-      .catch(err => {
-        console.log(`${err}`);
-      });
+    }).then(this._getResponceData);
   }
 }
 

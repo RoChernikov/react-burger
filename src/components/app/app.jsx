@@ -11,11 +11,11 @@ import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  SELECT_INGREDIENT,
-  UNSELECT_INGREDIENT,
   getIngredientsApi,
   getOrderNumber,
-  DELETE_ORDER
+  selectIngredient,
+  unselectIngredient,
+  deleteOrder
 } from '../../services/actions/actions';
 //--------------------------------------------------------------------------------
 
@@ -26,7 +26,8 @@ const App = () => {
     selectedIngredient,
     ingredientsFailed,
     ingredientsRequest,
-    order
+    order,
+    orderNumberRequest
   } = useSelector(
     ({
       ingredients: {
@@ -35,34 +36,28 @@ const App = () => {
         ingredientsFailed,
         ingredientsRequest
       },
-      order: { order }
+      order: { order, orderNumberRequest }
     }) => {
       return {
         ingredients,
         selectedIngredient,
         ingredientsFailed,
         ingredientsRequest,
-        order
+        order,
+        orderNumberRequest
       };
     }
   );
 
   const openIngredientDetailsModal = useCallback(
     ingredient => {
-      dispatch({
-        type: SELECT_INGREDIENT,
-        payload: {
-          ingredient: ingredient
-        }
-      });
+      dispatch(selectIngredient(ingredient));
     },
     [dispatch]
   );
 
   const closeIngredientDetailsModal = useCallback(() => {
-    dispatch({
-      type: UNSELECT_INGREDIENT
-    });
+    dispatch(unselectIngredient());
   }, [dispatch]);
 
   const openOrderDetailsModal = useCallback(
@@ -75,16 +70,14 @@ const App = () => {
   );
 
   const closeOrderDetailsModal = useCallback(() => {
-    dispatch({
-      type: DELETE_ORDER
-    });
+    dispatch(deleteOrder());
   }, [dispatch]);
 
   useEffect(() => {
     dispatch(getIngredientsApi());
   }, [dispatch]);
 
-  return ingredientsRequest ? (
+  return ingredientsRequest || orderNumberRequest ? (
     <Loader />
   ) : (
     <>

@@ -1,6 +1,7 @@
 import styles from './burger-constructor.module.css';
 import { useCallback, useMemo, forwardRef, useState } from 'react';
 import PropTypes from 'prop-types';
+import { v4 as uuidv4 } from 'uuid';
 import {
   Button,
   CurrencyIcon,
@@ -10,7 +11,7 @@ import ConstructorItemDndWrapper from './components/constructor-item-dnd-wrapper
 import BunPlug from './components/bun-plug/bun-plug';
 import IngredientsPlug from './components/ingredients-plug/ingredients-plug';
 import { useDispatch, useSelector } from 'react-redux';
-import { DELETE_IGREDIENT } from '../../services/actions/actions';
+import { deleteIngredient } from '../../services/actions/actions';
 //--------------------------------------------------------------------------------
 
 const BurgerConstructor = forwardRef(({ openModal, isHover }, ref) => {
@@ -34,7 +35,7 @@ const BurgerConstructor = forwardRef(({ openModal, isHover }, ref) => {
 
   const handleDelete = useCallback(
     index => {
-      dispatch({ type: DELETE_IGREDIENT, payload: { index } });
+      dispatch(deleteIngredient(index));
     },
     [dispatch]
   );
@@ -93,7 +94,7 @@ const BurgerConstructor = forwardRef(({ openModal, isHover }, ref) => {
                       <ConstructorItemDndWrapper
                         ingredient={ingredient}
                         handleDelete={handleDelete}
-                        key={ingredient._id + index}
+                        key={uuidv4()}
                         index={index}
                       />
                     );

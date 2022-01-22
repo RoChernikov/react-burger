@@ -3,7 +3,7 @@ import { useRef, useEffect } from 'react';
 import { IngredientType } from '../../../../utils/types.js';
 import { useDrag, useDrop } from 'react-dnd';
 import { useDispatch } from 'react-redux';
-import { REORDER_INGREDIENT } from '../../../../services/actions/actions.jsx';
+import { reorderIngredient } from '../../../../services/actions/actions.jsx';
 import ConstructorItem from '../constructor-item/constructor-item';
 //--------------------------------------------------------------------------------
 
@@ -23,13 +23,7 @@ function ConstructorItemDndWrapper({ ingredient, index, handleDelete }) {
   const [{ isHover }, dropTarget] = useDrop({
     accept: 'constructor-item',
     drop({ dragIndex }) {
-      dispatch({
-        type: REORDER_INGREDIENT,
-        payload: {
-          targetIndex: index,
-          dragIndex: dragIndex
-        }
-      });
+      dispatch(reorderIngredient(index, dragIndex));
     },
     collect: monitor => ({
       isHover: monitor.isOver()

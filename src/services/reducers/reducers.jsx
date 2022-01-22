@@ -8,6 +8,7 @@ import {
   GET_ORDER_NUMBER_SUCCESS,
   GET_ORDER_NUMBER_FAILED,
   DELETE_ORDER,
+  CLEAR_ORDER_LIST,
   DROP_INGREDIENT,
   DELETE_IGREDIENT,
   REORDER_INGREDIENT
@@ -161,6 +162,13 @@ export const burgerConstructorReducer = (
           draggingItem,
           ...arrAfterDraggingItem
         ]
+      };
+    }
+    case CLEAR_ORDER_LIST: {
+      return {
+        ...state,
+        selectedIngredients: [],
+        selectedBun: null
       };
     }
     default: {

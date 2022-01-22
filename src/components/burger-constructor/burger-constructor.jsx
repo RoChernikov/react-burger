@@ -1,7 +1,6 @@
 import styles from './burger-constructor.module.css';
 import { useCallback, useMemo, forwardRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import { v4 as uuidv4 } from 'uuid';
 import {
   Button,
   CurrencyIcon,
@@ -82,7 +81,6 @@ const BurgerConstructor = forwardRef(({ openModal, isHover }, ref) => {
             />
           )}
         </li>
-
         <li className={styles.container}>
           {selectedIngredients.length === 0 ? (
             <IngredientsPlug>Добавьте начинку</IngredientsPlug>
@@ -94,7 +92,7 @@ const BurgerConstructor = forwardRef(({ openModal, isHover }, ref) => {
                       <ConstructorItemDndWrapper
                         ingredient={ingredient}
                         handleDelete={handleDelete}
-                        key={uuidv4()}
+                        key={ingredient.uid}
                         index={index}
                       />
                     );

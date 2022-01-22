@@ -1,4 +1,5 @@
 import Api from '../../utils/api';
+import { v4 as uuidv4 } from 'uuid';
 export const GET_INGREDIENTS_REQUEST = 'GET_INGREDIENTS_REQUEST';
 export const GET_INGREDIENTS_SUCCESS = 'GET_INGREDIENTS_SUCCESS';
 export const GET_INGREDIENTS_FAILED = 'GET_INGREDIENTS_FAILED';
@@ -84,7 +85,10 @@ export const deleteOrder = () => {
 };
 
 export const dropIngredient = ingredient => {
-  return { type: DROP_INGREDIENT, payload: { ingredient } };
+  return {
+    type: DROP_INGREDIENT,
+    payload: { ingredient: { ...ingredient, uid: uuidv4() } }
+  };
 };
 
 export const deleteIngredient = index => {

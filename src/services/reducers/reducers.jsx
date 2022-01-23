@@ -11,7 +11,8 @@ import {
   CLEAR_ORDER_LIST,
   DROP_INGREDIENT,
   DELETE_IGREDIENT,
-  REORDER_INGREDIENT
+  REORDER_INGREDIENT,
+  SELECT_MEAL
 } from '../actions/actions';
 //--------------------------------------------------------------------------------
 
@@ -20,7 +21,8 @@ const ingredientsInitialState = {
   ingredients: [],
   ingredientsRequest: false,
   ingredientsFailed: false,
-  selectedIngredient: null
+  selectedIngredient: null,
+  selectedMeal: 'bun'
 };
 
 export const ingredientsReducer = (state = ingredientsInitialState, action) => {
@@ -56,6 +58,12 @@ export const ingredientsReducer = (state = ingredientsInitialState, action) => {
       return {
         ...state,
         selectedIngredient: null
+      };
+    }
+    case SELECT_MEAL: {
+      return {
+        ...state,
+        selectedMeal: action.payload.mealName
       };
     }
     default: {

@@ -13,6 +13,7 @@ export const DELETE_ORDER = 'DELETE_ORDER';
 export const DROP_INGREDIENT = 'DROP_INGREDIENT';
 export const DELETE_IGREDIENT = 'DELETE_IGREDIENT';
 export const REORDER_INGREDIENT = 'REORDER_IGREDIENT';
+export const SELECT_MEAL = 'SELECT_MEAL';
 //--------------------------------------------------------------------------------
 
 const getIngredientsRequest = () => {
@@ -102,6 +103,13 @@ export const reorderIngredient = (targetIndex, dragIndex) => {
       targetIndex: targetIndex,
       dragIndex: dragIndex
     }
+  };
+};
+
+export const selectMeal = mealName => {
+  return {
+    type: SELECT_MEAL,
+    payload: { mealName }
   };
 };
 

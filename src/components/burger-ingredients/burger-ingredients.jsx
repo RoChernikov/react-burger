@@ -2,9 +2,10 @@ import styles from './burger-ingredients.module.css';
 import { useState, useEffect, useMemo, useCallback } from 'react';
 import { useInView } from 'react-intersection-observer';
 import PropTypes from 'prop-types';
-import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
+import NavBar from './components/nav-bar/nav-bar';
 import IngredientsCategory from './components/ingredients-category/IngredientsCategory';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectMeal } from '../../services/actions/actions';
 //--------------------------------------------------------------------------------
 
 const inViewOptions = {
@@ -14,18 +15,23 @@ const inViewOptions = {
 };
 
 function BurgerIngredients({ openModal }) {
-  const { ingredients, selectedIngredients, selectedBun } = useSelector(
-    ({
-      ingredients: { ingredients },
-      burgerConstructor: { selectedIngredients, selectedBun }
-    }) => {
-      return {
-        ingredients,
-        selectedIngredients,
-        selectedBun
-      };
-    }
-  );
+  const dispatch = useDispatch();
+
+  const { ingredients, selectedIngredients, selectedBun, selectedMeal } =
+    useSelector(
+      ({
+        ingredients: { ingredients, selectedMeal },
+        burgerConstructor: { selectedIngredients, selectedBun }
+      }) => {
+        return {
+          ingredients,
+          selectedIngredients,
+          selectedBun,
+          selectedMeal
+        };
+      }
+    );
+
   const bun = useMemo(
     () => ingredients.filter(ingredient => ingredient.type === 'bun'),
     [ingredients]
@@ -39,14 +45,12 @@ function BurgerIngredients({ openModal }) {
     [ingredients]
   );
 
-  const [selectedMeal, setSelectedMeal] = useState('bun');
-
   const handleMealChange = useCallback(
     evt => {
-      setSelectedMeal(evt);
+      dispatch(selectMeal(evt));
       document.getElementById(evt).scrollIntoView();
     },
-    [setSelectedMeal]
+    [selectMeal]
   );
 
   const [bunRef, inViewBun] = useInView(inViewOptions);
@@ -55,11 +59,11 @@ function BurgerIngredients({ openModal }) {
 
   useEffect(() => {
     if (inViewBun) {
-      setSelectedMeal('bun');
+      dispatch(selectMeal('bun'));
     } else if (inViewSauce) {
-      setSelectedMeal('sauce');
+      dispatch(selectMeal('sauce'));
     } else if (inViewMain) {
-      setSelectedMeal('main');
+      dispatch(selectMeal('main'));
     }
   }, [inViewBun, inViewMain, inViewSauce]);
 
@@ -86,26 +90,7 @@ function BurgerIngredients({ openModal }) {
       <h1 className={`text text_type_main-large ${styles.title}`}>
         Соберите бургер
       </h1>
-      <div className={`mt-5 ${styles.tab}`}>
-        <Tab
-          value="bun"
-          active={selectedMeal === 'bun'}
-          onClick={handleMealChange}>
-          Булки
-        </Tab>
-        <Tab
-          value="sauce"
-          active={selectedMeal === 'sauce'}
-          onClick={handleMealChange}>
-          Соусы
-        </Tab>
-        <Tab
-          value="main"
-          active={selectedMeal === 'main'}
-          onClick={handleMealChange}>
-          Начинки
-        </Tab>
-      </div>
+      <NavBar handleSelect={handleMealChange} selectedMeal={selectedMeal} />
       <ul className={` ${styles.ingredients}`}>
         <IngredientsCategory
           id="bun"

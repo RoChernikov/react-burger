@@ -1,6 +1,7 @@
 import styles from './order-details.module.css';
 import PropTypes from 'prop-types';
-//hardcode
+//--------------------------------------------------------------------------------
+
 const OrderDetails = ({ order }) => {
   return (
     <div className={styles.orderDetails}>
@@ -20,7 +21,7 @@ const OrderDetails = ({ order }) => {
 };
 
 OrderDetails.propTypes = {
-  order: PropTypes.number.isRequired
+  order: PropTypes.number
 };
 
 export default OrderDetails;

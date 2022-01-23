@@ -1,6 +1,7 @@
 .constructor {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   width: 100%;
   max-width: 600px;
 }
@@ -55,4 +56,17 @@
 .order svg {
   width: 36px;
   height: auto;
+}
+
+.container {
+  display: flex;
+  justify-content: end;
+}
+
+.hover {
+  background: radial-gradient(
+    circle,
+    rgba(87, 0, 255, 0.5480567226890756) 0%,
+    rgba(19, 19, 22, 1) 65%
+  );
 }

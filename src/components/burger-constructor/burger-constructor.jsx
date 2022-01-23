@@ -1,76 +1,119 @@
 import styles from './burger-constructor.module.css';
-import { useState, useEffect, useContext } from 'react';
+import { useCallback, useMemo, forwardRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import {
   Button,
   CurrencyIcon,
-  DragIcon,
   ConstructorElement
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { IngredientsContext } from '../../services/ingredients-context';
+import ConstructorItemDndWrapper from './components/constructor-item-dnd-wrapper/constructor-item-dnd-wrapper';
+import BunPlug from './components/bun-plug/bun-plug';
+import IngredientsPlug from './components/ingredients-plug/ingredients-plug';
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteIngredient } from '../../services/actions/actions';
+//--------------------------------------------------------------------------------
 
-function BurgerConstructor({ openModal }) {
-  const ingredientsData = useContext(IngredientsContext);
-  const [totalSum, setTotalSum] = useState(0);
-  const [filteredIngredients, setFilteredIngredients] = useState([]);
-  const [pickedBun, setPickedBun] = useState({});
+const BurgerConstructor = forwardRef(({ openModal, isHover }, ref) => {
+  const dispatch = useDispatch();
 
-  useEffect(() => {
-    setFilteredIngredients(ingredientsData.filter(item => item.type !== 'bun'));
-    const bun = ingredientsData.find(item => item.type === 'bun');
-    if (bun) setPickedBun(bun);
-  }, [ingredientsData]);
+  const [bunPlugBorder, setBunPlugBorder] = useState('white');
 
-  useEffect(() => {
-    const pricesList = filteredIngredients.map(item => Number(item.price));
-    const bunPrice = pickedBun.price ? pickedBun.price * 2 : 0;
-    setTotalSum(pricesList.reduce((prev, cur) => prev + cur, bunPrice));
-  }, [filteredIngredients, pickedBun]);
+  const selectedIngredients = useSelector(
+    state => state.burgerConstructor.selectedIngredients
+  );
+  const selectedBun = useSelector(state => state.burgerConstructor.selectedBun);
+
+  const totalSum = useMemo(
+    () =>
+      selectedIngredients.reduce(
+        (sum, ingredient) => sum + ingredient.price,
+        selectedBun ? selectedBun.price * 2 : 0
+      ),
+    [selectedIngredients, selectedBun]
+  );
+
+  const handleDelete = useCallback(
+    index => {
+      dispatch(deleteIngredient(index));
+    },
+    [dispatch]
+  );
+
+  const handleSubmit = useCallback(() => {
+    if (!selectedBun) {
+      setBunPlugBorder('red');
+      setTimeout(() => {
+        setBunPlugBorder('white');
+      }, 400);
+      return;
+    }
+    openModal(selectedIngredients.concat(selectedBun));
+  }, [openModal, selectedIngredients, selectedBun]);
+
+  const background = isHover
+    ? `radial-gradient(
+  circle,
+  rgba(87, 0, 255, 0.5480567226890756) 0%,
+  rgba(19, 19, 22, 1) 65%
+)`
+    : 'transparent';
 
   return (
     <section
       className={`mr-5 pl-4 ${styles.constructor}`}
       aria-label="Конструктор бургера">
-      <ul className={`mt-25 ${styles.partsList}`}>
+      <ul
+        className={`mt-25 ${styles.partsList}`}
+        style={{ background }}
+        ref={ref}>
         <li className={`mr-4 ${styles.part}`}>
-          <ConstructorElement
-            isLocked={true}
-            type="top"
-            text={`${pickedBun ? pickedBun.name : 'булка'} (верх)`}
-            price={pickedBun ? pickedBun.price : 0}
-            thumbnail={pickedBun ? pickedBun.image : 'Изображение'}
-          />
+          {!selectedBun ? (
+            <BunPlug position="top" border={bunPlugBorder}>
+              Добавьте булочку
+            </BunPlug>
+          ) : (
+            <ConstructorElement
+              isLocked={true}
+              type="top"
+              text={`${selectedBun ? selectedBun.name : 'булка'} (верх)`}
+              price={selectedBun ? selectedBun.price : 0}
+              thumbnail={selectedBun ? selectedBun.image : 'Изображение'}
+            />
+          )}
         </li>
-
-        <li>
-          <ul className={`mt-4 mb-4 ${styles.partsListScroll}`}>
-            {filteredIngredients
-              ? filteredIngredients.map((ingredient, index) => {
-                  return (
-                    <li
-                      key={ingredient._id + index}
-                      className={`mr-2 ${styles.part}`}>
-                      <DragIcon type="primary" />
-                      <ConstructorElement
-                        text={ingredient.name}
-                        price={ingredient.price}
-                        thumbnail={ingredient.image}
+        <li className={styles.container}>
+          {selectedIngredients.length === 0 ? (
+            <IngredientsPlug>Добавьте начинку</IngredientsPlug>
+          ) : (
+            <ul className={`mt-4 mb-4 ${styles.partsListScroll}`}>
+              {selectedIngredients
+                ? selectedIngredients.map((ingredient, index) => {
+                    return (
+                      <ConstructorItemDndWrapper
+                        ingredient={ingredient}
+                        handleDelete={handleDelete}
+                        key={ingredient.uid}
+                        index={index}
                       />
-                    </li>
-                  );
-                })
-              : null}
-          </ul>
+                    );
+                  })
+                : null}
+            </ul>
+          )}
         </li>
 
         <li className={`mr-4 ${styles.part}`}>
-          <ConstructorElement
-            type="bottom"
-            isLocked={true}
-            text={`${pickedBun ? pickedBun.name : 'булка'} (низ)`}
-            price={pickedBun ? pickedBun.price : 0}
-            thumbnail={pickedBun ? pickedBun.image : 'Изображение'}
-          />
+          {!selectedBun ? (
+            <BunPlug position="bottom" border={bunPlugBorder} />
+          ) : (
+            <ConstructorElement
+              type="bottom"
+              isLocked={true}
+              text={`${selectedBun ? selectedBun.name : 'булка'} (низ)`}
+              price={selectedBun ? selectedBun.price : 0}
+              thumbnail={selectedBun ? selectedBun.image : 'Изображение'}
+            />
+          )}
         </li>
       </ul>
       <div className={`mt-10 mr-4 ${styles.order}`}>
@@ -78,16 +121,17 @@ function BurgerConstructor({ openModal }) {
         <span className="ml-2 mr-10">
           <CurrencyIcon type="primary" />
         </span>
-        <Button type="primary" size="large" onClick={openModal}>
+        <Button type="primary" size="large" onClick={handleSubmit}>
           Оформить заказ
         </Button>
       </div>
     </section>
   );
-}
+});
 
 BurgerConstructor.propTypes = {
-  openModal: PropTypes.func.isRequired
+  openModal: PropTypes.func.isRequired,
+  isHover: PropTypes.bool
 };
 
 export default BurgerConstructor;

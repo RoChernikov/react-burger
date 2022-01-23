@@ -1,0 +1,31 @@
+.item {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  column-gap: 8px;
+  transition: all 0.024s;
+}
+
+.dragIcon {
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  border: none;
+  cursor: grab;
+}
+
+.hover {
+  position: relative;
+}
+
+.hover::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 48px;
+  box-sizing: border-box;
+  border-radius: var(--common-border-radius-s);
+  width: 536px;
+  height: 80px;
+  box-shadow: 0px 0px 15px 5px rgba(87, 0, 255, 0.5480567226890756) inset;
+}

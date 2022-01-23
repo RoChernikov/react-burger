@@ -3,7 +3,8 @@ import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import PropTypes from 'prop-types';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import ModalOverlay from '../modal-overlay/modal-overlay';
+import ModalOverlay from './components/modal-overlay/modal-overlay';
+//--------------------------------------------------------------------------------
 
 const Modal = ({ closeModal, children }) => {
   const [closeIconState, setCloseIconState] = useState(false);
@@ -27,8 +28,7 @@ const Modal = ({ closeModal, children }) => {
           onClick={closeModal}
           className={`mt-15 mr-10 ${styles.closeButton}`}
           onMouseEnter={() => setCloseIconState(true)}
-          onMouseLeave={() => setCloseIconState(false)}
-        >
+          onMouseLeave={() => setCloseIconState(false)}>
           <CloseIcon type={closeIconState ? 'secondary' : 'primary'} />
         </button>
         {children}

@@ -1,85 +1,115 @@
 import styles from './app.module.css';
-import { useEffect, useState, useCallback } from 'react';
-import Api from '../../utils/api';
+import { useEffect, useCallback } from 'react';
+import Loader from '../loader/loader';
 import AppHeader from '../app-header/app-header';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
-import BurgerConstructor from '../burger-constructor/burger-constructor';
+import BurgerConstructorDndWrapper from '../burger-constructor/components/burger-constructor-dnd-wrapper/burger-constructor-dnd-wrapper';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
 import IngredientDetails from '../ingredient-details/ingredient-details';
-import { IngredientsContext } from '../../services/ingredients-context';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  getIngredientsApi,
+  getOrderNumber,
+  selectIngredient,
+  unselectIngredient,
+  deleteOrder
+} from '../../services/actions/actions';
+//--------------------------------------------------------------------------------
 
 const App = () => {
-  const [isLoadingError, setIsLoadingError] = useState(false);
-  const [ingredients, setIngredients] = useState([]);
-  const [pickedIngredientItem, setPickedIngredientItem] = useState(null);
-  const [orderNumber, setOrderNumber] = useState(null);
-  const [isOrderDetailsModalOpen, setOrderDetailsModalOpen] = useState(false);
-  const [isIngredientDetailsModalOpen, setIngredientDetailsModalOpen] =
-    useState(false);
+  const dispatch = useDispatch();
+  const {
+    ingredients,
+    selectedIngredient,
+    ingredientsFailed,
+    ingredientsRequest,
+    order,
+    orderNumberRequest
+  } = useSelector(
+    ({
+      ingredients: {
+        ingredients,
+        selectedIngredient,
+        ingredientsFailed,
+        ingredientsRequest
+      },
+      order: { order, orderNumberRequest }
+    }) => {
+      return {
+        ingredients,
+        selectedIngredient,
+        ingredientsFailed,
+        ingredientsRequest,
+        order,
+        orderNumberRequest
+      };
+    }
+  );
 
-  const closeModal = useCallback(() => {
-    setOrderDetailsModalOpen(false);
-    setIngredientDetailsModalOpen(false);
-  }, []);
+  const openIngredientDetailsModal = useCallback(
+    ingredient => {
+      dispatch(selectIngredient(ingredient));
+    },
+    [dispatch]
+  );
 
-  const openOrderDetailsModal = () => {
-    setOrderDetailsModalOpen(true);
-    Api.sendOrder(ingredients.map(item => item._id)).then(({ order }) =>
-      setOrderNumber(order.number)
-    );
-  };
+  const closeIngredientDetailsModal = useCallback(() => {
+    dispatch(unselectIngredient());
+  }, [dispatch]);
 
-  const openIngredientDetailsModal = ingredient => {
-    setIngredientDetailsModalOpen(true);
-    setPickedIngredientItem(ingredient);
-  };
+  const openOrderDetailsModal = useCallback(
+    selectedIngredients => {
+      dispatch(
+        getOrderNumber(selectedIngredients.map(ingredient => ingredient._id))
+      );
+    },
+    [dispatch]
+  );
+
+  const closeOrderDetailsModal = useCallback(() => {
+    dispatch(deleteOrder());
+  }, [dispatch]);
 
   useEffect(() => {
-    Api.getIngredients()
-      .then(res => {
-        setIngredients(res.data);
-      })
-      .catch(error => {
-        setIsLoadingError(true);
-        console.log(`Ошибка получения данных: ${error}`);
-      });
-  }, []);
+    dispatch(getIngredientsApi());
+  }, [dispatch]);
 
-  return (
+  return ingredientsRequest || orderNumberRequest ? (
+    <Loader />
+  ) : (
     <>
       <AppHeader />
-      {!isLoadingError ? (
-        <main className={styles.main}>
-          <IngredientsContext.Provider value={ingredients}>
+      <DndProvider backend={HTML5Backend}>
+        {!ingredientsFailed ? (
+          <main className={styles.main}>
             <BurgerIngredients openModal={openIngredientDetailsModal} />
-            <BurgerConstructor
-              ingredientsData={ingredients}
-              openModal={openOrderDetailsModal}
-            />
-          </IngredientsContext.Provider>
-        </main>
-      ) : (
-        <main>
-          <section aria-label="Сообщение об ошибке">
-            <h1 className="text text_type_main-large mt-20">
-              Что-то пошло не так :(
-            </h1>
-            <p className={`text text_type_main-small ${styles.errorSubtitle}`}>
-              не удалось загрузить данные с сервера
-            </p>
-          </section>
-        </main>
-      )}
-      {isOrderDetailsModalOpen && (
-        <Modal closeModal={closeModal}>
-          <OrderDetails order={orderNumber} />
+            <BurgerConstructorDndWrapper openModal={openOrderDetailsModal} />
+          </main>
+        ) : (
+          <main>
+            <section aria-label="Сообщение об ошибке">
+              <h1 className="text text_type_main-large mt-20">
+                Что-то пошло не так :(
+              </h1>
+              <p
+                className={`text text_type_main-small ${styles.errorSubtitle}`}>
+                не удалось загрузить данные с сервера
+              </p>
+            </section>
+          </main>
+        )}
+      </DndProvider>
+      {selectedIngredient && (
+        <Modal closeModal={closeIngredientDetailsModal}>
+          <IngredientDetails ingredient={selectedIngredient} />
         </Modal>
       )}
-
-      {isIngredientDetailsModalOpen && (
-        <Modal closeModal={closeModal}>
-          <IngredientDetails ingredient={pickedIngredientItem} />
+      {order && (
+        <Modal closeModal={closeOrderDetailsModal}>
+          <OrderDetails order={order.number} />
         </Modal>
       )}
     </>

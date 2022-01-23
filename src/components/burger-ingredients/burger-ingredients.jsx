@@ -1,5 +1,5 @@
 import styles from './burger-ingredients.module.css';
-import { useState, useEffect, useMemo, useCallback } from 'react';
+import { useEffect, useMemo, useCallback } from 'react';
 import { useInView } from 'react-intersection-observer';
 import PropTypes from 'prop-types';
 import NavBar from './components/nav-bar/nav-bar';
@@ -7,12 +7,6 @@ import IngredientsCategory from './components/ingredients-category/IngredientsCa
 import { useDispatch, useSelector } from 'react-redux';
 import { selectMeal } from '../../services/actions/actions';
 //--------------------------------------------------------------------------------
-
-const inViewOptions = {
-  threshold: 0.1,
-  trackVisibility: true,
-  delay: 100
-};
 
 function BurgerIngredients({ openModal }) {
   const dispatch = useDispatch();
@@ -45,28 +39,6 @@ function BurgerIngredients({ openModal }) {
     [ingredients]
   );
 
-  const handleMealChange = useCallback(
-    evt => {
-      dispatch(selectMeal(evt));
-      document.getElementById(evt).scrollIntoView();
-    },
-    [selectMeal]
-  );
-
-  const [bunRef, inViewBun] = useInView(inViewOptions);
-  const [mainRef, inViewMain] = useInView(inViewOptions);
-  const [sauceRef, inViewSauce] = useInView(inViewOptions);
-
-  useEffect(() => {
-    if (inViewBun) {
-      dispatch(selectMeal('bun'));
-    } else if (inViewSauce) {
-      dispatch(selectMeal('sauce'));
-    } else if (inViewMain) {
-      dispatch(selectMeal('main'));
-    }
-  }, [inViewBun, inViewMain, inViewSauce]);
-
   const counter = useMemo(() => {
     return ingredients.reduce((acc, ingredient) => {
       if (ingredient.type === 'bun') {
@@ -85,13 +57,40 @@ function BurgerIngredients({ openModal }) {
     }, {});
   }, [ingredients, selectedIngredients, selectedBun]);
 
+  const handleMealChange = useCallback(
+    evt => {
+      dispatch(selectMeal(evt));
+    },
+    [selectMeal]
+  );
+
+  const inViewOptions = {
+    threshold: 0.1,
+    trackVisibility: true,
+    delay: 100
+  };
+
+  const [bunRef, inViewBun] = useInView(inViewOptions);
+  const [mainRef, inViewMain] = useInView(inViewOptions);
+  const [sauceRef, inViewSauce] = useInView(inViewOptions);
+
+  useEffect(() => {
+    if (inViewBun) {
+      dispatch(selectMeal('bun'));
+    } else if (inViewSauce) {
+      dispatch(selectMeal('sauce'));
+    } else if (inViewMain) {
+      dispatch(selectMeal('main'));
+    }
+  }, [inViewBun, inViewMain, inViewSauce]);
+
   return (
     <section className={`mt-10 ml-5 ${styles.constructor}`}>
       <h1 className={`text text_type_main-large ${styles.title}`}>
         Соберите бургер
       </h1>
       <NavBar handleSelect={handleMealChange} selectedMeal={selectedMeal} />
-      <ul className={` ${styles.ingredients}`}>
+      <ul className={` ${styles.ingredients}`} id="scrollBox">
         <IngredientsCategory
           id="bun"
           title="Булки"

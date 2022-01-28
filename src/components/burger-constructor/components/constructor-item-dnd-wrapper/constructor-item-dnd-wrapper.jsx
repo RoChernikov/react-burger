@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import { useRef, useEffect } from 'react';
 import { IngredientType } from '../../../../utils/types.js';
-import { useDrag, useDrop } from 'react-dnd';
+import { useDrag, useDrop, DragPreviewImage } from 'react-dnd';
 import { useDispatch } from 'react-redux';
 import ConstructorItem from '../constructor-item/constructor-item';
 import { reorderIngredient } from '../../../../services/actions/constructor.jsx';
@@ -12,22 +12,30 @@ function ConstructorItemDndWrapper({ ingredient, index, handleDelete }) {
 
   const ref = useRef(null);
 
-  const [{ isDrag }, dragRef] = useDrag({
+  const [{ isDrag }, dragRef, dragPreview] = useDrag({
     type: 'constructor-item',
     item: { dragIndex: index },
     collect: monitor => ({
       isDrag: monitor.isDragging()
     })
   });
-
-  const [{ isHover }, dropTarget] = useDrop({
+  const [, dropTarget] = useDrop({
     accept: 'constructor-item',
-    drop({ dragIndex }) {
-      dispatch(reorderIngredient(index, dragIndex));
-    },
     collect: monitor => ({
-      isHover: monitor.isOver()
-    })
+      handlerId: monitor.getHandlerId()
+    }),
+    hover(item) {
+      if (!ref.current) {
+        return;
+      }
+      const targetIndex = index;
+      const dragIndex = item.dragIndex;
+      if (dragIndex === targetIndex) {
+        return;
+      }
+      dispatch(reorderIngredient(targetIndex, dragIndex));
+      item.dragIndex = targetIndex;
+    }
   });
 
   useEffect(
@@ -38,14 +46,16 @@ function ConstructorItemDndWrapper({ ingredient, index, handleDelete }) {
   );
 
   return (
-    <ConstructorItem
-      ingredient={ingredient}
-      index={index}
-      isHover={isHover}
-      isDrag={isDrag}
-      handleDelete={handleDelete}
-      ref={ref}
-    />
+    <>
+      <DragPreviewImage src={ingredient.image} connect={dragPreview} />
+      <ConstructorItem
+        ingredient={ingredient}
+        index={index}
+        isDrag={isDrag}
+        handleDelete={handleDelete}
+        ref={ref}
+      />
+    </>
   );
 }
 

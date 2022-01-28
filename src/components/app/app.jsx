@@ -78,26 +78,26 @@ const App = () => {
   ) : (
     <>
       <AppHeader />
-      <DndProvider backend={HTML5Backend}>
-        {!ingredientsFailed ? (
-          <main className={styles.main}>
+
+      {!ingredientsFailed ? (
+        <main className={styles.main}>
+          <DndProvider backend={HTML5Backend}>
             <BurgerIngredients openModal={openIngredientDetailsModal} />
             <BurgerConstructorDndWrapper openModal={openOrderDetailsModal} />
-          </main>
-        ) : (
-          <main>
-            <section aria-label="Сообщение об ошибке">
-              <h1 className="text text_type_main-large mt-20">
-                Что-то пошло не так :(
-              </h1>
-              <p
-                className={`text text_type_main-small ${styles.errorSubtitle}`}>
-                не удалось загрузить данные с сервера
-              </p>
-            </section>
-          </main>
-        )}
-      </DndProvider>
+          </DndProvider>
+        </main>
+      ) : (
+        <main>
+          <section aria-label="Сообщение об ошибке">
+            <h1 className="text text_type_main-large mt-20">
+              Что-то пошло не так :(
+            </h1>
+            <p className={`text text_type_main-small ${styles.errorSubtitle}`}>
+              не удалось загрузить данные с сервера
+            </p>
+          </section>
+        </main>
+      )}
       {selectedIngredient && (
         <Modal closeModal={closeIngredientDetailsModal}>
           <IngredientDetails ingredient={selectedIngredient} />

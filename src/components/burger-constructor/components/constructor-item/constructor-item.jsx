@@ -9,21 +9,16 @@ import { IngredientType } from '../../../../utils/types';
 //--------------------------------------------------------------------------------
 
 const ConstructorItem = forwardRef(
-  ({ ingredient, handleDelete, index, isHover, isDrag }, ref) => {
+  ({ ingredient, handleDelete, index, isDrag }, ref) => {
     const deleteItem = useCallback(
       () => handleDelete(index),
       [handleDelete, index]
     );
-    const visibilityStyle = isDrag ? 'hidden' : 'visible';
-    const hoverStyle = isHover
-      ? `mr-2 ${styles.item} ${styles.hover}`
-      : `mr-2 ${styles.item}`;
+
+    let opacity = isDrag ? 0.6 : 1;
 
     return (
-      <li
-        className={hoverStyle}
-        ref={ref}
-        style={{ visibility: `${visibilityStyle}` }}>
+      <li className={`mr-2 ${styles.item}`} ref={ref} style={{ opacity }}>
         <button className={styles.dragIcon}>
           <DragIcon type="primary" />
         </button>
@@ -42,7 +37,6 @@ ConstructorItem.propTypes = {
   ingredient: PropTypes.shape(IngredientType).isRequired,
   index: PropTypes.number.isRequired,
   handleDelete: PropTypes.func.isRequired,
-  isHover: PropTypes.bool,
   isDrag: PropTypes.bool
 };
 

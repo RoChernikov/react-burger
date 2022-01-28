@@ -4,7 +4,7 @@ import BurgerIngredient from '../burger-ingredient/Burger-ingredient';
 import { IngredientType } from '../../../../utils/types';
 //--------------------------------------------------------------------------------
 
-function BurgerIngredientDndWrapper({ ingredient, openModal, count }) {
+function BurgerIngredientsDndWrapper({ ingredient, openModal, count }) {
   const [{ isDrag }, dragRef] = useDrag({
     type: 'ingredient',
     item: { ingredient },
@@ -23,10 +23,10 @@ function BurgerIngredientDndWrapper({ ingredient, openModal, count }) {
   );
 }
 
-BurgerIngredientDndWrapper.propTypes = {
+BurgerIngredientsDndWrapper.propTypes = {
   ingredient: PropTypes.shape(IngredientType).isRequired,
   openModal: PropTypes.func.isRequired,
   count: PropTypes.number.isRequired
 };
 
-export default BurgerIngredientDndWrapper;
+export default BurgerIngredientsDndWrapper;

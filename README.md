@@ -11,6 +11,8 @@
 - с помощью перетаскивания соберите свой межгалактический бургер
 - список ингредиентов приходит с публичного API
 
+<a  href="http://rochernikov.github.io/react-burger/" target="_blank" align="center"><img src="./readme_src/demo.gif" width="100%" alt="Демо"></a>
+
 ### Технологии, использованные при создании:
 
 - React.js (CRA)

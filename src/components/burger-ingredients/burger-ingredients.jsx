@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import NavBar from './components/nav-bar/nav-bar';
 import IngredientsCategory from './components/ingredients-category/IngredientsCategory';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectMeal } from '../../services/actions/actions';
+import { selectMeal } from '../../services/actions/ingredients';
 //--------------------------------------------------------------------------------
 
 function BurgerIngredients({ openModal }) {
@@ -61,7 +61,7 @@ function BurgerIngredients({ openModal }) {
     evt => {
       dispatch(selectMeal(evt));
     },
-    [selectMeal]
+    [dispatch]
   );
 
   const inViewOptions = {
@@ -82,7 +82,7 @@ function BurgerIngredients({ openModal }) {
     } else if (inViewMain) {
       dispatch(selectMeal('main'));
     }
-  }, [inViewBun, inViewMain, inViewSauce]);
+  }, [dispatch, inViewBun, inViewMain, inViewSauce]);
 
   return (
     <section className={`mt-10 ml-5 ${styles.constructor}`}>

@@ -3,8 +3,8 @@ import { useRef, useEffect } from 'react';
 import { IngredientType } from '../../../../utils/types.js';
 import { useDrag, useDrop } from 'react-dnd';
 import { useDispatch } from 'react-redux';
-import { reorderIngredient } from '../../../../services/actions/actions.jsx';
 import ConstructorItem from '../constructor-item/constructor-item';
+import { reorderIngredient } from '../../../../services/actions/constructor.jsx';
 //--------------------------------------------------------------------------------
 
 function ConstructorItemDndWrapper({ ingredient, index, handleDelete }) {

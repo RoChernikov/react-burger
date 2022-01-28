@@ -1,3 +1,4 @@
+import update from 'immutability-helper';
 import {
   DROP_INGREDIENT,
   DELETE_IGREDIENT,
@@ -40,29 +41,15 @@ export const burgerConstructorReducer = (
     case REORDER_INGREDIENT: {
       const { dragIndex, targetIndex } = action.payload;
       const itemsArray = [...state.selectedIngredients];
-
       const draggingItem = itemsArray[dragIndex];
-
-      const arrBeforeDraggingItem =
-        dragIndex < targetIndex
-          ? itemsArray.filter(
-              (item, index) => index <= targetIndex && index !== dragIndex
-            )
-          : itemsArray.filter((item, index) => index < targetIndex);
-
-      const arrAfterDraggingItem =
-        dragIndex < targetIndex
-          ? itemsArray.filter((item, index) => index > targetIndex)
-          : itemsArray.filter(
-              (item, index) => index >= targetIndex && index !== dragIndex
-            );
       return {
         ...state,
-        selectedIngredients: [
-          ...arrBeforeDraggingItem,
-          draggingItem,
-          ...arrAfterDraggingItem
-        ]
+        selectedIngredients: update(itemsArray, {
+          $splice: [
+            [dragIndex, 1],
+            [targetIndex, 0, draggingItem]
+          ]
+        })
       };
     }
     case CLEAR_ORDER_LIST: {

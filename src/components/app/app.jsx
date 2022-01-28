@@ -12,17 +12,15 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   getIngredientsApi,
-  getOrderNumber,
   selectIngredient,
-  unselectIngredient,
-  deleteOrder
-} from '../../services/actions/actions';
+  unselectIngredient
+} from '../../services/actions/ingredients';
+import { getOrderNumber, deleteOrder } from '../../services/actions/order';
 //--------------------------------------------------------------------------------
 
 const App = () => {
   const dispatch = useDispatch();
   const {
-    ingredients,
     selectedIngredient,
     ingredientsFailed,
     ingredientsRequest,
@@ -31,7 +29,6 @@ const App = () => {
   } = useSelector(
     ({
       ingredients: {
-        ingredients,
         selectedIngredient,
         ingredientsFailed,
         ingredientsRequest
@@ -39,7 +36,6 @@ const App = () => {
       order: { order, orderNumberRequest }
     }) => {
       return {
-        ingredients,
         selectedIngredient,
         ingredientsFailed,
         ingredientsRequest,

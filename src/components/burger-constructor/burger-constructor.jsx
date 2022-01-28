@@ -10,7 +10,7 @@ import ConstructorItemDndWrapper from './components/constructor-item-dnd-wrapper
 import BunPlug from './components/bun-plug/bun-plug';
 import IngredientsPlug from './components/ingredients-plug/ingredients-plug';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteIngredient } from '../../services/actions/actions';
+import { deleteIngredient } from '../../services/actions/constructor';
 //--------------------------------------------------------------------------------
 
 const BurgerConstructor = forwardRef(({ openModal, isHover }, ref) => {

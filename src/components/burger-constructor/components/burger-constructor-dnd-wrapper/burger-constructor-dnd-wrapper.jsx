@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import { useDrop } from 'react-dnd';
 import { useDispatch } from 'react-redux';
 import BurgerConstructor from '../../burger-constructor';
-import { dropIngredient } from '../../../../services/actions/actions';
+import { dropIngredient } from '../../../../services/actions/constructor';
 //--------------------------------------------------------------------------------
 
 function BurgerConstructorDndWrapper({ openModal }) {

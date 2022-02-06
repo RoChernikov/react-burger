@@ -6,6 +6,10 @@ const composeEnhancers =
     ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
     : compose;
 
+// const composeEnhancers = (window as any)[
+//   '__REDUX_DEVTOOLS_EXTENSION_COMPOSE__'
+// ] as typeof compose;
+
 const enhancer = composeEnhancers(applyMiddleware(thunk));
 const state = createStore(rootReducer, enhancer);
 

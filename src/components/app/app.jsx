@@ -1,5 +1,5 @@
 import styles from './app.module.css';
-import { useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback, FC } from 'react';
 import Loader from '../loader/loader';
 import AppHeader from '../app-header/app-header';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';

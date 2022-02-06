@@ -18,7 +18,7 @@ export const burgerConstructorReducer = (
 ) => {
   switch (action.type) {
     case DROP_INGREDIENT: {
-      const { ingredient } = action.payload;
+      const ingredient = action.ingredient;
       if (ingredient.type === 'bun') {
         return {
           ...state,
@@ -34,12 +34,13 @@ export const burgerConstructorReducer = (
       return {
         ...state,
         selectedIngredients: state.selectedIngredients.filter(
-          (item, index) => index !== action.payload.index
+          (item, index) => index !== action.index
         )
       };
     }
     case REORDER_INGREDIENT: {
-      const { dragIndex, targetIndex } = action.payload;
+      const dragIndex = action.dragIndex;
+      const targetIndex = action.targetIndex;
       const itemsArray = [...state.selectedIngredients];
       const draggingItem = itemsArray[dragIndex];
       return {

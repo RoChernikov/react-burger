@@ -1,6 +1,6 @@
 {
   "name": "react-burger",
-  "homepage": "http://rochernikov.github.io/react-burger",
+  "homepage": "./",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -55,6 +55,7 @@
     ]
   },
   "devDependencies": {
+    "@types/uuid": "^8.3.4",
     "gh-pages": "^3.2.3"
   }
 }

@@ -30,7 +30,7 @@ export const ingredientsReducer = (state = ingredientsInitialState, action) => {
         ...state,
         ingredientsFailed: false,
         ingredientsRequest: false,
-        ingredients: action.payload.ingredients
+        ingredients: action.ingredients
       };
     }
     case GET_INGREDIENTS_FAILED: {
@@ -42,7 +42,7 @@ export const ingredientsReducer = (state = ingredientsInitialState, action) => {
     case SELECT_INGREDIENT: {
       return {
         ...state,
-        selectedIngredient: action.payload.ingredient
+        selectedIngredient: action.ingredient
       };
     }
     case UNSELECT_INGREDIENT: {
@@ -54,7 +54,7 @@ export const ingredientsReducer = (state = ingredientsInitialState, action) => {
     case SELECT_MEAL: {
       return {
         ...state,
-        selectedMeal: action.payload.mealName
+        selectedMeal: action.mealName
       };
     }
     default: {

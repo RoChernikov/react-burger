@@ -1,4 +1,5 @@
 import Api from '../../utils/api';
+import { AppDispatch, AppThunk } from '../..';
 import { clearOrderList } from './constructor';
 export const GET_ORDER_NUMBER_REQUEST = 'GET_ORDER_NUMBER_REQUEST';
 export const GET_ORDER_NUMBER_SUCCESS = 'GET_ORDER_NUMBER_SUCCESS';
@@ -6,35 +7,56 @@ export const GET_ORDER_NUMBER_FAILED = 'GET_ORDER_NUMBER_FAILED';
 export const DELETE_ORDER = 'DELETE_ORDER';
 //--------------------------------------------------------------------------------
 
-const getOrderNumberRequest = () => {
+export interface IGetOrderNumberRequest {
+  readonly type: typeof GET_ORDER_NUMBER_REQUEST;
+}
+
+export interface IGetOrderNumberSuccess {
+  readonly type: typeof GET_ORDER_NUMBER_SUCCESS;
+  readonly order: number;
+}
+
+export interface IGetOrderNumberFailed {
+  readonly type: typeof GET_ORDER_NUMBER_FAILED;
+}
+
+export interface IDeleteOrder {
+  readonly type: typeof DELETE_ORDER;
+}
+
+export type TOrderActions =
+  | IGetOrderNumberRequest
+  | IGetOrderNumberSuccess
+  | IGetOrderNumberFailed
+  | IDeleteOrder;
+
+const getOrderNumberRequest = (): IGetOrderNumberRequest => {
   return {
     type: GET_ORDER_NUMBER_REQUEST
   };
 };
 
-const getOrderNumberSuccess = order => {
+const getOrderNumberSuccess = (order: number): IGetOrderNumberSuccess => {
   return {
     type: GET_ORDER_NUMBER_SUCCESS,
-    payload: {
-      order: order
-    }
+    order
   };
 };
 
-const getOrderNumberFailed = () => {
+const getOrderNumberFailed = (): IGetOrderNumberFailed => {
   return {
     type: GET_ORDER_NUMBER_FAILED
   };
 };
 
-export const deleteOrder = () => {
+export const deleteOrder = (): IDeleteOrder => {
   return {
     type: DELETE_ORDER
   };
 };
 
-export function getOrderNumber(selectedIngredients) {
-  return dispatch => {
+export const getOrderNumber: AppThunk =
+  (selectedIngredients: string[]) => (dispatch: AppDispatch) => {
     dispatch(getOrderNumberRequest());
     Api.sendOrder(selectedIngredients)
       .then(res => {
@@ -46,4 +68,3 @@ export function getOrderNumber(selectedIngredients) {
         console.log(`${err}`);
       });
   };
-}

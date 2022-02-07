@@ -4,27 +4,34 @@ import { useInView } from 'react-intersection-observer';
 import PropTypes from 'prop-types';
 import NavBar from './components/nav-bar/nav-bar';
 import IngredientsCategory from './components/ingredients-category/IngredientsCategory';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { useAppSelector, useAppDispatch } from '../../services/hooks/hooks';
 import { selectMeal } from '../../services/actions/ingredients';
+import { burgerConstructorSlice } from '../../services/slices/burger-constructor';
 //--------------------------------------------------------------------------------
 
 function BurgerIngredients({ openModal }) {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  const { ingredients, selectedIngredients, selectedBun, selectedMeal } =
-    useSelector(
-      ({
-        ingredients: { ingredients, selectedMeal },
-        burgerConstructor: { selectedIngredients, selectedBun }
-      }) => {
-        return {
-          ingredients,
-          selectedIngredients,
-          selectedBun,
-          selectedMeal
-        };
-      }
-    );
+  // const { ingredients, selectedIngredients, selectedBun, selectedMeal } =
+  const { ingredients, selectedMeal } = useSelector(
+    ({
+      ingredients: { ingredients, selectedMeal }
+      // burgerConstructor: { selectedIngredients, selectedBun }
+    }) => {
+      return {
+        ingredients,
+        // selectedIngredients,
+        // selectedBun,
+        selectedMeal
+      };
+    }
+  );
+
+  const { selectedIngredients, selectedBun } = useAppSelector(
+    state => state.burgerConstructor
+  );
 
   const bun = useMemo(
     () => ingredients.filter(ingredient => ingredient.type === 'bun'),

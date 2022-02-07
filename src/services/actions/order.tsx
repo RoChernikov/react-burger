@@ -1,6 +1,6 @@
 import Api from '../../utils/api';
 import { AppDispatch, AppThunk } from '../..';
-import { clearOrderList } from './constructor';
+import { burgerConstructorSlice } from '../slices/burger-constructor';
 export const GET_ORDER_NUMBER_REQUEST = 'GET_ORDER_NUMBER_REQUEST';
 export const GET_ORDER_NUMBER_SUCCESS = 'GET_ORDER_NUMBER_SUCCESS';
 export const GET_ORDER_NUMBER_FAILED = 'GET_ORDER_NUMBER_FAILED';
@@ -57,6 +57,7 @@ export const deleteOrder = (): IDeleteOrder => {
 
 export const getOrderNumber: AppThunk =
   (selectedIngredients: string[]) => (dispatch: AppDispatch) => {
+    const { clearOrderList } = burgerConstructorSlice.actions;
     dispatch(getOrderNumberRequest());
     Api.sendOrder(selectedIngredients)
       .then(res => {

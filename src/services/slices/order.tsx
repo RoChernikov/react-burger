@@ -2,10 +2,11 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AppThunk, AppDispatch } from '../..';
 import Api from '../../utils/api';
 import { burgerConstructorSlice } from './constructor';
+import { TOrder } from '../../utils/types';
 //--------------------------------------------------------------------------------
 
 interface orderState {
-  order: number | null;
+  order: TOrder | null;
   orderNumberRequest: boolean;
   orderNumberFailed: boolean;
 }
@@ -23,7 +24,7 @@ export const orderSlice = createSlice({
     getOrderNumberRequest(state) {
       state.orderNumberRequest = true;
     },
-    getOrderNumberSuccess(state, action: PayloadAction<number>) {
+    getOrderNumberSuccess(state, action: PayloadAction<TOrder>) {
       state.orderNumberRequest = false;
       state.orderNumberFailed = false;
       state.order = action.payload;
@@ -46,7 +47,7 @@ export const getOrderNumber: AppThunk =
     dispatch(getOrderNumberRequest());
     Api.sendOrder(selectedIngredients)
       .then(res => {
-        dispatch(getOrderNumberSuccess(res.order));
+        dispatch(getOrderNumberSuccess(res));
         dispatch(clearOrderList());
       })
       .catch(err => {

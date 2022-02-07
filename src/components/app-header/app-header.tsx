@@ -1,5 +1,5 @@
 import styles from './app-header.module.css';
-import { useState } from 'react';
+import React, { useState, FC } from 'react';
 import {
   Logo,
   BurgerIcon,
@@ -9,7 +9,7 @@ import {
 import HeaderLink from './components/header-link/header-link';
 //--------------------------------------------------------------------------------
 
-const AppHeader = () => {
+const AppHeader: FC = () => {
   const [page, setPage] = useState('constructor');
 
   return (
@@ -41,7 +41,7 @@ const AppHeader = () => {
             </HeaderLink>
           </li>
         </ul>
-        <a href="#" className={styles.logoWrapper}>
+        <a href="/" className={styles.logoWrapper}>
           <Logo />
         </a>
         <div className={styles.profileLinkWrapper}>

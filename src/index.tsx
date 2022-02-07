@@ -11,7 +11,7 @@ import state from './services/store';
 
 export type RootState = ReturnType<typeof state.getState>;
 export type AppThunk<TReturn = void> = ActionCreator<
-  ThunkAction<TReturn, Action, RootState, Action>
+  ThunkAction<TReturn, RootState, unknown, Action>
 >;
 export type AppDispatch = typeof state.dispatch;
 

@@ -17,7 +17,7 @@ import {
 import { orderSlice, getOrderNumber } from '../../services/slices/order';
 //--------------------------------------------------------------------------------
 
-const App = () => {
+const App: FC = () => {
   const dispatch = useAppDispatch();
 
   const { deleteOrder } = orderSlice.actions;
@@ -43,10 +43,14 @@ const App = () => {
   const openOrderDetailsModal = useCallback(
     selectedIngredients => {
       dispatch(
-        getOrderNumber(selectedIngredients.map(ingredient => ingredient._id))
+        getOrderNumber(
+          selectedIngredients.map(
+            (ingredient: { _id: string }) => ingredient._id
+          )
+        )
       );
     },
-    [dispatch, getOrderNumber]
+    [dispatch]
   );
 
   const closeOrderDetailsModal = useCallback(() => {
@@ -89,7 +93,7 @@ const App = () => {
       )}
       {order && (
         <Modal closeModal={closeOrderDetailsModal}>
-          <OrderDetails order={order.number} />
+          <OrderDetails order={order.order.number} />
         </Modal>
       )}
     </>

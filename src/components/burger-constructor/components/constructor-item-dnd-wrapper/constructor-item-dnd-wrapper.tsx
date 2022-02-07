@@ -1,13 +1,16 @@
-import PropTypes from 'prop-types';
-import { useRef, useEffect } from 'react';
-import { IngredientType } from '../../../../utils/types.js';
+import React, { useRef, useEffect, FC } from 'react';
 import { useDrag, useDrop, DragPreviewImage } from 'react-dnd';
 import { useDispatch } from 'react-redux';
 import ConstructorItem from '../constructor-item/constructor-item';
 import { burgerConstructorSlice } from '../../../../services/slices/constructor';
+import { IConstructorItem } from '../../../../utils/interfaces';
 //--------------------------------------------------------------------------------
 
-function ConstructorItemDndWrapper({ ingredient, index, handleDelete }) {
+const ConstructorItemDndWrapper: FC<IConstructorItem> = ({
+  ingredient,
+  index,
+  handleDelete
+}) => {
   const dispatch = useDispatch();
   const { reorderIngredient } = burgerConstructorSlice.actions;
 
@@ -25,7 +28,7 @@ function ConstructorItemDndWrapper({ ingredient, index, handleDelete }) {
     collect: monitor => ({
       handlerId: monitor.getHandlerId()
     }),
-    hover(item) {
+    hover(item: { dragIndex: number }) {
       if (!ref.current) {
         return;
       }
@@ -58,12 +61,6 @@ function ConstructorItemDndWrapper({ ingredient, index, handleDelete }) {
       />
     </>
   );
-}
-
-ConstructorItemDndWrapper.propTypes = {
-  ingredient: PropTypes.shape(IngredientType).isRequired,
-  index: PropTypes.number.isRequired,
-  handleDelete: PropTypes.func.isRequired
 };
 
 export default ConstructorItemDndWrapper;

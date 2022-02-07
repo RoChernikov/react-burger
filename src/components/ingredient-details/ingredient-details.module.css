@@ -26,5 +26,6 @@
 
 .image {
   max-width: 480px;
+  min-height: 240px;
   width: 100%;
 }

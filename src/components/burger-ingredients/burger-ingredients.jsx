@@ -4,27 +4,22 @@ import { useInView } from 'react-intersection-observer';
 import PropTypes from 'prop-types';
 import NavBar from './components/nav-bar/nav-bar';
 import IngredientsCategory from './components/ingredients-category/IngredientsCategory';
-import { useDispatch, useSelector } from 'react-redux';
-import { selectMeal } from '../../services/actions/ingredients';
+import { useAppSelector, useAppDispatch } from '../../services/hooks';
+import { ingredientsSlice } from '../../services/slices/ingredients';
 //--------------------------------------------------------------------------------
 
 function BurgerIngredients({ openModal }) {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  const { ingredients, selectedIngredients, selectedBun, selectedMeal } =
-    useSelector(
-      ({
-        ingredients: { ingredients, selectedMeal },
-        burgerConstructor: { selectedIngredients, selectedBun }
-      }) => {
-        return {
-          ingredients,
-          selectedIngredients,
-          selectedBun,
-          selectedMeal
-        };
-      }
-    );
+  const { selectMeal } = ingredientsSlice.actions;
+
+  const { selectedIngredients, selectedBun } = useAppSelector(
+    state => state.burgerConstructor
+  );
+
+  const { ingredients, selectedMeal } = useAppSelector(
+    state => state.ingredients
+  );
 
   const bun = useMemo(
     () => ingredients.filter(ingredient => ingredient.type === 'bun'),
@@ -82,7 +77,7 @@ function BurgerIngredients({ openModal }) {
     } else if (inViewMain) {
       dispatch(selectMeal('main'));
     }
-  }, [dispatch, inViewBun, inViewMain, inViewSauce]);
+  }, [dispatch, selectMeal, inViewBun, inViewMain, inViewSauce]);
 
   return (
     <section className={`mt-10 ml-5 ${styles.constructor}`}>

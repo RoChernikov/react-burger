@@ -1,12 +1,13 @@
 import PropTypes from 'prop-types';
 import { useDrop } from 'react-dnd';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '../../../../services/hooks';
 import BurgerConstructor from '../../burger-constructor';
-import { dropIngredient } from '../../../../services/actions/constructor';
+import { burgerConstructorSlice } from '../../../../services/slices/constructor';
 //--------------------------------------------------------------------------------
 
 function BurgerConstructorDndWrapper({ openModal }) {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
+  const { dropIngredient } = burgerConstructorSlice.actions;
   const [{ isHover }, dropTarget] = useDrop({
     accept: 'ingredient',
     drop({ ingredient }) {

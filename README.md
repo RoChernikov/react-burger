@@ -16,10 +16,10 @@
 ### Технологии, использованные при создании:
 
 - React.js (CRA)
-- Redux
+- TypeScript
+- Redux (Redux-toolkit, thunk)
 - React DND
 - Работа с публичным API
-- JavaScript (ES6)
 - Flexbox
 - Grid Layout
 - CSS - animation

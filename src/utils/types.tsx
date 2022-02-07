@@ -1,7 +1,7 @@
 export type TIngredient = {
   _id?: string;
   name?: string;
-  type?: 'bun' | 'sauce' | 'main';
+  type?: TMeal;
   proteins?: number;
   fat?: number;
   carbohydrates?: number;
@@ -13,3 +13,5 @@ export type TIngredient = {
   __v?: number;
   uid?: string;
 };
+
+export type TMeal = 'bun' | 'sauce' | 'main';

@@ -16,13 +16,13 @@ import { burgerConstructorSlice } from '../../services/slices/burger-constructor
 const BurgerConstructor = forwardRef(({ openModal, isHover }, ref) => {
   const dispatch = useAppDispatch();
 
-  const [bunPlugBorder, setBunPlugBorder] = useState('white');
+  const { deleteIngredient } = burgerConstructorSlice.actions;
 
   const { selectedIngredients, selectedBun } = useAppSelector(
     state => state.burgerConstructor
   );
 
-  const { deleteIngredient } = burgerConstructorSlice.actions;
+  const [bunPlugBorder, setBunPlugBorder] = useState('white');
 
   const totalSum = useMemo(
     () =>

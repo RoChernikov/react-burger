@@ -9,36 +9,26 @@ import OrderDetails from '../order-details/order-details';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { useAppDispatch, useAppSelector } from '../../services/hooks/hooks';
 import {
   getIngredientsApi,
-  selectIngredient,
-  unselectIngredient
-} from '../../services/actions/ingredients';
+  ingredientsSlice
+} from '../../services/slices/ingredients';
 import { getOrderNumber, deleteOrder } from '../../services/actions/order';
 //--------------------------------------------------------------------------------
 
 const App = () => {
-  const dispatch = useDispatch();
-  const {
-    selectedIngredient,
-    ingredientsFailed,
-    ingredientsRequest,
-    order,
-    orderNumberRequest
-  } = useSelector(
-    ({
-      ingredients: {
-        selectedIngredient,
-        ingredientsFailed,
-        ingredientsRequest
-      },
-      order: { order, orderNumberRequest }
-    }) => {
+  const dispatch = useAppDispatch();
+
+  const { selectIngredient, unselectIngredient } = ingredientsSlice.actions;
+
+  const { selectedIngredient, ingredientsFailed, ingredientsRequest } =
+    useAppSelector(state => state.ingredients);
+
+  const { order, orderNumberRequest } = useSelector(
+    ({ order: { order, orderNumberRequest } }) => {
       return {
-        selectedIngredient,
-        ingredientsFailed,
-        ingredientsRequest,
         order,
         orderNumberRequest
       };
@@ -98,7 +88,7 @@ const App = () => {
           </section>
         </main>
       )}
-      {selectedIngredient && (
+      {selectedIngredient._id && (
         <Modal closeModal={closeIngredientDetailsModal}>
           <IngredientDetails ingredient={selectedIngredient} />
         </Modal>

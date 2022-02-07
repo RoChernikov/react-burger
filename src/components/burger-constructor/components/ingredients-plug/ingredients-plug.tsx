@@ -1,11 +1,10 @@
 import styles from './ingredients-plug.module.css';
-import PropTypes from 'prop-types';
+import React, { FC } from 'react';
+import { IIngredientsPlug } from '../../../../utils/interfaces';
 //--------------------------------------------------------------------------------
 
-const IngredientsPlug = ({ children }) => {
+const IngredientsPlug: FC<IIngredientsPlug> = ({ children }) => {
   return <div className={styles.container}>{children}</div>;
 };
-
-IngredientsPlug.propTypes = { children: PropTypes.string };
 
 export default IngredientsPlug;

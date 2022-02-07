@@ -1,6 +1,5 @@
 import styles from './burger-constructor.module.css';
-import { useCallback, useMemo, forwardRef, useState } from 'react';
-import PropTypes from 'prop-types';
+import React, { useCallback, useMemo, forwardRef, useState } from 'react';
 import {
   Button,
   CurrencyIcon,
@@ -11,9 +10,13 @@ import BunPlug from './components/bun-plug/bun-plug';
 import IngredientsPlug from './components/ingredients-plug/ingredients-plug';
 import { useAppSelector, useAppDispatch } from '../../services/hooks';
 import { burgerConstructorSlice } from '../../services/slices/constructor';
+import { IBurgerConstructor } from '../../utils/interfaces';
 //--------------------------------------------------------------------------------
 
-const BurgerConstructor = forwardRef(({ openModal, isHover }, ref) => {
+const BurgerConstructor = forwardRef<
+  HTMLUListElement,
+  IBurgerConstructor & { isHover: boolean }
+>(({ openModal, isHover }, ref) => {
   const dispatch = useAppDispatch();
 
   const { deleteIngredient } = burgerConstructorSlice.actions;
@@ -129,10 +132,5 @@ const BurgerConstructor = forwardRef(({ openModal, isHover }, ref) => {
     </section>
   );
 });
-
-BurgerConstructor.propTypes = {
-  openModal: PropTypes.func.isRequired,
-  isHover: PropTypes.bool
-};
 
 export default BurgerConstructor;

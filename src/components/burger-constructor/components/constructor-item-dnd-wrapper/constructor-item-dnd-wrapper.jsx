@@ -4,7 +4,7 @@ import { IngredientType } from '../../../../utils/types.js';
 import { useDrag, useDrop, DragPreviewImage } from 'react-dnd';
 import { useDispatch } from 'react-redux';
 import ConstructorItem from '../constructor-item/constructor-item';
-import { burgerConstructorSlice } from '../../../../services/slices/burger-constructor';
+import { burgerConstructorSlice } from '../../../../services/slices/constructor';
 //--------------------------------------------------------------------------------
 
 function ConstructorItemDndWrapper({ ingredient, index, handleDelete }) {

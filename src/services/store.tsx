@@ -1,6 +1,6 @@
 import thunk from 'redux-thunk';
 import { configureStore } from '@reduxjs/toolkit';
-import { rootReducer } from './reducers';
+import { rootReducer } from './slices';
 
 const state = configureStore({
   reducer: rootReducer,

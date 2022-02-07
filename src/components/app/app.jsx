@@ -9,42 +9,36 @@ import OrderDetails from '../order-details/order-details';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import { useSelector } from 'react-redux';
-import { useAppDispatch, useAppSelector } from '../../services/hooks/hooks';
+import { useAppDispatch, useAppSelector } from '../../services/hooks';
 import {
   getIngredientsApi,
   ingredientsSlice
 } from '../../services/slices/ingredients';
-import { getOrderNumber, deleteOrder } from '../../services/actions/order';
+import { orderSlice, getOrderNumber } from '../../services/slices/order';
 //--------------------------------------------------------------------------------
 
 const App = () => {
   const dispatch = useAppDispatch();
+
+  const { deleteOrder } = orderSlice.actions;
 
   const { selectIngredient, unselectIngredient } = ingredientsSlice.actions;
 
   const { selectedIngredient, ingredientsFailed, ingredientsRequest } =
     useAppSelector(state => state.ingredients);
 
-  const { order, orderNumberRequest } = useSelector(
-    ({ order: { order, orderNumberRequest } }) => {
-      return {
-        order,
-        orderNumberRequest
-      };
-    }
-  );
+  const { order, orderNumberRequest } = useAppSelector(state => state.order);
 
   const openIngredientDetailsModal = useCallback(
     ingredient => {
       dispatch(selectIngredient(ingredient));
     },
-    [dispatch]
+    [dispatch, selectIngredient]
   );
 
   const closeIngredientDetailsModal = useCallback(() => {
     dispatch(unselectIngredient());
-  }, [dispatch]);
+  }, [dispatch, unselectIngredient]);
 
   const openOrderDetailsModal = useCallback(
     selectedIngredients => {
@@ -52,12 +46,12 @@ const App = () => {
         getOrderNumber(selectedIngredients.map(ingredient => ingredient._id))
       );
     },
-    [dispatch]
+    [dispatch, getOrderNumber]
   );
 
   const closeOrderDetailsModal = useCallback(() => {
     dispatch(deleteOrder());
-  }, [dispatch]);
+  }, [dispatch, deleteOrder]);
 
   useEffect(() => {
     dispatch(getIngredientsApi());
@@ -88,7 +82,7 @@ const App = () => {
           </section>
         </main>
       )}
-      {selectedIngredient._id && (
+      {selectedIngredient && (
         <Modal closeModal={closeIngredientDetailsModal}>
           <IngredientDetails ingredient={selectedIngredient} />
         </Modal>

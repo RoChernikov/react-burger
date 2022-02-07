@@ -2,15 +2,16 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { v4 as uuidv4 } from 'uuid';
 import update from 'immutability-helper';
 import { TIngredient } from '../../utils/types';
+//--------------------------------------------------------------------------------
 
 interface constructorState {
   selectedIngredients: TIngredient[];
-  selectedBun: TIngredient;
+  selectedBun: TIngredient | null;
 }
 
 const initialState: constructorState = {
   selectedIngredients: [],
-  selectedBun: {}
+  selectedBun: null
 };
 
 export const burgerConstructorSlice = createSlice({
@@ -47,7 +48,7 @@ export const burgerConstructorSlice = createSlice({
     },
     clearOrderList(state) {
       state.selectedIngredients = [];
-      state.selectedBun = {};
+      state.selectedBun = null;
     }
   }
 });

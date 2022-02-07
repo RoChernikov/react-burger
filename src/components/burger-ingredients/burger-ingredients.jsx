@@ -4,7 +4,7 @@ import { useInView } from 'react-intersection-observer';
 import PropTypes from 'prop-types';
 import NavBar from './components/nav-bar/nav-bar';
 import IngredientsCategory from './components/ingredients-category/IngredientsCategory';
-import { useAppSelector, useAppDispatch } from '../../services/hooks/hooks';
+import { useAppSelector, useAppDispatch } from '../../services/hooks';
 import { ingredientsSlice } from '../../services/slices/ingredients';
 //--------------------------------------------------------------------------------
 

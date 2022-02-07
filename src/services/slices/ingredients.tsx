@@ -2,20 +2,21 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AppThunk, AppDispatch } from '../..';
 import Api from '../../utils/api';
 import { TIngredient, TMeal } from '../../utils/types';
+//--------------------------------------------------------------------------------
 
-interface constructorState {
+interface ingredientsState {
   ingredients: Array<TIngredient>;
   ingredientsRequest: boolean;
   ingredientsFailed: boolean;
-  selectedIngredient: TIngredient;
+  selectedIngredient: TIngredient | null;
   selectedMeal: TMeal;
 }
 
-const initialState: constructorState = {
+const initialState: ingredientsState = {
   ingredients: [],
   ingredientsRequest: false,
   ingredientsFailed: false,
-  selectedIngredient: {},
+  selectedIngredient: null,
   selectedMeal: 'bun'
 };
 
@@ -39,7 +40,7 @@ export const ingredientsSlice = createSlice({
       state.selectedIngredient = action.payload;
     },
     unselectIngredient(state) {
-      state.selectedIngredient = {};
+      state.selectedIngredient = null;
     },
     selectMeal(state, action: PayloadAction<TMeal>) {
       state.selectedMeal = action.payload;

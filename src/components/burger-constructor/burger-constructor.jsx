@@ -9,8 +9,8 @@ import {
 import ConstructorItemDndWrapper from './components/constructor-item-dnd-wrapper/constructor-item-dnd-wrapper';
 import BunPlug from './components/bun-plug/bun-plug';
 import IngredientsPlug from './components/ingredients-plug/ingredients-plug';
-import { useAppSelector, useAppDispatch } from '../../services/hooks/hooks';
-import { burgerConstructorSlice } from '../../services/slices/burger-constructor';
+import { useAppSelector, useAppDispatch } from '../../services/hooks';
+import { burgerConstructorSlice } from '../../services/slices/constructor';
 //--------------------------------------------------------------------------------
 
 const BurgerConstructor = forwardRef(({ openModal, isHover }, ref) => {
@@ -28,7 +28,7 @@ const BurgerConstructor = forwardRef(({ openModal, isHover }, ref) => {
     () =>
       selectedIngredients.reduce(
         (sum, ingredient) => sum + ingredient.price,
-        selectedBun._id ? selectedBun.price * 2 : 0
+        selectedBun ? selectedBun.price * 2 : 0
       ),
     [selectedIngredients, selectedBun]
   );
@@ -41,7 +41,7 @@ const BurgerConstructor = forwardRef(({ openModal, isHover }, ref) => {
   );
 
   const handleSubmit = useCallback(() => {
-    if (!selectedBun._id) {
+    if (!selectedBun) {
       setBunPlugBorder('red');
       setTimeout(() => {
         setBunPlugBorder('white');
@@ -68,7 +68,7 @@ const BurgerConstructor = forwardRef(({ openModal, isHover }, ref) => {
         style={{ background }}
         ref={ref}>
         <li className={`mr-4 ${styles.part}`}>
-          {!selectedBun._id ? (
+          {!selectedBun ? (
             <BunPlug position="top" border={bunPlugBorder}>
               Добавьте булочку
             </BunPlug>
@@ -104,15 +104,15 @@ const BurgerConstructor = forwardRef(({ openModal, isHover }, ref) => {
         </li>
 
         <li className={`mr-4 ${styles.part}`}>
-          {!selectedBun._id ? (
+          {!selectedBun ? (
             <BunPlug position="bottom" border={bunPlugBorder} />
           ) : (
             <ConstructorElement
               type="bottom"
               isLocked={true}
-              text={`${selectedBun.name ? selectedBun.name : 'булка'} (низ)`}
-              price={selectedBun.price ? selectedBun.price : 0}
-              thumbnail={selectedBun.image ? selectedBun.image : 'Изображение'}
+              text={`${selectedBun ? selectedBun.name : 'булка'} (низ)`}
+              price={selectedBun ? selectedBun.price : 0}
+              thumbnail={selectedBun ? selectedBun.image : 'Изображение'}
             />
           )}
         </li>

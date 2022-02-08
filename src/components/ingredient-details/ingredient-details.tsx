@@ -1,9 +1,9 @@
 import styles from './ingredient-details.module.css';
 import React, { FC } from 'react';
-import { IIngredientDetails } from '../../utils/interfaces';
+import { TDestructIngredient } from '../../utils/types';
 //--------------------------------------------------------------------------------
 
-const IngredientDetails: FC<IIngredientDetails> = ({ ingredient }) => {
+const IngredientDetails: FC<TDestructIngredient> = ({ ingredient }) => {
   return (
     <>
       <h2 className={`text text_type_main-large mt-3 ${styles.title}`}>

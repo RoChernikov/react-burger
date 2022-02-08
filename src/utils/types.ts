@@ -1,3 +1,4 @@
+import { ReactNode } from 'react';
 export type TIngredient = {
   _id: string;
   name: string;
@@ -28,4 +29,6 @@ export type TOrder = {
   };
 };
 
-export type TDropIngredient = { ingredient: TIngredient };
+export type TDestructIngredient = { ingredient: TIngredient };
+
+export type TCloseModal = { closeModal: () => void; children?: ReactNode };

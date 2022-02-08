@@ -46,7 +46,3 @@ export interface IIngredientsCategory {
   openModal: (ingredient: TIngredient) => void;
   counts: { [ingredient: string]: number };
 }
-
-export interface IIngredientDetails {
-  ingredient: TIngredient;
-}

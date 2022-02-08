@@ -93,7 +93,7 @@ const App: FC = () => {
       )}
       {order && (
         <Modal closeModal={closeOrderDetailsModal}>
-          <OrderDetails order={order.order.number} />
+          <OrderDetails orderNumber={order.order.number} />
         </Modal>
       )}
     </>

@@ -16,6 +16,10 @@ export type TIngredient = {
 
 export type TMeal = 'bun' | 'sauce' | 'main';
 
+export type TOpenIngredientModal = {
+  openModal: (ingredient: TIngredient) => void;
+};
+
 export type TOrder = {
   success: boolean;
   name: string;

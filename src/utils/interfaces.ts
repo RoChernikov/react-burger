@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { TIngredient } from './types';
+import { TIngredient, TMeal } from './types';
 
 export interface IHeaderLink {
   icon: ReactNode;
@@ -26,4 +26,23 @@ export interface IConstructorItem {
   ingredient: TIngredient;
   handleDelete: (index: number) => void;
   index: number;
+}
+
+export interface IBurgerIngredient {
+  ingredient: TIngredient;
+  openModal: (ingredient: TIngredient) => void;
+  count: number;
+}
+
+export interface IIngredientsNavBar {
+  handleSelect: (value: string) => void;
+  selectedMeal: TMeal;
+}
+
+export interface IIngredientsCategory {
+  id: string;
+  title: string;
+  ingredients: TIngredient[];
+  openModal: (ingredient: TIngredient) => void;
+  counts: { [ingredient: string]: number };
 }

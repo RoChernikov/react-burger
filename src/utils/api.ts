@@ -1,14 +1,18 @@
 const BASE_URL = 'https://norma.nomoreparties.space/api';
 
+type TBaseUrl = { baseUrl: string };
+
 class Api {
-  constructor({ baseUrl }) {
+  _baseUrl: string;
+  _headers: { [key: string]: string };
+  constructor({ baseUrl }: TBaseUrl) {
     this._baseUrl = baseUrl;
     this._headers = {
       'Content-Type': 'application/json'
     };
   }
 
-  _getResponceData(res) {
+  _getResponceData(res: Response) {
     if (!res.ok) {
       return Promise.reject(`Ошибка: ${res.status}`);
     }
@@ -22,7 +26,7 @@ class Api {
     }).then(this._getResponceData);
   }
 
-  sendOrder(ingredients) {
+  sendOrder(ingredients: string[]) {
     return fetch(`${BASE_URL}/orders`, {
       method: 'POST',
       body: JSON.stringify({ ingredients }),

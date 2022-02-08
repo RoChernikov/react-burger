@@ -54,7 +54,6 @@ function BurgerIngredients({ openModal }: TOpenIngredientModal) {
 
   const handleMealChange = useCallback(
     evt => {
-      console.log(evt);
       dispatch(selectMeal(evt));
     },
     [dispatch, selectMeal]

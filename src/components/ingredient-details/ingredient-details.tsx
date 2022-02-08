@@ -1,9 +1,9 @@
 import styles from './ingredient-details.module.css';
-import PropTypes from 'prop-types';
-import { IngredientType } from '../../utils/types';
+import React, { FC } from 'react';
+import { IIngredientDetails } from '../../utils/interfaces';
 //--------------------------------------------------------------------------------
 
-const IngredientDetails = ({ ingredient }) => {
+const IngredientDetails: FC<IIngredientDetails> = ({ ingredient }) => {
   return (
     <>
       <h2 className={`text text_type_main-large mt-3 ${styles.title}`}>
@@ -53,10 +53,6 @@ const IngredientDetails = ({ ingredient }) => {
       </div>
     </>
   );
-};
-
-IngredientDetails.propTypes = {
-  ingredient: PropTypes.shape(IngredientType).isRequired
 };
 
 export default IngredientDetails;

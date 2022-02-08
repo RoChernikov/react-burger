@@ -1,14 +1,14 @@
 import styles from './burger-ingredients.module.css';
 import { useEffect, useMemo, useCallback } from 'react';
 import { useInView } from 'react-intersection-observer';
-import PropTypes from 'prop-types';
 import NavBar from './components/nav-bar/nav-bar';
 import IngredientsCategory from './components/ingredients-category/IngredientsCategory';
 import { useAppSelector, useAppDispatch } from '../../services/hooks';
 import { ingredientsSlice } from '../../services/slices/ingredients';
+import { TOpenIngredientModal } from '../../utils/types';
 //--------------------------------------------------------------------------------
 
-function BurgerIngredients({ openModal }) {
+function BurgerIngredients({ openModal }: TOpenIngredientModal) {
   const dispatch = useAppDispatch();
 
   const { selectMeal } = ingredientsSlice.actions;
@@ -54,9 +54,10 @@ function BurgerIngredients({ openModal }) {
 
   const handleMealChange = useCallback(
     evt => {
+      console.log(evt);
       dispatch(selectMeal(evt));
     },
-    [dispatch]
+    [dispatch, selectMeal]
   );
 
   const inViewOptions = {
@@ -114,9 +115,5 @@ function BurgerIngredients({ openModal }) {
     </section>
   );
 }
-
-BurgerIngredients.propTypes = {
-  openModal: PropTypes.func.isRequired
-};
 
 export default BurgerIngredients;

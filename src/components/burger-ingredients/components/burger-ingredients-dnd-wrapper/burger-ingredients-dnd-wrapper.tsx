@@ -1,10 +1,14 @@
-import PropTypes from 'prop-types';
+import React, { FC } from 'react';
 import { useDrag } from 'react-dnd';
 import BurgerIngredient from '../burger-ingredient/Burger-ingredient';
-import { IngredientType } from '../../../../utils/types';
+import { IBurgerIngredient } from '../../../../utils/interfaces';
 //--------------------------------------------------------------------------------
 
-function BurgerIngredientsDndWrapper({ ingredient, openModal, count }) {
+const BurgerIngredientsDndWrapper: FC<IBurgerIngredient> = ({
+  ingredient,
+  openModal,
+  count
+}) => {
   const [{ isDrag }, dragRef] = useDrag({
     type: 'ingredient',
     item: { ingredient },
@@ -21,12 +25,6 @@ function BurgerIngredientsDndWrapper({ ingredient, openModal, count }) {
       ref={dragRef}
     />
   );
-}
-
-BurgerIngredientsDndWrapper.propTypes = {
-  ingredient: PropTypes.shape(IngredientType).isRequired,
-  openModal: PropTypes.func.isRequired,
-  count: PropTypes.number.isRequired
 };
 
 export default BurgerIngredientsDndWrapper;

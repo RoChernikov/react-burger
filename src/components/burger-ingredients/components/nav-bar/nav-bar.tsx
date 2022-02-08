@@ -1,10 +1,11 @@
 import styles from './nav-bar.module.css';
+import React, { FC } from 'react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link } from 'react-scroll';
-import PropTypes from 'prop-types';
+import { IIngredientsNavBar } from '../../../../utils/interfaces';
 //--------------------------------------------------------------------------------
 
-const NavBar = ({ handleSelect, selectedMeal }) => {
+const NavBar: FC<IIngredientsNavBar> = ({ handleSelect, selectedMeal }) => {
   const scrollProps = {
     smooth: 'easeInOutCubic',
     duration: 500,
@@ -48,11 +49,6 @@ const NavBar = ({ handleSelect, selectedMeal }) => {
       </ul>
     </nav>
   );
-};
-
-NavBar.propTypes = {
-  handleSelect: PropTypes.func.isRequired,
-  selectedMeal: PropTypes.string.isRequired
 };
 
 export default NavBar;

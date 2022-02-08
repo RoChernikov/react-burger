@@ -1,11 +1,12 @@
 import styles from './header-link.module.css';
-import PropTypes from 'prop-types';
+import React, { FC } from 'react';
+import { IHeaderLink } from '../../../../utils/interfaces';
 //--------------------------------------------------------------------------------
 
-function HeaderLink({ icon, active, children, onClick }) {
+const HeaderLink: FC<IHeaderLink> = ({ icon, active, children, onClick }) => {
   return (
     <a
-      href="#"
+      href="/"
       className={
         active
           ? `pl-5 pr-5 ${styles.link} ${styles.link_active}`
@@ -16,13 +17,6 @@ function HeaderLink({ icon, active, children, onClick }) {
       <p className="text text_type_main-default ml-2">{children}</p>
     </a>
   );
-}
-
-HeaderLink.propTypes = {
-  icon: PropTypes.element.isRequired,
-  active: PropTypes.bool.isRequired,
-  children: PropTypes.string.isRequired,
-  onClick: PropTypes.func.isRequired
 };
 
 export default HeaderLink;

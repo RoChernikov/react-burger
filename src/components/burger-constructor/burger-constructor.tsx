@@ -1,6 +1,5 @@
 import styles from './burger-constructor.module.css';
-import { useCallback, useMemo, forwardRef, useState } from 'react';
-import PropTypes from 'prop-types';
+import React, { useCallback, useMemo, forwardRef, useState } from 'react';
 import {
   Button,
   CurrencyIcon,
@@ -9,19 +8,24 @@ import {
 import ConstructorItemDndWrapper from './components/constructor-item-dnd-wrapper/constructor-item-dnd-wrapper';
 import BunPlug from './components/bun-plug/bun-plug';
 import IngredientsPlug from './components/ingredients-plug/ingredients-plug';
-import { useDispatch, useSelector } from 'react-redux';
-import { deleteIngredient } from '../../services/actions/constructor';
+import { useAppSelector, useAppDispatch } from '../../services/hooks';
+import { burgerConstructorSlice } from '../../services/slices/constructor';
+import { IBurgerConstructor } from '../../utils/interfaces';
 //--------------------------------------------------------------------------------
 
-const BurgerConstructor = forwardRef(({ openModal, isHover }, ref) => {
-  const dispatch = useDispatch();
+const BurgerConstructor = forwardRef<
+  HTMLUListElement,
+  IBurgerConstructor & { isHover: boolean }
+>(({ openModal, isHover }, ref) => {
+  const dispatch = useAppDispatch();
+
+  const { deleteIngredient } = burgerConstructorSlice.actions;
+
+  const { selectedIngredients, selectedBun } = useAppSelector(
+    state => state.burgerConstructor
+  );
 
   const [bunPlugBorder, setBunPlugBorder] = useState('white');
-
-  const selectedIngredients = useSelector(
-    state => state.burgerConstructor.selectedIngredients
-  );
-  const selectedBun = useSelector(state => state.burgerConstructor.selectedBun);
 
   const totalSum = useMemo(
     () =>
@@ -36,7 +40,7 @@ const BurgerConstructor = forwardRef(({ openModal, isHover }, ref) => {
     index => {
       dispatch(deleteIngredient(index));
     },
-    [dispatch]
+    [dispatch, deleteIngredient]
   );
 
   const handleSubmit = useCallback(() => {
@@ -75,9 +79,9 @@ const BurgerConstructor = forwardRef(({ openModal, isHover }, ref) => {
             <ConstructorElement
               isLocked={true}
               type="top"
-              text={`${selectedBun ? selectedBun.name : 'булка'} (верх)`}
-              price={selectedBun ? selectedBun.price : 0}
-              thumbnail={selectedBun ? selectedBun.image : 'Изображение'}
+              text={`${selectedBun.name ? selectedBun.name : 'булка'} (верх)`}
+              price={selectedBun.price ? selectedBun.price : 0}
+              thumbnail={selectedBun.image ? selectedBun.image : 'Изображение'}
             />
           )}
         </li>
@@ -128,10 +132,5 @@ const BurgerConstructor = forwardRef(({ openModal, isHover }, ref) => {
     </section>
   );
 });
-
-BurgerConstructor.propTypes = {
-  openModal: PropTypes.func.isRequired,
-  isHover: PropTypes.bool
-};
 
 export default BurgerConstructor;

@@ -1,5 +1,5 @@
 import styles from './app.module.css';
-import { useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback, FC } from 'react';
 import Loader from '../loader/loader';
 import AppHeader from '../app-header/app-header';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
@@ -9,57 +9,45 @@ import OrderDetails from '../order-details/order-details';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import { useDispatch, useSelector } from 'react-redux';
+import { useAppDispatch, useAppSelector } from '../../services/hooks';
 import {
   getIngredientsApi,
-  selectIngredient,
-  unselectIngredient
-} from '../../services/actions/ingredients';
-import { getOrderNumber, deleteOrder } from '../../services/actions/order';
+  ingredientsSlice
+} from '../../services/slices/ingredients';
+import { orderSlice, getOrderNumber } from '../../services/slices/order';
 //--------------------------------------------------------------------------------
 
-const App = () => {
-  const dispatch = useDispatch();
-  const {
-    selectedIngredient,
-    ingredientsFailed,
-    ingredientsRequest,
-    order,
-    orderNumberRequest
-  } = useSelector(
-    ({
-      ingredients: {
-        selectedIngredient,
-        ingredientsFailed,
-        ingredientsRequest
-      },
-      order: { order, orderNumberRequest }
-    }) => {
-      return {
-        selectedIngredient,
-        ingredientsFailed,
-        ingredientsRequest,
-        order,
-        orderNumberRequest
-      };
-    }
-  );
+const App: FC = () => {
+  const dispatch = useAppDispatch();
+
+  const { deleteOrder } = orderSlice.actions;
+
+  const { selectIngredient, unselectIngredient } = ingredientsSlice.actions;
+
+  const { selectedIngredient, ingredientsFailed, ingredientsRequest } =
+    useAppSelector(state => state.ingredients);
+
+  const { order, orderNumberRequest } = useAppSelector(state => state.order);
 
   const openIngredientDetailsModal = useCallback(
     ingredient => {
       dispatch(selectIngredient(ingredient));
     },
-    [dispatch]
+    [dispatch, selectIngredient]
   );
 
   const closeIngredientDetailsModal = useCallback(() => {
     dispatch(unselectIngredient());
-  }, [dispatch]);
+  }, [dispatch, unselectIngredient]);
 
   const openOrderDetailsModal = useCallback(
     selectedIngredients => {
       dispatch(
-        getOrderNumber(selectedIngredients.map(ingredient => ingredient._id))
+        getOrderNumber(
+          selectedIngredients.map(
+            (ingredient: { _id: string }) => ingredient._id
+          )
+        )
       );
     },
     [dispatch]
@@ -67,7 +55,7 @@ const App = () => {
 
   const closeOrderDetailsModal = useCallback(() => {
     dispatch(deleteOrder());
-  }, [dispatch]);
+  }, [dispatch, deleteOrder]);
 
   useEffect(() => {
     dispatch(getIngredientsApi());
@@ -105,7 +93,7 @@ const App = () => {
       )}
       {order && (
         <Modal closeModal={closeOrderDetailsModal}>
-          <OrderDetails order={order.number} />
+          <OrderDetails orderNumber={order.order.number} />
         </Modal>
       )}
     </>

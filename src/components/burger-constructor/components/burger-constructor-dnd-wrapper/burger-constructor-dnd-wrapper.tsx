@@ -1,15 +1,18 @@
-import PropTypes from 'prop-types';
+import React, { FC } from 'react';
 import { useDrop } from 'react-dnd';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '../../../../services/hooks';
 import BurgerConstructor from '../../burger-constructor';
-import { dropIngredient } from '../../../../services/actions/constructor';
+import { burgerConstructorSlice } from '../../../../services/slices/constructor';
+import { TDestructIngredient } from '../../../../utils/types';
+import { IBurgerConstructor } from '../../../../utils/interfaces';
 //--------------------------------------------------------------------------------
 
-function BurgerConstructorDndWrapper({ openModal }) {
-  const dispatch = useDispatch();
+const BurgerConstructorDndWrapper: FC<IBurgerConstructor> = ({ openModal }) => {
+  const dispatch = useAppDispatch();
+  const { dropIngredient } = burgerConstructorSlice.actions;
   const [{ isHover }, dropTarget] = useDrop({
     accept: 'ingredient',
-    drop({ ingredient }) {
+    drop({ ingredient }: TDestructIngredient) {
       dispatch(dropIngredient(ingredient));
     },
     collect: monitor => ({
@@ -24,10 +27,5 @@ function BurgerConstructorDndWrapper({ openModal }) {
       ref={dropTarget}
     />
   );
-}
-
-BurgerConstructorDndWrapper.propTypes = {
-  openModal: PropTypes.func.isRequired
 };
-
 export default BurgerConstructorDndWrapper;

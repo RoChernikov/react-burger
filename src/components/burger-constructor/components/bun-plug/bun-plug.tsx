@@ -1,8 +1,9 @@
 import styles from './bun-plug.module.css';
-import PropTypes from 'prop-types';
+import React, { FC } from 'react';
+import { IBunBlug } from '../../../../utils/interfaces';
 //--------------------------------------------------------------------------------
 
-const BunPlug = ({ children, position, border }) => (
+const BunPlug: FC<IBunBlug> = ({ children, position, border }) => (
   <div
     className={
       position === 'top'
@@ -15,11 +16,5 @@ const BunPlug = ({ children, position, border }) => (
     {children}
   </div>
 );
-
-BunPlug.propTypes = {
-  position: PropTypes.string,
-  border: PropTypes.string,
-  children: PropTypes.string
-};
 
 export default BunPlug;

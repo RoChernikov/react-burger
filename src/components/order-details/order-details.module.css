@@ -12,5 +12,6 @@
 .icon {
   width: 120px;
   height: 120px;
+  min-height: 120px;
   background: url(../../images/order_done.svg) center no-repeat;
 }

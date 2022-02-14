@@ -1,16 +1,16 @@
-import styles from './burger-constructor.module.css';
-import React, { useCallback, useMemo, forwardRef, useState } from 'react';
+import styles from "./burger-constructor.module.css";
+import React, { useCallback, useMemo, forwardRef, useState } from "react";
 import {
   Button,
   CurrencyIcon,
-  ConstructorElement
-} from '@ya.praktikum/react-developer-burger-ui-components';
-import ConstructorItemDndWrapper from './components/constructor-item-dnd-wrapper/constructor-item-dnd-wrapper';
-import BunPlug from './components/bun-plug/bun-plug';
-import IngredientsPlug from './components/ingredients-plug/ingredients-plug';
-import { useAppSelector, useAppDispatch } from '../../services/hooks';
-import { burgerConstructorSlice } from '../../services/slices/constructor';
-import { IBurgerConstructor } from '../../utils/interfaces';
+  ConstructorElement,
+} from "@ya.praktikum/react-developer-burger-ui-components";
+import ConstructorItemDndWrapper from "./components/constructor-item-dnd-wrapper/constructor-item-dnd-wrapper";
+import BunPlug from "./components/bun-plug/bun-plug";
+import IngredientsPlug from "./components/ingredients-plug/ingredients-plug";
+import { useAppSelector, useAppDispatch } from "../../services/hooks";
+import { burgerConstructorSlice } from "../../services/slices/constructor";
+import { IBurgerConstructor } from "../../utils/interfaces";
 //--------------------------------------------------------------------------------
 
 const BurgerConstructor = forwardRef<
@@ -22,10 +22,10 @@ const BurgerConstructor = forwardRef<
   const { deleteIngredient } = burgerConstructorSlice.actions;
 
   const { selectedIngredients, selectedBun } = useAppSelector(
-    state => state.burgerConstructor
+    (state) => state.burgerConstructor
   );
 
-  const [bunPlugBorder, setBunPlugBorder] = useState('white');
+  const [bunPlugBorder, setBunPlugBorder] = useState("white");
 
   const totalSum = useMemo(
     () =>
@@ -37,7 +37,7 @@ const BurgerConstructor = forwardRef<
   );
 
   const handleDelete = useCallback(
-    index => {
+    (index) => {
       dispatch(deleteIngredient(index));
     },
     [dispatch, deleteIngredient]
@@ -45,9 +45,9 @@ const BurgerConstructor = forwardRef<
 
   const handleSubmit = useCallback(() => {
     if (!selectedBun) {
-      setBunPlugBorder('red');
+      setBunPlugBorder("red");
       setTimeout(() => {
-        setBunPlugBorder('white');
+        setBunPlugBorder("white");
       }, 400);
       return;
     }
@@ -60,16 +60,18 @@ const BurgerConstructor = forwardRef<
   rgba(87, 0, 255, 0.5480567226890756) 0%,
   rgba(19, 19, 22, 1) 65%
 )`
-    : 'transparent';
+    : "transparent";
 
   return (
     <section
       className={`mr-5 pl-4 ${styles.constructor}`}
-      aria-label="Конструктор бургера">
+      aria-label="Конструктор бургера"
+    >
       <ul
         className={`mt-25 ${styles.partsList}`}
         style={{ background }}
-        ref={ref}>
+        ref={ref}
+      >
         <li className={`mr-4 ${styles.part}`}>
           {!selectedBun ? (
             <BunPlug position="top" border={bunPlugBorder}>
@@ -79,9 +81,9 @@ const BurgerConstructor = forwardRef<
             <ConstructorElement
               isLocked={true}
               type="top"
-              text={`${selectedBun.name ? selectedBun.name : 'булка'} (верх)`}
+              text={`${selectedBun.name ? selectedBun.name : "булка"} (верх)`}
               price={selectedBun.price ? selectedBun.price : 0}
-              thumbnail={selectedBun.image ? selectedBun.image : 'Изображение'}
+              thumbnail={selectedBun.image ? selectedBun.image : "Изображение"}
             />
           )}
         </li>
@@ -113,9 +115,9 @@ const BurgerConstructor = forwardRef<
             <ConstructorElement
               type="bottom"
               isLocked={true}
-              text={`${selectedBun ? selectedBun.name : 'булка'} (низ)`}
+              text={`${selectedBun ? selectedBun.name : "булка"} (низ)`}
               price={selectedBun ? selectedBun.price : 0}
-              thumbnail={selectedBun ? selectedBun.image : 'Изображение'}
+              thumbnail={selectedBun ? selectedBun.image : "Изображение"}
             />
           )}
         </li>

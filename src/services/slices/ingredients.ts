@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { AppThunk, AppDispatch } from '../..';
+import { AppThunk, AppDispatch } from '../../services/store';
 import Api from '../../utils/api';
 import { TIngredient, TMeal } from '../../utils/types';
 //--------------------------------------------------------------------------------

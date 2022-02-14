@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ReactNode, SyntheticEvent } from 'react';
 import { TIngredient, TMeal } from './types';
 
 export interface IHeaderLink {
@@ -45,4 +45,24 @@ export interface IIngredientsCategory {
   ingredients: TIngredient[];
   openModal: (ingredient: TIngredient) => void;
   counts: { [ingredient: string]: number };
+}
+
+export interface IForm {
+  children: ReactNode;
+  onSubmit?: (evt: SyntheticEvent) => void;
+  title: string;
+}
+
+export interface IInputWrapper {
+  children: ReactNode;
+}
+
+export interface ISubmit {
+  children: ReactNode;
+}
+
+export interface IFormHint {
+  children: string;
+  link: string;
+  caption: string;
 }

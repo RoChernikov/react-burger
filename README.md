@@ -32,7 +32,7 @@
 
 - HTML
 - CSS
-- JavaScript
+- TypeScript
 - JSX
 
 ### Внешние компоненты

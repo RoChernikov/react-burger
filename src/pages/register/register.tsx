@@ -13,12 +13,24 @@ const handleSubmit = () => {
   console.log('Submit');
 };
 
-const LoginPage: FC = () => {
+const RegisterPage: FC = () => {
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   return (
-    <Form onSubmit={handleSubmit} title="Вход">
+    <Form onSubmit={handleSubmit} title="Регистрация">
+      <InputWrapper>
+        <Input
+          name="name"
+          value={name}
+          onChange={e => setName(e.target.value)}
+          type="text"
+          placeholder="Имя"
+          error={false}
+          errorText="Ошибка"
+        />
+      </InputWrapper>
       <InputWrapper>
         <Input
           name="email"
@@ -37,17 +49,12 @@ const LoginPage: FC = () => {
           onChange={e => setPassword(e.target.value)}
         />
       </InputWrapper>
-      <Submit>Войти</Submit>
-      <FormHint link="/register" caption="Зарегистрироваться">
-        Вы - новый пользователь?
+      <Submit>Зарегистрироваться</Submit>
+      <FormHint link="/login" caption="Войти">
+        Уже зарегистрированы?
       </FormHint>
-      <div className="mt-4">
-        <FormHint link="/forgot-password" caption="Восстановить пароль">
-          Забыли пароль?
-        </FormHint>
-      </div>
     </Form>
   );
 };
 
-export default LoginPage;
+export default RegisterPage;

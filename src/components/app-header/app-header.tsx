@@ -7,10 +7,11 @@ import {
   ProfileIcon
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import HeaderLink from './components/header-link/header-link';
+import { NavLink } from 'react-router-dom';
 //--------------------------------------------------------------------------------
 
 const AppHeader: FC = () => {
-  const [page, setPage] = useState('constructor');
+  const [page, setPage] = useState('home');
 
   return (
     <header className={`pt-4 pb-4 ${styles.header}`}>
@@ -18,40 +19,41 @@ const AppHeader: FC = () => {
         <ul className={styles.list}>
           <li className="mr-2">
             <HeaderLink
+              to="/"
               icon={
-                <BurgerIcon
-                  type={page === 'constructor' ? 'primary' : 'secondary'}
-                />
+                <BurgerIcon type={page === 'home' ? 'primary' : 'secondary'} />
               }
-              active={page === 'constructor' ? true : false}
-              onClick={() => setPage('constructor')}>
+              onClick={() => setPage('home')}>
               Конструктор
             </HeaderLink>
           </li>
           <li>
             <HeaderLink
+              to="/feed"
               icon={
                 <ListIcon
                   type={page === 'orderList' ? 'primary' : 'secondary'}
                 />
               }
-              active={page === 'orderList' ? true : false}
               onClick={() => setPage('orderList')}>
               Лента заказов
             </HeaderLink>
           </li>
         </ul>
-        <a href="/" className={styles.logoWrapper}>
+        <NavLink
+          to="/"
+          className={styles.logoWrapper}
+          onClick={() => setPage('home')}>
           <Logo />
-        </a>
+        </NavLink>
         <div className={styles.profileLinkWrapper}>
           <HeaderLink
+            to="/profile"
             icon={
               <ProfileIcon
                 type={page === 'profile' ? 'primary' : 'secondary'}
               />
             }
-            active={page === 'profile' ? true : false}
             onClick={() => setPage('profile')}>
             Личный кабинет
           </HeaderLink>

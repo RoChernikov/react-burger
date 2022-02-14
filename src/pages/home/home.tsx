@@ -16,7 +16,7 @@ import {
 import { orderSlice, getOrderNumber } from '../../services/slices/order';
 //--------------------------------------------------------------------------------
 
-const Homepage: FC = () => {
+const HomePage: FC = () => {
   const dispatch = useAppDispatch();
 
   const { deleteOrder } = orderSlice.actions;
@@ -97,4 +97,4 @@ const Homepage: FC = () => {
   );
 };
 
-export default Homepage;
+export default HomePage;

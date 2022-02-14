@@ -2,8 +2,8 @@ import { ReactNode } from 'react';
 import { TIngredient, TMeal } from './types';
 
 export interface IHeaderLink {
+  to: string;
   icon: ReactNode;
-  active: boolean;
   children: ReactNode;
   onClick: () => void;
 }

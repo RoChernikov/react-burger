@@ -1,0 +1,7 @@
+.wrapper > div {
+  width: 100%;
+}
+
+.wrapper > div > div {
+  width: 100%;
+}

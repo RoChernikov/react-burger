@@ -7,6 +7,7 @@ import ProfilePage from '../../pages/profile/profile';
 import FeedPage from '../../pages/feed/feed';
 import ForgotPasswordPage from '../../pages/forgot-password/forgot-password';
 import ResetPasswordPage from '../../pages/reset-password/reset-password';
+import IngredientPage from '../../pages/ingredient/ingredient-page';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 //--------------------------------------------------------------------------------
 
@@ -30,6 +31,9 @@ const App: FC = () => {
           </Route>
           <Route path="/reset-password" exact>
             <ResetPasswordPage />
+          </Route>
+          <Route path="/ingredient" exact>
+            <IngredientPage />
           </Route>
           <Route path="/profile" exact>
             <ProfilePage />

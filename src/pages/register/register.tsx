@@ -1,3 +1,4 @@
+import styles from './register.module.css';
 import React, { FC, useState } from 'react';
 import {
   Input,
@@ -19,41 +20,43 @@ const RegisterPage: FC = () => {
   const [password, setPassword] = useState('');
 
   return (
-    <Form onSubmit={handleSubmit} title="Регистрация">
-      <InputWrapper>
-        <Input
-          name="name"
-          value={name}
-          onChange={e => setName(e.target.value)}
-          type="text"
-          placeholder="Имя"
-          error={false}
-          errorText="Ошибка"
-        />
-      </InputWrapper>
-      <InputWrapper>
-        <Input
-          name="email"
-          value={email}
-          type="text"
-          placeholder="E-mail"
-          error={false}
-          errorText="Ошибка"
-          onChange={e => setEmail(e.target.value)}
-        />
-      </InputWrapper>
-      <InputWrapper>
-        <PasswordInput
-          name="password"
-          value={password}
-          onChange={e => setPassword(e.target.value)}
-        />
-      </InputWrapper>
-      <Submit>Зарегистрироваться</Submit>
-      <FormHint link="/login" caption="Войти">
-        Уже зарегистрированы?
-      </FormHint>
-    </Form>
+    <main className={styles.main}>
+      <Form onSubmit={handleSubmit} title="Регистрация">
+        <InputWrapper>
+          <Input
+            name="name"
+            value={name}
+            onChange={e => setName(e.target.value)}
+            type="text"
+            placeholder="Имя"
+            error={false}
+            errorText="Ошибка"
+          />
+        </InputWrapper>
+        <InputWrapper>
+          <Input
+            name="email"
+            value={email}
+            type="text"
+            placeholder="E-mail"
+            error={false}
+            errorText="Ошибка"
+            onChange={e => setEmail(e.target.value)}
+          />
+        </InputWrapper>
+        <InputWrapper>
+          <PasswordInput
+            name="password"
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+          />
+        </InputWrapper>
+        <Submit>Зарегистрироваться</Submit>
+        <FormHint link="/login" caption="Войти">
+          Уже зарегистрированы?
+        </FormHint>
+      </Form>
+    </main>
   );
 };
 

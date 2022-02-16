@@ -8,6 +8,8 @@
   justify-content: flex-start;
   cursor: grab;
   transition: all 0.2s;
+  text-decoration: none;
+  color: inherit;
 }
 
 .ingredient:hover {

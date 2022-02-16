@@ -8,6 +8,7 @@ import FeedPage from '../../pages/feed/feed';
 import ForgotPasswordPage from '../../pages/forgot-password/forgot-password';
 import ResetPasswordPage from '../../pages/reset-password/reset-password';
 import IngredientPage from '../../pages/ingredient/ingredient-page';
+import NotFound404 from '../../pages/not-found-404/not-found-404';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 //--------------------------------------------------------------------------------
 
@@ -40,6 +41,9 @@ const App: FC = () => {
           </Route>
           <Route path="/feed" exact>
             <FeedPage />
+          </Route>
+          <Route>
+            <NotFound404 />
           </Route>
         </Switch>
       </Router>

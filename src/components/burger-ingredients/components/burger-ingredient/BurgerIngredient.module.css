@@ -23,7 +23,7 @@
 .dragging {
   background: radial-gradient(
     circle,
-    rgba(87, 0, 255, 0.5480567226890756) 0%,
+    rgba(87, 0, 255, 0.35) 0%,
     rgba(19, 19, 22, 1) 65%
   );
 }

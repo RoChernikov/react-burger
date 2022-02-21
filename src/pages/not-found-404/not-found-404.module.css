@@ -217,7 +217,7 @@
 
 .errorContent {
   position: absolute;
-  top: 50%;
+  top: 42%;
   left: 50%;
   width: 100%;
   -webkit-transform: translate(-50%, -50%);
@@ -230,7 +230,7 @@
 }
 
 .messageTitle {
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Jet Brains Mono', sans-serif;
   font-weight: 900;
   text-transform: uppercase;
   letter-spacing: 5px;
@@ -241,7 +241,7 @@
 }
 
 .messageText {
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Jet Brains Mono', sans-serif;
   line-height: 42px;
   font-size: 72px;
   padding: 0 60px;
@@ -301,7 +301,7 @@
   border: 1px solid #131316;
   color: #131316;
   text-decoration: none;
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Jet Brains Mono', sans-serif;
   text-transform: uppercase;
   font-size: 11px;
   letter-spacing: 0.1rem;
@@ -346,9 +346,7 @@
 .eNavLink:nth-child(2):hover:after {
   color: #fff;
 }
-/* 2.1. END Section Error */
 
-/* 2.2. Social style */
 .error__social {
   position: absolute;
   top: 50%;
@@ -418,7 +416,7 @@
 .cable {
   width: 8px;
   height: 248px;
-  background-image: linear-gradient(rgb(32 148 218 / 70%), rgb(193 65 25)),
+  background-image: linear-gradient(rgb(32 148 218 / 70%), rgb(132, 0, 172)),
     linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
     linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7));
 }

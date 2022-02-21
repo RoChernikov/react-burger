@@ -1,11 +1,12 @@
 import styles from './feed.module.css';
 import React, { FC } from 'react';
+import DeveloperGuy from '../../components/developer-guy/developer-guy';
 //--------------------------------------------------------------------------------
 
 const FeedPage: FC = () => {
   return (
     <div className={styles.box}>
-      <h1>Лента заказов в разработке</h1>
+      <DeveloperGuy />
     </div>
   );
 };

@@ -11,7 +11,7 @@ const handleSubmit = () => {
   console.log('Submit');
 };
 
-const ForgotPasswordPage: FC = () => {
+const ForgotPassPage: FC = () => {
   const [email, setEmail] = useState('');
 
   return (
@@ -37,4 +37,4 @@ const ForgotPasswordPage: FC = () => {
   );
 };
 
-export default ForgotPasswordPage;
+export default ForgotPassPage;

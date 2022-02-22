@@ -31,7 +31,6 @@ export interface IConstructorItem {
 
 export interface IBurgerIngredient {
   ingredient: TIngredient;
-  openModal: (ingredient: TIngredient) => void;
   count: number;
 }
 
@@ -44,7 +43,6 @@ export interface IIngredientsCategory {
   id: string;
   title: string;
   ingredients: TIngredient[];
-  openModal: (ingredient: TIngredient) => void;
   counts: { [ingredient: string]: number };
 }
 

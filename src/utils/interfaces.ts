@@ -1,5 +1,6 @@
 import { ReactNode, SyntheticEvent } from 'react';
 import { TIngredient, TMeal } from './types';
+import { Location } from 'history';
 
 export interface IHeaderLink {
   to: string;
@@ -65,4 +66,15 @@ export interface IFormHint {
   children: string;
   link: string;
   caption: string;
+}
+
+export interface ILocationParams extends Location {
+  from: {
+    pathname: string;
+    state: object;
+    search: string;
+    hash: string;
+    key: string;
+  };
+  background?: Location;
 }

@@ -9,41 +9,32 @@ import ForgotPasswordPage from '../../pages/forgot-password/forgot-password';
 import ResetPasswordPage from '../../pages/reset-password/reset-password';
 import IngredientPage from '../../pages/ingredient/ingredient-page';
 import NotFound404 from '../../pages/not-found-404/not-found-404';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, useLocation } from 'react-router-dom';
+import { ILocationParams } from '../../utils/interfaces';
 //--------------------------------------------------------------------------------
 
 const App: FC = () => {
+  let location = useLocation<ILocationParams>();
+
+  let background = location.state && location.state.background;
+
   return (
     <>
       <AppHeader />
-      <Switch>
-        <Route path="/" exact>
-          <HomePage />
-        </Route>
-        <Route path="/login" exact>
-          <LoginPage />
-        </Route>
-        <Route path="/register" exact>
-          <RegisterPage />
-        </Route>
-        <Route path="/forgot-password" exact>
-          <ForgotPasswordPage />
-        </Route>
-        <Route path="/reset-password" exact>
-          <ResetPasswordPage />
-        </Route>
-        <Route path="/ingredient" exact>
-          <IngredientPage />
-        </Route>
-        <Route path="/profile" exact>
-          <ProfilePage />
-        </Route>
-        <Route path="/feed" exact>
-          <FeedPage />
-        </Route>
-        <Route>
-          <NotFound404 />
-        </Route>
+      <Switch location={background || location}>
+        <Route exact path="/" children={<HomePage />} />
+        <Route exact path="/login" children={<LoginPage />} />
+        <Route exact path="/register" children={<RegisterPage />} />
+        <Route
+          exact
+          path="/forgot-password"
+          children={<ForgotPasswordPage />}
+        />
+        <Route exact path="/reset-password" children={<ResetPasswordPage />} />
+        <Route exact path="/ingredients/:id" children={<IngredientPage />} />
+        <Route exact path="/profile" children={<ProfilePage />} />
+        <Route exact path="/feed" children={<FeedPage />} />
+        <Route children={<NotFound404 />} />
       </Switch>
     </>
   );

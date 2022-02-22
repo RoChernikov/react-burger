@@ -1,9 +1,15 @@
 import styles from './ingredient-details.module.css';
 import React, { FC } from 'react';
-import { TDestructIngredient } from '../../utils/types';
+import { useParams } from 'react-router-dom';
+import { useAppSelector } from '../../services/hooks';
+import { selectIngredientById } from '../../services/slices/ingredients';
 //--------------------------------------------------------------------------------
 
-const IngredientDetails: FC<TDestructIngredient> = ({ ingredient }) => {
+const IngredientDetails: FC = () => {
+  const params = useParams<{ id: string }>();
+
+  const ingredient = useAppSelector(selectIngredientById(params.id));
+
   return (
     <>
       <h2 className={`text text_type_main-large mt-3 ${styles.title}`}>
@@ -12,17 +18,17 @@ const IngredientDetails: FC<TDestructIngredient> = ({ ingredient }) => {
       <div className={styles.content}>
         <img
           className={`mt-3 ${styles.image}`}
-          alt={ingredient.name}
-          src={ingredient.image_large}
+          alt={ingredient?.name}
+          src={ingredient?.image_large}
         />
-        <p className="text text_type_main-medium mt-4 ">{ingredient.name}</p>
+        <p className="text text_type_main-medium mt-4 ">{ingredient?.name}</p>
         <ul className={`mt-8 ${styles.nutritionList}`}>
           <li className={styles.nutritionItem}>
             <p className="text text_type_main-default text_color_inactive">
               Калории,ккал
             </p>
             <p className="text text text_type_digits-default text_color_inactive">
-              {ingredient.calories}
+              {ingredient?.calories}
             </p>
           </li>
           <li className={styles.nutritionItem}>
@@ -30,7 +36,7 @@ const IngredientDetails: FC<TDestructIngredient> = ({ ingredient }) => {
               Белки, г
             </p>
             <p className="text text text_type_digits-default text_color_inactive">
-              {ingredient.proteins}
+              {ingredient?.proteins}
             </p>
           </li>
           <li className={styles.nutritionItem}>
@@ -38,7 +44,7 @@ const IngredientDetails: FC<TDestructIngredient> = ({ ingredient }) => {
               Жиры, г
             </p>
             <p className="text text text_type_digits-default text_color_inactive">
-              {ingredient.fat}
+              {ingredient?.fat}
             </p>
           </li>
           <li className={styles.nutritionItem}>
@@ -46,7 +52,7 @@ const IngredientDetails: FC<TDestructIngredient> = ({ ingredient }) => {
               Углеводы, г
             </p>
             <p className="text text text_type_digits-default text_color_inactive">
-              {ingredient.carbohydrates}
+              {ingredient?.carbohydrates}
             </p>
           </li>
         </ul>

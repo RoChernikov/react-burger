@@ -1,14 +1,13 @@
 import styles from './burger-ingredients.module.css';
-import { useEffect, useMemo, useCallback } from 'react';
+import { FC, useEffect, useMemo, useCallback } from 'react';
 import { useInView } from 'react-intersection-observer';
 import NavBar from './components/nav-bar/nav-bar';
 import IngredientsCategory from './components/ingredients-category/IngredientsCategory';
 import { useAppSelector, useAppDispatch } from '../../services/hooks';
 import { ingredientsSlice } from '../../services/slices/ingredients';
-import { TOpenIngredientModal } from '../../utils/types';
 //--------------------------------------------------------------------------------
 
-function BurgerIngredients({ openModal }: TOpenIngredientModal) {
+const BurgerIngredients: FC = () => {
   const dispatch = useAppDispatch();
 
   const { selectMeal } = ingredientsSlice.actions;
@@ -90,7 +89,6 @@ function BurgerIngredients({ openModal }: TOpenIngredientModal) {
           id="bun"
           title="Булки"
           ingredients={bun}
-          openModal={openModal}
           counts={counter}
           ref={bunRef}
         />
@@ -98,7 +96,6 @@ function BurgerIngredients({ openModal }: TOpenIngredientModal) {
           id="sauce"
           title="Соусы"
           ingredients={sauce}
-          openModal={openModal}
           counts={counter}
           ref={sauceRef}
         />
@@ -106,13 +103,12 @@ function BurgerIngredients({ openModal }: TOpenIngredientModal) {
           id="main"
           title="Начинки"
           ingredients={main}
-          openModal={openModal}
           counts={counter}
           ref={mainRef}
         />
       </ul>
     </section>
   );
-}
+};
 
 export default BurgerIngredients;

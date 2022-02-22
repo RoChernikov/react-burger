@@ -3,7 +3,7 @@ import React, { FC } from 'react';
 import img from '../../images/Developer.png';
 //--------------------------------------------------------------------------------
 
-const DeveloperGuy: FC = () => {
+const DeveloperGuy: FC<{ children: string }> = ({ children }) => {
   const bgImage = { backgroundImage: `url(${img})` };
   return (
     <div className={styles.container}>
@@ -23,7 +23,7 @@ const DeveloperGuy: FC = () => {
         </div>
         <div className={styles.laptop} style={bgImage}></div>
       </div>
-      <p className={styles.speech}>Страница в разработке!</p>
+      <p className={styles.speech}>{children}</p>
     </div>
   );
 };

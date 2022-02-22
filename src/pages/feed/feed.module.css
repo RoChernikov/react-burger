@@ -1,11 +1,11 @@
-.box {
+.container {
   box-sizing: border-box;
   width: 100%;
   max-width: 1920px;
   height: 100%;
   display: flex;
-  align-items: flex-end;
   opacity: 0;
+  padding-top: 120px;
   /* transform: scale(0.8); */
   animation: appearance 0.3s forwards;
 }

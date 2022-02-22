@@ -5,8 +5,8 @@ import DeveloperGuy from '../../components/developer-guy/developer-guy';
 
 const FeedPage: FC = () => {
   return (
-    <div className={styles.box}>
-      <DeveloperGuy />
+    <div className={styles.container}>
+      <DeveloperGuy>Страница в разработке!</DeveloperGuy>
     </div>
   );
 };

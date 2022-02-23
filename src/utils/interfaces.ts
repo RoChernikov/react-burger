@@ -76,3 +76,14 @@ export interface ILocationParams extends Location {
   };
   background?: Location;
 }
+
+export interface IRegisterForm {
+  email: string;
+  password: string;
+  name: string;
+}
+
+export interface ILoginForm {
+  email: string;
+  password: string;
+}

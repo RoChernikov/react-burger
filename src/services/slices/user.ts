@@ -56,6 +56,12 @@ export const userSlice = createSlice({
     resetUserData(state) {
       state.user.name = '';
       state.user.email = '';
+    },
+    allowPasswordReset: state => {
+      state.canResetPassword = true;
+    },
+    restrictPasswordReset: state => {
+      state.canResetPassword = false;
     }
   }
 });
@@ -66,7 +72,9 @@ export const {
   failed,
   setUser,
   setAuthorization,
-  resetUserData
+  resetUserData,
+  allowPasswordReset,
+  restrictPasswordReset
 } = userSlice.actions;
 
 export const updateToken: AppThunk = () => () => {
@@ -142,3 +150,20 @@ export const logOut: AppThunk = () => (dispatch: AppDispatch) => {
       console.log(`${err}`);
     });
 };
+
+export const forgotPassword: AppThunk =
+  (email: string) => (dispatch: AppDispatch) => {
+    dispatch(request());
+    return Api.forgotPassword(email)
+      .then(data => {
+        if (data.success) {
+          dispatch(success());
+        } else {
+          throw Error(data.message);
+        }
+      })
+      .catch(err => {
+        dispatch(failed());
+        console.log(`${err}`);
+      });
+  };

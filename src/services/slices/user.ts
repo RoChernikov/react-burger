@@ -167,3 +167,20 @@ export const forgotPassword: AppThunk =
         console.log(`${err}`);
       });
   };
+
+export const resetPassword: AppThunk =
+  (password: string, token: string) => (dispatch: AppDispatch) => {
+    dispatch(request());
+    return Api.resetPassword({ password: password, token: token })
+      .then(data => {
+        if (data.success) {
+          dispatch(success());
+        } else {
+          throw Error(data.message);
+        }
+      })
+      .catch(err => {
+        dispatch(failed());
+        console.log(`${err}`);
+      });
+  };

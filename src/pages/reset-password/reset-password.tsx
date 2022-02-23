@@ -10,7 +10,7 @@ import InputWrapper from '../../components/form/components/input-wrapper/input-w
 import FormHint from '../../components/form/components/form-hint/form-hint';
 //--------------------------------------------------------------------------------
 
-const ResetPasswordPage: FC = () => {
+const ResetPassPage: FC = () => {
   const [password, setPassword] = useState('');
   const [value, setValue] = useState('');
 
@@ -44,4 +44,4 @@ const ResetPasswordPage: FC = () => {
   );
 };
 
-export default ResetPasswordPage;
+export default ResetPassPage;

@@ -1,3 +1,4 @@
+import { IRegisterForm, ILoginForm } from './interfaces';
 const BASE_URL = 'https://norma.nomoreparties.space/api';
 
 type TBaseUrl = { baseUrl: string };
@@ -29,8 +30,71 @@ class Api {
   sendOrder(ingredients: string[]) {
     return fetch(`${BASE_URL}/orders`, {
       method: 'POST',
-      body: JSON.stringify({ ingredients }),
-      headers: this._headers
+      headers: this._headers,
+      body: JSON.stringify({ ingredients })
+    }).then(this._getResponceData);
+  }
+
+  register(data: IRegisterForm) {
+    return fetch(`${BASE_URL}/auth/register`, {
+      method: 'POST',
+      headers: this._headers,
+      body: JSON.stringify(data)
+    }).then(this._getResponceData);
+  }
+
+  login(data: ILoginForm) {
+    return fetch(`${BASE_URL}/auth/login`, {
+      method: 'POST',
+      headers: this._headers,
+      body: JSON.stringify(data)
+    }).then(this._getResponceData);
+  }
+
+  updateToken(refreshToken: string) {
+    return fetch(`${BASE_URL}/auth/token`, {
+      method: 'POST',
+      headers: this._headers,
+      body: JSON.stringify({ token: refreshToken })
+    }).then(this._getResponceData);
+  }
+
+  getUser(accessToken: string) {
+    return fetch(`${BASE_URL}/auth/user`, {
+      method: 'GET',
+      headers: { ...this._headers, Authorization: `Bearer ${accessToken}` }
+    }).then(this._getResponceData);
+  }
+
+  patchUser(accessToken: string, data: { name: string; email: string }) {
+    return fetch(`${BASE_URL}/auth/user`, {
+      method: 'PATCH',
+      headers: { ...this._headers, Authorization: `Bearer ${accessToken}` },
+      body: JSON.stringify(data)
+    }).then(this._getResponceData);
+  }
+
+  logout(refreshToken: string) {
+    return fetch(`${BASE_URL}/auth/logout`, {
+      method: 'POST',
+      headers: this._headers,
+      body: JSON.stringify({ token: refreshToken })
+    }).then(this._getResponceData);
+  }
+
+  forgotPassword(email: string) {
+    return fetch(`${BASE_URL}/password-reset`, {
+      method: 'POST',
+      headers: this._headers,
+      body: JSON.stringify({ email })
+    }).then(this._getResponceData);
+  }
+
+  resetPassword(data: { password: string; token: string }) {
+    return fetch(`${BASE_URL}/password-reset/reset`, {
+      method: 'POST',
+      headers: this._headers,
+      body: JSON.stringify(data)
     }).then(this._getResponceData);
   }
 }

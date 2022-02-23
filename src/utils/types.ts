@@ -28,3 +28,8 @@ export type TOrder = {
 export type TDestructIngredient = { ingredient: TIngredient };
 
 export type TCloseModal = { closeModal: () => void; children?: ReactNode };
+
+export type TUser = {
+  name: string;
+  email: string;
+};

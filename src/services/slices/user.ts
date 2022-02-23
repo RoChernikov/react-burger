@@ -69,8 +69,12 @@ export const {
   resetUserData
 } = userSlice.actions;
 
-export const updateToken: AppThunk = refreshToken => () => {
-  return Api.updateToken(getCookie(refreshToken)).then(data =>
+export const updateToken: AppThunk = () => () => {
+  const token = getCookie('refreshToken');
+  if (!token) {
+    throw new Error('There is no refresh token in cookies');
+  }
+  return Api.updateToken(token).then(data =>
     setCookie('refresh-token', data.refreshToken)
   );
 };
@@ -104,6 +108,30 @@ export const login: AppThunk = data => (dispatch: AppDispatch) => {
         setCookie('accessToken', data.accessToken);
         setCookie('refresh-token', data.refreshToken);
         dispatch(setAuthorization(true));
+        dispatch(success());
+      } else {
+        throw Error(data.message);
+      }
+    })
+    .catch(err => {
+      dispatch(failed());
+      console.log(`${err}`);
+    });
+};
+
+export const logOut: AppThunk = () => (dispatch: AppDispatch) => {
+  dispatch(request());
+  const token = getCookie('refreshToken');
+  if (!token) {
+    throw new Error('There is no refresh token in cookies');
+  }
+  return Api.logout(token)
+    .then(data => {
+      if (data.success) {
+        deleteCookie('accessToken');
+        deleteCookie('refreshToken');
+        dispatch(resetUserData());
+        dispatch(setAuthorization(false));
         dispatch(success());
       } else {
         throw Error(data.message);

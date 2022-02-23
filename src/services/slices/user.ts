@@ -47,17 +47,8 @@ export const userSlice = createSlice({
       state.userSuccess = false;
       state.userRequest = false;
     },
-    setName(state, action: PayloadAction<string>) {
-      state.user = {
-        ...state.user,
-        name: action.payload
-      };
-    },
-    setEmail(state, action: PayloadAction<string>) {
-      state.user = {
-        ...state.user,
-        email: action.payload
-      };
+    setUser(state, action: PayloadAction<TUser>) {
+      state.user = action.payload;
     },
     setAuthorization(state, action: PayloadAction<boolean>) {
       state.isAuthorized = action.payload;
@@ -69,18 +60,49 @@ export const userSlice = createSlice({
   }
 });
 
-const { request, success, failed, setName, setEmail, setAuthorization } =
-  userSlice.actions;
+export const {
+  request,
+  success,
+  failed,
+  setUser,
+  setAuthorization,
+  resetUserData
+} = userSlice.actions;
+
+export const updateToken: AppThunk = refreshToken => () => {
+  return Api.updateToken(getCookie(refreshToken)).then(data =>
+    setCookie('refresh-token', data.refreshToken)
+  );
+};
 
 export const register: AppThunk = data => (dispatch: AppDispatch) => {
   dispatch(request());
   Api.register(data)
     .then(data => {
       if (data.success) {
-        dispatch(setEmail(data.user.email));
-        dispatch(setName(data.user.name));
+        dispatch(setUser(data.user));
         setCookie('accessToken', data.accessToken);
         setCookie('refreshToken', data.refreshToken);
+        dispatch(setAuthorization(true));
+        dispatch(success());
+      } else {
+        throw Error(data.message);
+      }
+    })
+    .catch(err => {
+      dispatch(failed());
+      console.log(`${err}`);
+    });
+};
+
+export const login: AppThunk = data => (dispatch: AppDispatch) => {
+  dispatch(request());
+  Api.login(data)
+    .then(data => {
+      if (data.success) {
+        dispatch(setUser(data.user));
+        setCookie('accessToken', data.accessToken);
+        setCookie('refresh-token', data.refreshToken);
         dispatch(setAuthorization(true));
         dispatch(success());
       } else {

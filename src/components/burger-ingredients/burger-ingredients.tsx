@@ -1,16 +1,14 @@
 import styles from './burger-ingredients.module.css';
-import { FC, useEffect, useMemo, useCallback } from 'react';
+import React, { FC, useEffect, useMemo, useCallback } from 'react';
 import { useInView } from 'react-intersection-observer';
 import NavBar from './components/nav-bar/nav-bar';
 import IngredientsCategory from './components/ingredients-category/IngredientsCategory';
 import { useAppSelector, useAppDispatch } from '../../services/hooks';
-import { ingredientsSlice } from '../../services/slices/ingredients';
+import { selectMeal } from '../../services/slices/ingredients';
 //--------------------------------------------------------------------------------
 
 const BurgerIngredients: FC = () => {
   const dispatch = useAppDispatch();
-
-  const { selectMeal } = ingredientsSlice.actions;
 
   const { selectedIngredients, selectedBun } = useAppSelector(
     state => state.burgerConstructor

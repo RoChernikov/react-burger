@@ -5,18 +5,15 @@ import BurgerIngredients from '../../components/burger-ingredients/burger-ingred
 import BurgerConstructorDndWrapper from '../../components/burger-constructor/components/burger-constructor-dnd-wrapper/burger-constructor-dnd-wrapper';
 import Modal from '../../components/modal/modal';
 import OrderDetails from '../../components/order-details/order-details';
-import IngredientDetails from '../../components/ingredient-details/ingredient-details';
 import DeveloperGuy from '../../components/developer-guy/developer-guy';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { useAppDispatch, useAppSelector } from '../../services/hooks';
-import { orderSlice, getOrderNumber } from '../../services/slices/order';
+import { deleteOrder, getOrderNumber } from '../../services/slices/order';
 //--------------------------------------------------------------------------------
 
 const HomePage: FC = () => {
   const dispatch = useAppDispatch();
-
-  const { deleteOrder } = orderSlice.actions;
 
   const { ingredientsFailed, ingredientsRequest } = useAppSelector(
     state => state.ingredients

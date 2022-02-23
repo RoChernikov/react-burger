@@ -1,5 +1,5 @@
 import styles from './app-header.module.css';
-import React, { useState, FC } from 'react';
+import React, { useState, FC, useMemo } from 'react';
 import {
   Logo,
   BurgerIcon,
@@ -7,11 +7,12 @@ import {
   ProfileIcon
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import HeaderLink from './components/header-link/header-link';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useHistory } from 'react-router-dom';
 //--------------------------------------------------------------------------------
 
 const AppHeader: FC = () => {
-  const [page, setPage] = useState('home');
+  const history = useHistory();
+  const path = useMemo(() => history.location.pathname, [history.location]);
 
   return (
     <header className={`pt-4 pb-4 ${styles.header}`}>
@@ -21,9 +22,8 @@ const AppHeader: FC = () => {
             <HeaderLink
               to="/"
               icon={
-                <BurgerIcon type={page === 'home' ? 'primary' : 'secondary'} />
-              }
-              onClick={() => setPage('home')}>
+                <BurgerIcon type={path === '/' ? 'primary' : 'secondary'} />
+              }>
               Конструктор
             </HeaderLink>
           </li>
@@ -31,19 +31,13 @@ const AppHeader: FC = () => {
             <HeaderLink
               to="/feed"
               icon={
-                <ListIcon
-                  type={page === 'orderList' ? 'primary' : 'secondary'}
-                />
-              }
-              onClick={() => setPage('orderList')}>
+                <ListIcon type={path === '/feed' ? 'primary' : 'secondary'} />
+              }>
               Лента заказов
             </HeaderLink>
           </li>
         </ul>
-        <NavLink
-          to="/"
-          className={styles.logoWrapper}
-          onClick={() => setPage('home')}>
+        <NavLink to="/" className={styles.logoWrapper}>
           <Logo />
         </NavLink>
         <div className={styles.profileLinkWrapper}>
@@ -51,10 +45,9 @@ const AppHeader: FC = () => {
             to="/profile"
             icon={
               <ProfileIcon
-                type={page === 'profile' ? 'primary' : 'secondary'}
+                type={path === '/profile' ? 'primary' : 'secondary'}
               />
-            }
-            onClick={() => setPage('profile')}>
+            }>
             Личный кабинет
           </HeaderLink>
         </div>

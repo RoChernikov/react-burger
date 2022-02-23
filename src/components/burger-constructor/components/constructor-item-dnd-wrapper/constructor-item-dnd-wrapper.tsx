@@ -2,7 +2,7 @@ import React, { useRef, useEffect, FC } from 'react';
 import { useDrag, useDrop, DragPreviewImage } from 'react-dnd';
 import { useDispatch } from 'react-redux';
 import ConstructorItem from '../constructor-item/constructor-item';
-import { burgerConstructorSlice } from '../../../../services/slices/constructor';
+import { reorderIngredient } from '../../../../services/slices/constructor';
 import { IConstructorItem } from '../../../../utils/interfaces';
 //--------------------------------------------------------------------------------
 
@@ -12,7 +12,6 @@ const ConstructorItemDndWrapper: FC<IConstructorItem> = ({
   handleDelete
 }) => {
   const dispatch = useDispatch();
-  const { reorderIngredient } = burgerConstructorSlice.actions;
 
   const ref = useRef(null);
 

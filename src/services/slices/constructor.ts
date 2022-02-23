@@ -52,3 +52,10 @@ export const burgerConstructorSlice = createSlice({
     }
   }
 });
+
+export const {
+  dropIngredient,
+  deleteIngredient,
+  reorderIngredient,
+  clearOrderList
+} = burgerConstructorSlice.actions;

@@ -6,7 +6,6 @@ export interface IHeaderLink {
   to: string;
   icon: ReactNode;
   children: ReactNode;
-  onClick: () => void;
 }
 
 export interface IBurgerConstructor {

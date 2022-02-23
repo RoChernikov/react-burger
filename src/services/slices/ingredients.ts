@@ -46,8 +46,12 @@ export const ingredientsSlice = createSlice({
   }
 });
 
-const { getIngredientsRequest, getIngredientsSuccess, getIngredientsFailed } =
-  ingredientsSlice.actions;
+export const {
+  getIngredientsRequest,
+  getIngredientsSuccess,
+  getIngredientsFailed,
+  selectMeal
+} = ingredientsSlice.actions;
 
 export const getIngredientsApi: AppThunk = () => (dispatch: AppDispatch) => {
   dispatch(getIngredientsRequest());

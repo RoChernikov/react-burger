@@ -1,8 +1,24 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import styles from './profile-nav.module.css';
 import { NavLink } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../services/hooks';
+import { logOut } from '../../services/slices/user';
+//--------------------------------------------------------------------------------
 
 const ProfileNav = () => {
+  const history = useHistory();
+  const dispatch = useAppDispatch();
+
+  const { userRequest } = useAppSelector(state => state.user);
+
+  const handleLogoutClick = useCallback(() => {
+    dispatch(logOut());
+    if (!userRequest) {
+      history.replace('/');
+    }
+  }, [dispatch, history, userRequest]);
+
   return (
     <aside className={styles.wrapper}>
       <ul className={styles.tabs}>
@@ -24,6 +40,7 @@ const ProfileNav = () => {
         </li>
         <li>
           <button
+            onClick={handleLogoutClick}
             className={`text text_type_main-medium text_color_inactive pt-4 pb-5 ${styles.button}`}>
             Выход
           </button>

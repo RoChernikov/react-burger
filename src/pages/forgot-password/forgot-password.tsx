@@ -1,18 +1,33 @@
 import styles from './forgot-password.module.css';
-import React, { FC, useState } from 'react';
+import React, { FC, useState, useCallback } from 'react';
 import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import Form from '../../components/form/form';
 import Submit from '../../components/form/components/submit/submit';
 import InputWrapper from '../../components/form/components/input-wrapper/input-wrapper';
 import FormHint from '../../components/form/components/form-hint/form-hint';
+import { useHistory } from 'react-router-dom';
+import { useAppSelector, useAppDispatch } from '../../services/hooks';
+import { forgotPassword } from '../../services/slices/user';
 //--------------------------------------------------------------------------------
 
-const handleSubmit = () => {
-  console.log('Submit');
-};
-
 const ForgotPassPage: FC = () => {
+  const dispatch = useAppDispatch();
+  const history = useHistory();
+
   const [email, setEmail] = useState('');
+
+  const { userRequest } = useAppSelector(state => state.user);
+
+  const handleSubmit = useCallback(
+    (evt: React.SyntheticEvent) => {
+      evt.preventDefault();
+      dispatch(forgotPassword(email));
+      if (!userRequest) {
+        history.replace('/reset-password');
+      }
+    },
+    [dispatch, email, history, userRequest]
+  );
 
   return (
     <main className={styles.main}>

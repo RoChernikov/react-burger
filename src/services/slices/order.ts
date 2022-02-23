@@ -38,8 +38,12 @@ export const orderSlice = createSlice({
   }
 });
 
-const { getOrderNumberRequest, getOrderNumberSuccess, getOrderNumberFailed } =
-  orderSlice.actions;
+export const {
+  getOrderNumberRequest,
+  getOrderNumberSuccess,
+  getOrderNumberFailed,
+  deleteOrder
+} = orderSlice.actions;
 
 export const getOrderNumber: AppThunk =
   (selectedIngredients: string[]) => (dispatch: AppDispatch) => {

@@ -1,11 +1,12 @@
 import styles from './profile.module.css';
-import React, { FC, useState } from 'react';
+import React, { FC, useState, useEffect } from 'react';
 import {
   Input,
   Button
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import ProfileNav from '../../components/profile-nav/profile-nav';
 import InputWrapper from '../../components/form/components/input-wrapper/input-wrapper';
+import { useAppSelector } from '../../services/hooks';
 //--------------------------------------------------------------------------------
 
 const handleSubmit = () => {
@@ -15,6 +16,15 @@ const handleSubmit = () => {
 const Profile: FC = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+
+  const { user } = useAppSelector(state => state.user);
+
+  useEffect(() => {
+    if (user) {
+      setEmail(user.email);
+      setName(user.name);
+    }
+  }, [user]);
 
   return (
     <main className={styles.main}>

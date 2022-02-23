@@ -1,3 +1,4 @@
+import React from 'react';
 import styles from './profile-nav.module.css';
 import { NavLink } from 'react-router-dom';
 

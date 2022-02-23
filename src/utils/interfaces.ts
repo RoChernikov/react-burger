@@ -6,7 +6,6 @@ export interface IHeaderLink {
   to: string;
   icon: ReactNode;
   children: ReactNode;
-  onClick: () => void;
 }
 
 export interface IBurgerConstructor {
@@ -86,4 +85,9 @@ export interface IRegisterForm {
 export interface ILoginForm {
   email: string;
   password: string;
+}
+
+export interface ICookieProps {
+  [name: string]: string | number | boolean | Date | undefined;
+  expires?: Date | number | string;
 }

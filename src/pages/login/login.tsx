@@ -1,5 +1,5 @@
 import styles from './login.module.css';
-import React, { FC, useState } from 'react';
+import React, { FC, useState, useCallback } from 'react';
 import {
   Input,
   PasswordInput
@@ -8,15 +8,30 @@ import Form from '../../components/form/form';
 import Submit from '../../components/form/components/submit/submit';
 import InputWrapper from '../../components/form/components/input-wrapper/input-wrapper';
 import FormHint from '../../components/form/components/form-hint/form-hint';
+import { useHistory } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../services/hooks';
+import { login } from '../../services/slices/user';
 //--------------------------------------------------------------------------------
 
-const handleSubmit = () => {
-  console.log('Submit');
-};
-
 const LoginPage: FC = () => {
+  const dispatch = useAppDispatch();
+  const history = useHistory();
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  const { userRequest } = useAppSelector(state => state.user);
+
+  const handleSubmit = useCallback(
+    (evt: React.SyntheticEvent) => {
+      evt.preventDefault();
+      dispatch(login({ email, password }));
+      if (!userRequest) {
+        history.replace('/profile');
+      }
+    },
+    [dispatch, email, password, history, userRequest]
+  );
 
   return (
     <main className={styles.main}>

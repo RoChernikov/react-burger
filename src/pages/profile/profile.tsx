@@ -1,23 +1,24 @@
 import styles from './profile.module.css';
-import React, { FC, useState, useEffect } from 'react';
+import React, { FC, useState, useEffect, useCallback } from 'react';
 import {
   Input,
   Button
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import ProfileNav from '../../components/profile-nav/profile-nav';
 import InputWrapper from '../../components/form/components/input-wrapper/input-wrapper';
-import { useAppSelector } from '../../services/hooks';
+import { useAppSelector, useAppDispatch } from '../../services/hooks';
+import { useHistory } from 'react-router-dom';
+import { patchUser } from '../../services/slices/user';
 //--------------------------------------------------------------------------------
 
-const handleSubmit = () => {
-  console.log('Submit');
-};
-
 const Profile: FC = () => {
+  const dispatch = useAppDispatch();
+  const history = useHistory();
+
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
 
-  const { user } = useAppSelector(state => state.user);
+  const { user, userRequest } = useAppSelector(state => state.user);
 
   useEffect(() => {
     if (user) {
@@ -25,6 +26,29 @@ const Profile: FC = () => {
       setName(user.name);
     }
   }, [user]);
+
+  const handleSubmit = useCallback(
+    (evt: React.SyntheticEvent) => {
+      evt.preventDefault();
+      dispatch(patchUser({ name, email }));
+      if (!userRequest) {
+        history.replace('/profile');
+      }
+    },
+    [dispatch, name, email, history, userRequest]
+  );
+
+  const handleReset = useCallback(
+    (evt: React.SyntheticEvent) => {
+      evt.preventDefault();
+      setName(user.name);
+      setEmail(user.email);
+      if (!userRequest) {
+        history.replace('/profile');
+      }
+    },
+    [dispatch, name, email, history, userRequest]
+  );
 
   return (
     <main className={styles.main}>
@@ -63,7 +87,7 @@ const Profile: FC = () => {
           />
         </InputWrapper>
         <div className={styles.buttons}>
-          <Button type="secondary" size="medium">
+          <Button type="secondary" size="medium" onClick={handleReset}>
             Отмена
           </Button>
           <Button size="small">Сохранить</Button>

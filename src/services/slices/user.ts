@@ -82,9 +82,10 @@ export const updateToken: AppThunk = () => () => {
   if (!token) {
     throw new Error('There is no refresh token in cookies');
   }
-  return Api.updateToken(token).then(data =>
-    setCookie('refresh-token', data.refreshToken)
-  );
+  return Api.updateToken(token).then(data => {
+    setCookie('accessToken', data.accessToken);
+    setCookie('refresh-token', data.refreshToken);
+  });
 };
 
 export const register: AppThunk = data => (dispatch: AppDispatch) => {
@@ -171,7 +172,7 @@ export const forgotPassword: AppThunk =
 export const resetPassword: AppThunk =
   (password: string, token: string) => (dispatch: AppDispatch) => {
     dispatch(request());
-    return Api.resetPassword({ password: password, token: token })
+    return Api.resetPassword({ password, token })
       .then(data => {
         if (data.success) {
           dispatch(success());
@@ -184,3 +185,40 @@ export const resetPassword: AppThunk =
         console.log(`${err}`);
       });
   };
+
+export const getUser: AppThunk =
+  (accessToken: string) => (dispatch: AppDispatch) => {
+    dispatch(request());
+    return Api.getUser(accessToken)
+      .then(data => {
+        if (data.success) {
+          dispatch(success());
+        } else {
+          throw Error(data.message);
+        }
+      })
+      .catch(err => {
+        dispatch(failed());
+        console.log(`${err}`);
+      });
+  };
+
+export const patchUser: AppThunk = (data: TUser) => (dispatch: AppDispatch) => {
+  const accessToken: string = getCookie('accessToken') || '';
+  dispatch(request());
+  return Api.patchUser(accessToken, data)
+    .then(data => {
+      if (data.success) {
+        dispatch(setUser(data.user));
+        dispatch(success());
+      } else if (data.message === 'jwt expired') {
+        updateToken();
+      } else {
+        throw Error(data.message);
+      }
+    })
+    .catch(err => {
+      dispatch(failed());
+      console.log(`${err}`);
+    });
+};

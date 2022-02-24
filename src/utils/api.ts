@@ -62,14 +62,14 @@ class Api {
   getUser(accessToken: string) {
     return fetch(`${BASE_URL}/auth/user`, {
       method: 'GET',
-      headers: { ...this._headers, Authorization: `Bearer ${accessToken}` }
+      headers: { ...this._headers, Authorization: accessToken }
     }).then(this._getResponceData);
   }
 
   patchUser(accessToken: string, data: { name: string; email: string }) {
     return fetch(`${BASE_URL}/auth/user`, {
       method: 'PATCH',
-      headers: { ...this._headers, Authorization: `Bearer ${accessToken}` },
+      headers: { ...this._headers, Authorization: accessToken },
       body: JSON.stringify(data)
     }).then(this._getResponceData);
   }

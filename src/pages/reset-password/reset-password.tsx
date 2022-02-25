@@ -10,28 +10,29 @@ import InputWrapper from '../../components/form/components/input-wrapper/input-w
 import FormHint from '../../components/form/components/form-hint/form-hint';
 import { useAppDispatch, useAppSelector } from '../../services/hooks';
 import { useHistory } from 'react-router';
-import { resetPassword } from '../../services/slices/user';
+// import { resetPassword } from '../../services/slices/user';
 //--------------------------------------------------------------------------------
 
 const ResetPassPage: FC = () => {
   const dispatch = useAppDispatch();
   const history = useHistory();
-
   const [password, setPassword] = useState('');
   const [value, setValue] = useState('');
+  // const { userRequest } = useAppSelector(state => state.user);
+  //-------------------------------------------------------------------------------
 
-  const { userRequest } = useAppSelector(state => state.user);
+  // const handleSubmit = useCallback(
+  //   (evt: React.SyntheticEvent) => {
+  //     evt.preventDefault();
+  //     dispatch(resetPassword(password, value));
+  //     if (!userRequest) {
+  //       history.replace('/login');
+  //     }
+  //   },
+  //   [dispatch, password, value, history, userRequest]
+  // );
 
-  const handleSubmit = useCallback(
-    (evt: React.SyntheticEvent) => {
-      evt.preventDefault();
-      dispatch(resetPassword(password, value));
-      if (!userRequest) {
-        history.replace('/login');
-      }
-    },
-    [dispatch, password, value, history, userRequest]
-  );
+  const handleSubmit = () => console.log('reset-pass-submit');
 
   return (
     <main className={styles.main}>

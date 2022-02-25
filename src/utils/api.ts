@@ -43,7 +43,7 @@ class Api {
     }).then(this._getResponceData);
   }
 
-  login(data: ILoginForm) {
+  signIn(data: ILoginForm) {
     return fetch(`${BASE_URL}/auth/login`, {
       method: 'POST',
       headers: this._headers,
@@ -74,7 +74,7 @@ class Api {
     }).then(this._getResponceData);
   }
 
-  logout(refreshToken: string) {
+  signOut(refreshToken: string) {
     return fetch(`${BASE_URL}/auth/logout`, {
       method: 'POST',
       headers: this._headers,

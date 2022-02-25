@@ -12,6 +12,7 @@ import ResetPassPage from '../../pages/reset-password/reset-password';
 import IngredientPage from '../../pages/ingredient/ingredient-page';
 import NotFound404 from '../../pages/not-found-404/not-found-404';
 import { Switch, Route, useLocation, useHistory } from 'react-router-dom';
+import ProtectedRoute from '../protected-route/protected-route';
 import { ILocationParams } from '../../utils/interfaces';
 import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
@@ -51,6 +52,7 @@ const App: FC = () => {
         <Route exact path="/reset-password" children={<ResetPassPage />} />
         <Route exact path="/ingredients/:id" children={<IngredientPage />} />
         <Route exact path="/profile" children={<ProfilePage />} />
+        <Route exact path="/profile/orders" children={<ProfilePage />} />
         <Route exact path="/feed" children={<FeedPage />} />
         <Route children={<NotFound404 />} />
       </Switch>

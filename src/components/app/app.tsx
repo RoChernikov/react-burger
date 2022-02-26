@@ -6,6 +6,7 @@ import HomePage from '../../pages/home/home';
 import LoginPage from '../../pages/login/login';
 import RegisterPage from '../../pages/register/register';
 import ProfilePage from '../../pages/profile/profile';
+import OrdersPage from '../../pages/orders/orders';
 import FeedPage from '../../pages/feed/feed';
 import ForgotPassPage from '../../pages/forgot-password/forgot-password';
 import ResetPassPage from '../../pages/reset-password/reset-password';
@@ -51,9 +52,13 @@ const App: FC = () => {
         <Route exact path="/forgot-password" children={<ForgotPassPage />} />
         <Route exact path="/reset-password" children={<ResetPassPage />} />
         <Route exact path="/ingredients/:id" children={<IngredientPage />} />
-        <Route exact path="/profile" children={<ProfilePage />} />
-        <Route exact path="/profile/orders" children={<ProfilePage />} />
-        <Route exact path="/feed" children={<FeedPage />} />
+        <ProtectedRoute exact path="/profile" children={<ProfilePage />} />
+        <ProtectedRoute
+          exact
+          path="/profile/orders"
+          children={<OrdersPage />}
+        />
+        <ProtectedRoute exact path="/feed" children={<FeedPage />} />
         <Route children={<NotFound404 />} />
       </Switch>
       {background && (

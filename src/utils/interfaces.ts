@@ -45,7 +45,7 @@ export interface IIngredientsCategory {
   counts: { [ingredient: string]: number };
 }
 
-export interface IForm {
+export interface IFormComponent {
   children: ReactNode;
   onSubmit?: (evt: SyntheticEvent) => void;
   title: string;
@@ -76,15 +76,10 @@ export interface ILocationParams extends Location {
   background?: Location;
 }
 
-export interface IRegisterForm {
+export interface IForm {
   email: string;
   password: string;
-  name: string;
-}
-
-export interface ILoginForm {
-  email: string;
-  password: string;
+  name?: string;
 }
 
 export interface ICookieProps {

@@ -2,13 +2,14 @@ import styles from './profile.module.css';
 import React, { FC, useState, useEffect, useCallback } from 'react';
 import {
   Input,
+  PasswordInput,
   Button
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import ProfileNav from '../../components/profile-nav/profile-nav';
 import InputWrapper from '../../components/form/components/input-wrapper/input-wrapper';
 import { useAppSelector, useAppDispatch } from '../../services/hooks';
 import { useHistory } from 'react-router-dom';
-// import { patchUser } from '../../services/slices/user';
+import { patchUser } from '../../services/slices/user';
 //--------------------------------------------------------------------------------
 
 const Profile: FC = () => {
@@ -16,41 +17,33 @@ const Profile: FC = () => {
   const history = useHistory();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  // const { user, userRequest } = useAppSelector(state => state.user);
+  const [pass, setPass] = useState('');
+  const { user } = useAppSelector(state => state.user);
   //-------------------------------------------------------------------------------
 
-  // useEffect(() => {
-  //   if (user) {
-  //     setEmail(user.email);
-  //     setName(user.name);
-  //   }
-  // }, [user]);
+  useEffect(() => {
+    if (user) {
+      setEmail(user.email);
+      setName(user.name);
+    }
+  }, [user]);
 
-  // const handleSubmit = useCallback(
-  //   (evt: React.SyntheticEvent) => {
-  //     evt.preventDefault();
-  //     dispatch(patchUser({ name, email }));
-  //     if (!userRequest) {
-  //       history.replace('/profile');
-  //     }
-  //   },
-  //   [dispatch, name, email, history, userRequest]
-  // );
+  const handleSubmit = useCallback(
+    (evt: React.SyntheticEvent) => {
+      evt.preventDefault();
+      dispatch(patchUser({ name, email, password: pass }));
+    },
+    [dispatch, name, email, pass]
+  );
 
-  // const handleReset = useCallback(
-  //   (evt: React.SyntheticEvent) => {
-  //     evt.preventDefault();
-  //     setName(user.name);
-  //     setEmail(user.email);
-  //     if (!userRequest) {
-  //       history.replace('/profile');
-  //     }
-  //   },
-  //   [dispatch, name, email, history, userRequest]
-  // );
-
-  const handleSubmit = () => console.log('profile-submit');
-  const handleReset = () => console.log('profile-reset');
+  const handleReset = useCallback(
+    (evt: React.SyntheticEvent) => {
+      evt.preventDefault();
+      setName(user.name);
+      setEmail(user.email);
+    },
+    [user]
+  );
 
   return (
     <main className={styles.main}>
@@ -79,13 +72,10 @@ const Profile: FC = () => {
         </InputWrapper>
 
         <InputWrapper>
-          <Input
-            name="password"
-            type="password"
-            value="password"
-            onChange={() => {}}
-            icon="EditIcon"
-            placeholder="Пароль"
+          <PasswordInput
+            name="newPass"
+            value={pass}
+            onChange={evt => setPass(evt.target.value)}
           />
         </InputWrapper>
         <div className={styles.buttons}>

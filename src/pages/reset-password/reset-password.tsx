@@ -1,5 +1,6 @@
 import styles from './reset-password.module.css';
 import React, { FC, useState, useCallback } from 'react';
+import { useHistory, Redirect } from 'react-router-dom';
 import {
   Input,
   PasswordInput
@@ -9,8 +10,7 @@ import Submit from '../../components/form/components/submit/submit';
 import InputWrapper from '../../components/form/components/input-wrapper/input-wrapper';
 import FormHint from '../../components/form/components/form-hint/form-hint';
 import { useAppDispatch, useAppSelector } from '../../services/hooks';
-import { useHistory } from 'react-router';
-// import { resetPassword } from '../../services/slices/user';
+import { resetPassword } from '../../services/slices/user';
 //--------------------------------------------------------------------------------
 
 const ResetPassPage: FC = () => {
@@ -18,21 +18,30 @@ const ResetPassPage: FC = () => {
   const history = useHistory();
   const [password, setPassword] = useState('');
   const [value, setValue] = useState('');
-  // const { userRequest } = useAppSelector(state => state.user);
+  const { isAuth } = useAppSelector(state => state.user);
   //-------------------------------------------------------------------------------
 
-  // const handleSubmit = useCallback(
-  //   (evt: React.SyntheticEvent) => {
-  //     evt.preventDefault();
-  //     dispatch(resetPassword(password, value));
-  //     if (!userRequest) {
-  //       history.replace('/login');
-  //     }
-  //   },
-  //   [dispatch, password, value, history, userRequest]
-  // );
+  const handleSubmit = useCallback(
+    (evt: React.SyntheticEvent) => {
+      evt.preventDefault();
+      dispatch(
+        resetPassword(password, value, () => {
+          history.replace({ pathname: '/login' });
+        })
+      );
+    },
+    [dispatch, password, value, history]
+  );
 
-  const handleSubmit = () => console.log('reset-pass-submit');
+  if (isAuth) {
+    return (
+      <Redirect
+        to={{
+          pathname: '/'
+        }}
+      />
+    );
+  }
 
   return (
     <main className={styles.main}>

@@ -1,6 +1,6 @@
 import styles from './login.module.css';
 import React, { FC, useState, useCallback } from 'react';
-import { Redirect } from 'react-router-dom';
+import { useHistory, Redirect } from 'react-router-dom';
 import {
   Input,
   PasswordInput
@@ -9,9 +9,8 @@ import Form from '../../components/form/form';
 import Submit from '../../components/form/components/submit/submit';
 import InputWrapper from '../../components/form/components/input-wrapper/input-wrapper';
 import FormHint from '../../components/form/components/form-hint/form-hint';
-import { useHistory } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../services/hooks';
-// import { signIn } from '../../services/slices/user';
+import { signIn } from '../../services/slices/user';
 //--------------------------------------------------------------------------------
 
 const LoginPage: FC = () => {
@@ -19,32 +18,30 @@ const LoginPage: FC = () => {
   const history = useHistory();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  // const { user } = useAppSelector(state => state.user);
+  const { isAuth } = useAppSelector(state => state.user);
   //-------------------------------------------------------------------------------
 
-  // const handleSubmit = useCallback(
-  //   (evt: React.SyntheticEvent) => {
-  //     evt.preventDefault();
-  //     dispatch(
-  //       signIn({ email, password }, () => {
-  //         history.replace({ pathname: '/' });
-  //       })
-  //     );
-  //   },
-  //   [dispatch, email, password]
-  // );
+  const handleSubmit = useCallback(
+    (evt: React.SyntheticEvent) => {
+      evt.preventDefault();
+      dispatch(
+        signIn({ email, password }, () => {
+          history.replace({ pathname: '/' });
+        })
+      );
+    },
+    [dispatch, email, password, history]
+  );
 
-  // if (user.name) {
-  //   return (
-  //     <Redirect
-  //       to={{
-  //         pathname: '/'
-  //       }}
-  //     />
-  //   );
-  // }
-
-  const handleSubmit = () => console.log('login-submit');
+  if (isAuth) {
+    return (
+      <Redirect
+        to={{
+          pathname: '/'
+        }}
+      />
+    );
+  }
 
   return (
     <main className={styles.main}>

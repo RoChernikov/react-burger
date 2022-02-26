@@ -3,23 +3,25 @@ import styles from './profile-nav.module.css';
 import { NavLink } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../services/hooks';
-// import { signOut } from '../../services/slices/user';
+import { signOut } from '../../services/slices/user';
 //--------------------------------------------------------------------------------
 
 const ProfileNav = () => {
   const history = useHistory();
   const dispatch = useAppDispatch();
-  // const { userRequest } = useAppSelector(state => state.user);
   //-------------------------------------------------------------------------------
 
-  // const handleLogoutClick = useCallback(() => {
-  //   dispatch(signOut());
-  //   if (!userRequest) {
-  //     history.replace('/');
-  //   }
-  // }, [dispatch, history, userRequest]);
-
-  const handleLogoutClick = () => console.log('logout');
+  const handleLogoutClick = useCallback(
+    (evt: React.SyntheticEvent) => {
+      evt.preventDefault();
+      dispatch(
+        signOut(() => {
+          history.replace({ pathname: '/login' });
+        })
+      );
+    },
+    [dispatch, history]
+  );
 
   return (
     <aside className={styles.wrapper}>

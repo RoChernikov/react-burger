@@ -1,5 +1,6 @@
 import styles from './register.module.css';
 import React, { FC, useCallback, useState } from 'react';
+import { useHistory, Redirect } from 'react-router-dom';
 import {
   Input,
   PasswordInput
@@ -8,9 +9,8 @@ import Form from '../../components/form/form';
 import Submit from '../../components/form/components/submit/submit';
 import InputWrapper from '../../components/form/components/input-wrapper/input-wrapper';
 import FormHint from '../../components/form/components/form-hint/form-hint';
-import { useHistory } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../services/hooks';
-// import { register } from '../../services/slices/user';
+import { register } from '../../services/slices/user';
 //--------------------------------------------------------------------------------
 
 const RegisterPage: FC = () => {
@@ -19,7 +19,7 @@ const RegisterPage: FC = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  // const { userRequest } = useAppSelector(state => state.user);
+  const { isAuth } = useAppSelector(state => state.user);
   //-------------------------------------------------------------------------------
 
   // const handleSubmit = useCallback(
@@ -33,7 +33,23 @@ const RegisterPage: FC = () => {
   //   [dispatch, name, email, password, history, userRequest]
   // );
 
-  const handleSubmit = () => console.log('register-submit');
+  const handleSubmit = useCallback(
+    (evt: React.SyntheticEvent) => {
+      evt.preventDefault();
+      console.log('register-submit');
+    },
+    [dispatch]
+  );
+
+  if (isAuth) {
+    return (
+      <Redirect
+        to={{
+          pathname: '/'
+        }}
+      />
+    );
+  }
 
   return (
     <main className={styles.main}>

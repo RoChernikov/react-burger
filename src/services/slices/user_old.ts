@@ -3,7 +3,7 @@ import { AppThunk, AppDispatch } from '../../services/store';
 import Api from '../../utils/api';
 import { getCookie, setCookie, deleteCookie } from '../../utils/cookie';
 import { TUser } from '../../utils/types';
-import { ILoginForm } from '../../utils/interfaces';
+import { IForm } from '../../utils/interfaces';
 //--------------------------------------------------------------------------------
 
 interface IUserState {
@@ -79,7 +79,7 @@ export const {
 } = userSlice.actions;
 
 export const updateToken: AppThunk = () => () => {
-  const token = getCookie('refreshToken');
+  let token = getCookie('refreshToken');
   if (!token) {
     throw new Error('There is no refresh token in cookies');
   }
@@ -110,7 +110,7 @@ export const register: AppThunk = data => (dispatch: AppDispatch) => {
 };
 
 export const signIn: AppThunk =
-  (data: ILoginForm, cb) => (dispatch: AppDispatch) => {
+  (data: IForm, cb) => (dispatch: AppDispatch) => {
     dispatch(request());
     Api.signIn(data)
       .then(data => {
@@ -133,7 +133,7 @@ export const signIn: AppThunk =
 
 export const signOut: AppThunk = () => (dispatch: AppDispatch) => {
   dispatch(request());
-  const token = getCookie('refreshToken');
+  let token = getCookie('refreshToken');
   if (!token) {
     throw new Error('There is no refresh token in cookies');
   }
@@ -192,7 +192,7 @@ export const resetPassword: AppThunk =
 
 export const getUser: AppThunk = () => (dispatch: AppDispatch) => {
   dispatch(request());
-  const accessToken: string = getCookie('accessToken');
+  let accessToken: string = getCookie('accessToken');
   return Api.getUser(accessToken)
     .then(data => {
       if (data.success) {
@@ -208,7 +208,7 @@ export const getUser: AppThunk = () => (dispatch: AppDispatch) => {
 };
 
 export const patchUser: AppThunk = (data: TUser) => (dispatch: AppDispatch) => {
-  const accessToken: string = getCookie('accessToken') || '';
+  let accessToken: string = getCookie('accessToken') || '';
   dispatch(request());
   return Api.patchUser(accessToken, data)
     .then(data => {

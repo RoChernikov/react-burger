@@ -33,4 +33,7 @@ export type TCloseModal = { closeModal: () => void; children?: ReactNode };
 export type TUser = {
   name: string;
   email: string;
+  password?: string;
 };
+
+export type TStatus = 'pending' | 'success' | 'failed';

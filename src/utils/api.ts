@@ -1,4 +1,4 @@
-import { IRegisterForm, ILoginForm } from './interfaces';
+import { IForm } from './interfaces';
 const BASE_URL = 'https://norma.nomoreparties.space/api';
 
 type TBaseUrl = { baseUrl: string };
@@ -35,7 +35,7 @@ class Api {
     }).then(this._getResponceData);
   }
 
-  register(data: IRegisterForm) {
+  register(data: IForm) {
     return fetch(`${BASE_URL}/auth/register`, {
       method: 'POST',
       headers: this._headers,
@@ -43,7 +43,7 @@ class Api {
     }).then(this._getResponceData);
   }
 
-  signIn(data: ILoginForm) {
+  signIn(data: IForm) {
     return fetch(`${BASE_URL}/auth/login`, {
       method: 'POST',
       headers: this._headers,
@@ -62,14 +62,14 @@ class Api {
   getUser(accessToken: string) {
     return fetch(`${BASE_URL}/auth/user`, {
       method: 'GET',
-      headers: { ...this._headers, Authorization: accessToken }
+      headers: { ...this._headers, Authorization: `Bearer ${accessToken}` }
     }).then(this._getResponceData);
   }
 
   patchUser(accessToken: string, data: { name: string; email: string }) {
     return fetch(`${BASE_URL}/auth/user`, {
       method: 'PATCH',
-      headers: { ...this._headers, Authorization: accessToken },
+      headers: { ...this._headers, Authorization: `Bearer ${accessToken}` },
       body: JSON.stringify(data)
     }).then(this._getResponceData);
   }

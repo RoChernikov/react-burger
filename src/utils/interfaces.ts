@@ -1,11 +1,11 @@
-import { ReactNode } from 'react';
+import { ReactNode, SyntheticEvent } from 'react';
 import { TIngredient, TMeal } from './types';
+import { Location } from 'history';
 
 export interface IHeaderLink {
+  to: string;
   icon: ReactNode;
-  active: boolean;
   children: ReactNode;
-  onClick: () => void;
 }
 
 export interface IBurgerConstructor {
@@ -30,7 +30,6 @@ export interface IConstructorItem {
 
 export interface IBurgerIngredient {
   ingredient: TIngredient;
-  openModal: (ingredient: TIngredient) => void;
   count: number;
 }
 
@@ -43,6 +42,47 @@ export interface IIngredientsCategory {
   id: string;
   title: string;
   ingredients: TIngredient[];
-  openModal: (ingredient: TIngredient) => void;
   counts: { [ingredient: string]: number };
+}
+
+export interface IFormComponent {
+  children: ReactNode;
+  onSubmit?: (evt: SyntheticEvent) => void;
+  title: string;
+}
+
+export interface IInputWrapper {
+  children: ReactNode;
+}
+
+export interface ISubmit {
+  children: ReactNode;
+}
+
+export interface IFormHint {
+  children: string;
+  link: string;
+  caption: string;
+}
+
+export interface ILocationParams extends Location {
+  from: {
+    pathname: string;
+    state: object;
+    search: string;
+    hash: string;
+    key: string;
+  };
+  background?: Location;
+}
+
+export interface IForm {
+  email: string;
+  password: string;
+  name?: string;
+}
+
+export interface ICookieProps {
+  [name: string]: string | number | boolean | Date | undefined;
+  expires?: Date | number | string;
 }

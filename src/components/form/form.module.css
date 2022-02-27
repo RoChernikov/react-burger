@@ -1,0 +1,22 @@
+.form {
+  width: 100%;
+  max-width: 480px;
+  opacity: 0;
+  transform: scale(0.8);
+  animation: appearance 0.3s forwards;
+}
+
+.title {
+  text-align: center;
+}
+
+@keyframes appearance {
+  0% {
+    opacity: 0;
+    transform: scale(0.7);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

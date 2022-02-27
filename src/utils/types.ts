@@ -1,4 +1,5 @@
 import { ReactNode } from 'react';
+
 export type TIngredient = {
   _id: string;
   name: string;
@@ -17,10 +18,6 @@ export type TIngredient = {
 
 export type TMeal = 'bun' | 'sauce' | 'main';
 
-export type TOpenIngredientModal = {
-  openModal: (ingredient: TIngredient) => void;
-};
-
 export type TOrder = {
   success: boolean;
   name: string;
@@ -32,3 +29,11 @@ export type TOrder = {
 export type TDestructIngredient = { ingredient: TIngredient };
 
 export type TCloseModal = { closeModal: () => void; children?: ReactNode };
+
+export type TUser = {
+  name: string;
+  email: string;
+  password?: string;
+};
+
+export type TStatus = 'pending' | 'success' | 'failed';

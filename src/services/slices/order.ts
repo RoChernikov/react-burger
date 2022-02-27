@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { AppThunk, AppDispatch } from '../..';
+import { AppThunk, AppDispatch } from '../../services/store';
 import Api from '../../utils/api';
 import { burgerConstructorSlice } from './constructor';
 import { TOrder } from '../../utils/types';
@@ -38,8 +38,12 @@ export const orderSlice = createSlice({
   }
 });
 
-const { getOrderNumberRequest, getOrderNumberSuccess, getOrderNumberFailed } =
-  orderSlice.actions;
+export const {
+  getOrderNumberRequest,
+  getOrderNumberSuccess,
+  getOrderNumberFailed,
+  deleteOrder
+} = orderSlice.actions;
 
 export const getOrderNumber: AppThunk =
   (selectedIngredients: string[]) => (dispatch: AppDispatch) => {
@@ -52,6 +56,6 @@ export const getOrderNumber: AppThunk =
       })
       .catch(err => {
         dispatch(getOrderNumberFailed());
-        console.log(`${err}`);
+        console.log(err);
       });
   };

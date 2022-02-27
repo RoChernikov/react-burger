@@ -6,7 +6,6 @@ import { IBurgerIngredient } from '../../../../utils/interfaces';
 
 const BurgerIngredientsDndWrapper: FC<IBurgerIngredient> = ({
   ingredient,
-  openModal,
   count
 }) => {
   const [{ isDrag }, dragRef] = useDrag({
@@ -19,7 +18,6 @@ const BurgerIngredientsDndWrapper: FC<IBurgerIngredient> = ({
   return (
     <BurgerIngredient
       ingredient={ingredient}
-      openModal={openModal}
       count={count}
       isDragging={isDrag}
       ref={dragRef}

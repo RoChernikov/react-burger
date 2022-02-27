@@ -1,5 +1,5 @@
 import styles from './app-header.module.css';
-import React, { useState, FC } from 'react';
+import React, { FC, useMemo, useEffect } from 'react';
 import {
   Logo,
   BurgerIcon,
@@ -7,10 +7,20 @@ import {
   ProfileIcon
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import HeaderLink from './components/header-link/header-link';
+import { NavLink, useHistory } from 'react-router-dom';
+import { useAppSelector, useAppDispatch } from '../../services/hooks';
+import { getUser } from '../../services/slices/user';
 //--------------------------------------------------------------------------------
 
 const AppHeader: FC = () => {
-  const [page, setPage] = useState('constructor');
+  const dispatch = useAppDispatch();
+  const history = useHistory();
+  const path = useMemo(() => history.location.pathname, [history.location]);
+  const { user, isAuth, status } = useAppSelector(state => state.user);
+
+  useEffect(() => {
+    isAuth && dispatch(getUser());
+  }, [dispatch, isAuth]);
 
   return (
     <header className={`pt-4 pb-4 ${styles.header}`}>
@@ -18,42 +28,42 @@ const AppHeader: FC = () => {
         <ul className={styles.list}>
           <li className="mr-2">
             <HeaderLink
+              to="/"
               icon={
-                <BurgerIcon
-                  type={page === 'constructor' ? 'primary' : 'secondary'}
-                />
-              }
-              active={page === 'constructor' ? true : false}
-              onClick={() => setPage('constructor')}>
+                <BurgerIcon type={path === '/' ? 'primary' : 'secondary'} />
+              }>
               Конструктор
             </HeaderLink>
           </li>
           <li>
             <HeaderLink
+              to="/feed"
               icon={
-                <ListIcon
-                  type={page === 'orderList' ? 'primary' : 'secondary'}
-                />
-              }
-              active={page === 'orderList' ? true : false}
-              onClick={() => setPage('orderList')}>
+                <ListIcon type={path === '/feed' ? 'primary' : 'secondary'} />
+              }>
               Лента заказов
             </HeaderLink>
           </li>
         </ul>
-        <a href="/" className={styles.logoWrapper}>
+        <NavLink to="/" className={styles.logoWrapper}>
           <Logo />
-        </a>
-        <div className={styles.profileLinkWrapper}>
+        </NavLink>
+        <div
+          className={
+            isAuth && status !== 'pending'
+              ? `${styles.profileLinkWrapper} ${styles.loggedIn}`
+              : `${styles.profileLinkWrapper}`
+          }>
           <HeaderLink
+            to="/profile"
             icon={
               <ProfileIcon
-                type={page === 'profile' ? 'primary' : 'secondary'}
+                type={path === '/profile' ? 'primary' : 'secondary'}
               />
-            }
-            active={page === 'profile' ? true : false}
-            onClick={() => setPage('profile')}>
-            Личный кабинет
+            }>
+            {status === 'pending'
+              ? 'Загрузка...'
+              : `${user?.name}` || 'Личный кабинет'}
           </HeaderLink>
         </div>
       </nav>

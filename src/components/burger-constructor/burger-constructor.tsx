@@ -1,5 +1,6 @@
 import styles from './burger-constructor.module.css';
 import React, { useCallback, useMemo, forwardRef, useState } from 'react';
+import { useHistory, Redirect } from 'react-router-dom';
 import {
   Button,
   CurrencyIcon,
@@ -18,12 +19,15 @@ const BurgerConstructor = forwardRef<
   IBurgerConstructor & { isHover: boolean }
 >(({ openModal, isHover }, ref) => {
   const dispatch = useAppDispatch();
+  const history = useHistory();
 
   const { deleteIngredient } = burgerConstructorSlice.actions;
 
   const { selectedIngredients, selectedBun } = useAppSelector(
     state => state.burgerConstructor
   );
+
+  const { isAuth } = useAppSelector(state => state.user);
 
   const [bunPlugBorder, setBunPlugBorder] = useState('white');
 
@@ -54,10 +58,14 @@ const BurgerConstructor = forwardRef<
     openModal(selectedIngredients.concat(selectedBun));
   }, [openModal, selectedIngredients, selectedBun]);
 
+  const handleSignIn = useCallback(() => {
+    history.replace({ pathname: '/login' });
+  }, [history]);
+
   const background = isHover
     ? `radial-gradient(
   circle,
-  rgba(87, 0, 255, 0.5480567226890756) 0%,
+  rgba(87, 0, 255, 0.35) 0%,
   rgba(19, 19, 22, 1) 65%
 )`
     : 'transparent';
@@ -125,8 +133,11 @@ const BurgerConstructor = forwardRef<
         <span className="ml-2 mr-10">
           <CurrencyIcon type="primary" />
         </span>
-        <Button type="primary" size="large" onClick={handleSubmit}>
-          Оформить заказ
+        <Button
+          type="primary"
+          size="large"
+          onClick={isAuth ? handleSubmit : handleSignIn}>
+          {isAuth ? 'Оформить заказ' : 'Войти'}
         </Button>
       </div>
     </section>

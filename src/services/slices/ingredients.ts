@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { AppThunk, AppDispatch } from '../..';
+import { AppThunk, AppDispatch } from '../../services/store';
 import Api from '../../utils/api';
 import { TIngredient, TMeal } from '../../utils/types';
 //--------------------------------------------------------------------------------
@@ -7,16 +7,16 @@ import { TIngredient, TMeal } from '../../utils/types';
 interface ingredientsState {
   ingredients: Array<TIngredient>;
   ingredientsRequest: boolean;
+  ingredientsSuccess: boolean;
   ingredientsFailed: boolean;
-  selectedIngredient: TIngredient | null;
   selectedMeal: TMeal;
 }
 
 const initialState: ingredientsState = {
   ingredients: [],
   ingredientsRequest: false,
+  ingredientsSuccess: false,
   ingredientsFailed: false,
-  selectedIngredient: null,
   selectedMeal: 'bun'
 };
 
@@ -26,21 +26,19 @@ export const ingredientsSlice = createSlice({
   reducers: {
     getIngredientsRequest(state) {
       state.ingredientsFailed = false;
+      state.ingredientsSuccess = false;
       state.ingredientsRequest = true;
     },
     getIngredientsSuccess(state, action: PayloadAction<Array<TIngredient>>) {
       state.ingredientsFailed = false;
       state.ingredientsRequest = false;
+      state.ingredientsSuccess = true;
       state.ingredients = action.payload;
     },
     getIngredientsFailed(state) {
       state.ingredientsFailed = true;
-    },
-    selectIngredient(state, action: PayloadAction<TIngredient>) {
-      state.selectedIngredient = action.payload;
-    },
-    unselectIngredient(state) {
-      state.selectedIngredient = null;
+      state.ingredientsSuccess = false;
+      state.ingredientsRequest = false;
     },
     selectMeal(state, action: PayloadAction<TMeal>) {
       state.selectedMeal = action.payload;
@@ -48,8 +46,12 @@ export const ingredientsSlice = createSlice({
   }
 });
 
-const { getIngredientsRequest, getIngredientsSuccess, getIngredientsFailed } =
-  ingredientsSlice.actions;
+export const {
+  getIngredientsRequest,
+  getIngredientsSuccess,
+  getIngredientsFailed,
+  selectMeal
+} = ingredientsSlice.actions;
 
 export const getIngredientsApi: AppThunk = () => (dispatch: AppDispatch) => {
   dispatch(getIngredientsRequest());
@@ -59,6 +61,10 @@ export const getIngredientsApi: AppThunk = () => (dispatch: AppDispatch) => {
     })
     .catch(err => {
       dispatch(getIngredientsFailed());
-      console.log(`${err}`);
+      console.log(err);
     });
+};
+
+export const selectIngredientById = (id: any) => (state: any) => {
+  return state.ingredients.ingredients.find((ing: any) => ing._id === id);
 };

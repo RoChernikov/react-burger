@@ -1,10 +1,10 @@
-<h1 align="center"><a  href="http://rochernikov.github.io/react-burger/" target="_blank"><img src="./readme_src/stellar-burger_header.jpg" width="100%" alt="шапка"></a></h1>
+<h1 align="center"><a  href="https://stellarburgers.vercel.app/" target="_blank"><img src="./readme_src/stellar-burger_header.jpg" width="100%" alt="шапка"></a></h1>
 
 ## Краткое описание:
 
 <p align="Left"> "Stellar Burgers" - одностраничное приложение, позволяющее собрать и заказать свой уникальный межгалактический бургер</p>
 
-[Открыть в браузере](http://rochernikov.github.io/react-burger/)
+[Открыть в браузере](https://stellarburgers.vercel.app/)
 
 ### Функционал:
 
@@ -24,9 +24,9 @@
 - Защищенный роутинг
 - Лента заказов (WebSocket)
 
-<a  href="http://rochernikov.github.io/react-burger/" target="_blank" align="center"><img src="./readme_src/demo.gif" width="100%" alt="Демо"></a>
+<a  href="https://stellarburgers.vercel.app/" target="_blank" align="center"><img src="./readme_src/demo.gif" width="100%" alt="Демо"></a>
 <br>
-<a  href="http://rochernikov.github.io/react-burger/" target="_blank" align="center"><img src="./readme_src/demo2.gif" width="100%" alt="Демо2"></a>
+<a  href="https://stellarburgers.vercel.app/" target="_blank" align="center"><img src="./readme_src/demo2.gif" width="100%" alt="Демо2"></a>
 
 ### Технологии, использованные при создании:
 
@@ -82,7 +82,7 @@
 
 [Макет](<https://www.figma.com/file/Z8DHldjVbvhQXtrkmJR8CU/React-%2F-Проектные-задачи-(3-месяца)?node-id=0%3A1>)
 
-- [Ссылка на GitHub Pages](http://rochernikov.github.io/react-burger/)
+- [Ссылка на деплой](https://stellarburgers.vercel.app/)
 
 - [По вопросам доработки сайта](https://t.me/ro_runner)
 

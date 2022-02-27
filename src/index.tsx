@@ -11,7 +11,7 @@ import state from './services/store';
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={state}>
-      <Router basename="react-burger">
+      <Router>
         <App />
       </Router>
     </Provider>

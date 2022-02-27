@@ -11,16 +11,16 @@ import InputWrapper from '../../components/form/components/input-wrapper/input-w
 import FormHint from '../../components/form/components/form-hint/form-hint';
 import { useAppDispatch, useAppSelector } from '../../services/hooks';
 import { resetPassword } from '../../services/slices/user';
+import { ILocationParams } from '../../utils/interfaces';
 //--------------------------------------------------------------------------------
 
 const ResetPassPage: FC = () => {
   const dispatch = useAppDispatch();
-  const history = useHistory();
+  const history = useHistory<ILocationParams>();
   const [password, setPassword] = useState('');
   const [value, setValue] = useState('');
-  const { isAuth } = useAppSelector(state => state.user);
+  const { isAuth, canResetPwd } = useAppSelector(state => state.user);
   //-------------------------------------------------------------------------------
-
   const handleSubmit = useCallback(
     (evt: React.SyntheticEvent) => {
       evt.preventDefault();
@@ -32,6 +32,16 @@ const ResetPassPage: FC = () => {
     },
     [dispatch, password, value, history]
   );
+
+  if (canResetPwd === false) {
+    return (
+      <Redirect
+        to={{
+          pathname: '/forgot-password'
+        }}
+      />
+    );
+  }
 
   if (isAuth) {
     return (

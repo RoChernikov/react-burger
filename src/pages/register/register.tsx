@@ -1,6 +1,6 @@
 import styles from './register.module.css';
 import React, { FC, useCallback, useState } from 'react';
-import { useHistory, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import {
   Input,
   PasswordInput
@@ -15,30 +15,18 @@ import { register } from '../../services/slices/user';
 
 const RegisterPage: FC = () => {
   const dispatch = useAppDispatch();
-  const history = useHistory();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { isAuth } = useAppSelector(state => state.user);
   //-------------------------------------------------------------------------------
 
-  // const handleSubmit = useCallback(
-  //   (evt: React.SyntheticEvent) => {
-  //     evt.preventDefault();
-  //     dispatch(register({ name, email, password }));
-  //     if (!userRequest) {
-  //       history.replace('/');
-  //     }
-  //   },
-  //   [dispatch, name, email, password, history, userRequest]
-  // );
-
   const handleSubmit = useCallback(
     (evt: React.SyntheticEvent) => {
       evt.preventDefault();
-      console.log('register-submit');
+      dispatch(register({ name, email, password }));
     },
-    [dispatch]
+    [dispatch, name, email, password]
   );
 
   if (isAuth) {

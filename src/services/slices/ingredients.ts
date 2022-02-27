@@ -61,7 +61,7 @@ export const getIngredientsApi: AppThunk = () => (dispatch: AppDispatch) => {
     })
     .catch(err => {
       dispatch(getIngredientsFailed());
-      console.log(`${err}`);
+      console.log(err);
     });
 };
 

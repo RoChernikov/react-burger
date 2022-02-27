@@ -56,6 +56,6 @@ export const getOrderNumber: AppThunk =
       })
       .catch(err => {
         dispatch(getOrderNumberFailed());
-        console.log(`${err}`);
+        console.log(err);
       });
   };

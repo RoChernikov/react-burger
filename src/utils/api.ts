@@ -1,4 +1,5 @@
 import { IForm } from './interfaces';
+import { getCookie } from './cookie';
 const BASE_URL = 'https://norma.nomoreparties.space/api';
 
 type TBaseUrl = { baseUrl: string };
@@ -51,34 +52,40 @@ class Api {
     }).then(this._getResponceData);
   }
 
-  updateToken(refreshToken: string) {
+  updateToken() {
     return fetch(`${BASE_URL}/auth/token`, {
       method: 'POST',
       headers: this._headers,
-      body: JSON.stringify({ token: refreshToken })
+      body: JSON.stringify({ token: getCookie('refreshToken') })
     }).then(this._getResponceData);
   }
 
-  getUser(accessToken: string) {
+  getUser() {
     return fetch(`${BASE_URL}/auth/user`, {
       method: 'GET',
-      headers: { ...this._headers, Authorization: `Bearer ${accessToken}` }
+      headers: {
+        ...this._headers,
+        Authorization: `Bearer ${getCookie('accessToken')}`
+      }
     }).then(this._getResponceData);
   }
 
-  patchUser(accessToken: string, data: { name: string; email: string }) {
+  patchUser(data: { name: string; email: string }) {
     return fetch(`${BASE_URL}/auth/user`, {
       method: 'PATCH',
-      headers: { ...this._headers, Authorization: `Bearer ${accessToken}` },
+      headers: {
+        ...this._headers,
+        Authorization: `Bearer ${getCookie('accessToken')}`
+      },
       body: JSON.stringify(data)
     }).then(this._getResponceData);
   }
 
-  signOut(refreshToken: string) {
+  signOut() {
     return fetch(`${BASE_URL}/auth/logout`, {
       method: 'POST',
       headers: this._headers,
-      body: JSON.stringify({ token: refreshToken })
+      body: JSON.stringify({ token: getCookie('refreshToken') })
     }).then(this._getResponceData);
   }
 

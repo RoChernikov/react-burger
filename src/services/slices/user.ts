@@ -10,6 +10,7 @@ interface IUserState {
   status: TStatus;
   user: TUser;
   isAuth: boolean;
+  canResetPwd: boolean;
 }
 
 const initialState: IUserState = {
@@ -18,7 +19,8 @@ const initialState: IUserState = {
     name: '',
     email: ''
   },
-  isAuth: !!getCookie('accessToken')
+  isAuth: !!getCookie('accessToken'),
+  canResetPwd: false
 };
 
 export const userSlice = createSlice({
@@ -39,6 +41,9 @@ export const userSlice = createSlice({
     },
     setAuth(state, action: PayloadAction<boolean>) {
       state.isAuth = action.payload;
+    },
+    setResetPwdStatus(state, action: PayloadAction<boolean>) {
+      state.canResetPwd = action.payload;
     }
   }
 });
@@ -48,118 +53,112 @@ export const {
   setStatusPending,
   setStatusFailed,
   setUser,
-  setAuth
+  setAuth,
+  setResetPwdStatus
 } = userSlice.actions;
 
-export const updateToken: AppThunk = () => () => {
-  let token = getCookie('refreshToken');
-  console.log(token);
-  if (!token) {
+export const updateToken: AppThunk = () => (dispatch: AppDispatch) => {
+  if (!getCookie('refreshToken')) {
     throw new Error('There is no refresh token in cookies');
   }
-  return Api.updateToken(token).then(res => {
-    setCookie('accessToken', res.accessToken.split('Bearer ')[1]);
-    setCookie('refreshToken', res.refreshToken);
-  });
+  return Api.updateToken()
+    .then(res => {
+      setCookie('accessToken', res.accessToken.split('Bearer ')[1]);
+      setCookie('refreshToken', res.refreshToken);
+    })
+    .catch(err => {
+      dispatch(setStatusFailed());
+      console.log(err);
+    });
 };
 
-export const signIn: AppThunk =
-  (data: IForm, cb: () => void) => (dispatch: AppDispatch) => {
-    dispatch(setStatusPending());
-    Api.signIn(data)
-      .then(res => {
-        if (res.success) {
-          setCookie('accessToken', res.accessToken.split('Bearer ')[1]);
-          setCookie('refreshToken', res.refreshToken);
-          dispatch(setUser(res.user));
-          dispatch(setAuth(true));
-          dispatch(setStatusSuccess());
-          cb();
-        } else {
-          throw Error(res.message);
-        }
-      })
-      .catch(err => {
-        dispatch(setStatusFailed());
-        console.log(`${err}`);
-      });
-  };
+export const signIn: AppThunk = (data: IForm) => (dispatch: AppDispatch) => {
+  dispatch(setStatusPending());
+  Api.signIn(data)
+    .then(res => {
+      setCookie('accessToken', res.accessToken.split('Bearer ')[1]);
+      setCookie('refreshToken', res.refreshToken);
+      dispatch(setUser(res.user));
+      dispatch(setAuth(true));
+      dispatch(setStatusSuccess());
+    })
+    .catch(err => {
+      dispatch(setStatusFailed());
+      console.log(err);
+    });
+};
 
 export const signOut: AppThunk =
   (cb: () => void) => (dispatch: AppDispatch) => {
     dispatch(setStatusPending());
-    Api.signOut(getCookie('refreshToken'))
+    Api.signOut()
       .then(res => {
-        if (res.success) {
-          deleteCookie('accessToken');
-          deleteCookie('refreshToken');
-          dispatch(setUser({ name: '', email: '' }));
-          dispatch(setStatusSuccess());
-          dispatch(setAuth(false));
-          cb();
-        } else {
-          throw Error(res.message);
-        }
-      })
-      .catch(err => {
-        dispatch(setStatusFailed());
-        console.log(`${err}`);
-      });
-  };
-
-export const register: AppThunk =
-  (data: IForm, cb: () => void) => (dispatch: AppDispatch) => {
-    dispatch(setStatusPending());
-    Api.register(data)
-      .then(res => {
-        if (res.success) {
-          setCookie('accessToken', res.accessToken.split('Bearer ')[1]);
-          setCookie('refreshToken', res.refreshToken);
-          dispatch(setUser(res.user));
-          dispatch(setAuth(true));
-          dispatch(setStatusSuccess());
-          cb();
-        } else {
-          throw Error(res.message);
-        }
-      })
-      .catch(err => {
-        dispatch(setStatusFailed());
-        console.log(`${err}`);
-      });
-  };
-
-export const getUser: AppThunk = () => (dispatch: AppDispatch) => {
-  dispatch(setStatusPending());
-  Api.getUser(getCookie('accessToken'))
-    .then(res => {
-      if (res.success) {
-        dispatch(setUser(res.user));
+        deleteCookie('accessToken');
+        deleteCookie('refreshToken');
+        dispatch(setUser({ name: '', email: '' }));
         dispatch(setStatusSuccess());
-      } else {
-        throw Error(res.message);
-      }
+        dispatch(setAuth(false));
+        cb();
+      })
+      .catch(err => {
+        dispatch(setStatusFailed());
+        console.log(err);
+      });
+  };
+
+export const register: AppThunk = (data: IForm) => (dispatch: AppDispatch) => {
+  dispatch(setStatusPending());
+  Api.register(data)
+    .then(res => {
+      setCookie('accessToken', res.accessToken.split('Bearer ')[1]);
+      setCookie('refreshToken', res.refreshToken);
+      dispatch(setUser(res.user));
+      dispatch(setAuth(true));
+      dispatch(setStatusSuccess());
     })
     .catch(err => {
       dispatch(setStatusFailed());
-      console.log(`${err}`);
+      console.log(err);
+    });
+};
+
+export const getUser: AppThunk = () => (dispatch: AppDispatch) => {
+  dispatch(setStatusPending());
+  Api.updateToken()
+    .then(res => {
+      setCookie('accessToken', res.accessToken.split('Bearer ')[1]);
+      setCookie('refreshToken', res.refreshToken);
+    })
+    .then(() => {
+      Api.getUser()
+        .then(res => {
+          dispatch(setUser(res.user));
+          dispatch(setStatusSuccess());
+        })
+        .catch(err => {
+          dispatch(updateToken());
+          dispatch(setStatusFailed());
+          console.log(err);
+        });
+    })
+    .catch(err => {
+      dispatch(updateToken());
+      dispatch(setStatusFailed());
+      dispatch(setAuth(false));
+      console.log(err);
     });
 };
 
 export const patchUser: AppThunk = (data: TUser) => (dispatch: AppDispatch) => {
   dispatch(setStatusPending());
-  Api.patchUser(getCookie('accessToken'), data)
+  Api.patchUser(data)
     .then(res => {
-      if (res.success) {
-        dispatch(setUser(res.user));
-        dispatch(setStatusSuccess());
-      } else {
-        throw Error(res.message);
-      }
+      dispatch(setUser(res.user));
+      dispatch(setStatusSuccess());
     })
     .catch(err => {
       dispatch(setStatusFailed());
-      console.log(`${err}`);
+      console.log(err);
     });
 };
 
@@ -168,16 +167,13 @@ export const forgotPassword: AppThunk =
     dispatch(setStatusPending());
     Api.forgotPassword(email)
       .then(res => {
-        if (res.success) {
-          dispatch(setStatusSuccess());
-          cb();
-        } else {
-          throw Error(res.message);
-        }
+        dispatch(setStatusSuccess());
+        dispatch(setResetPwdStatus(true));
+        cb();
       })
       .catch(err => {
         dispatch(setStatusFailed());
-        console.log(`${err}`);
+        console.log(err);
       });
   };
 
@@ -187,15 +183,11 @@ export const resetPassword: AppThunk =
     dispatch(setStatusPending());
     Api.resetPassword({ password, token })
       .then(res => {
-        if (res.success) {
-          dispatch(setStatusSuccess());
-          cb();
-        } else {
-          throw Error(res.message);
-        }
+        dispatch(setStatusSuccess());
+        cb();
       })
       .catch(err => {
         dispatch(setStatusFailed());
-        console.log(`${err}`);
+        console.log(err);
       });
   };

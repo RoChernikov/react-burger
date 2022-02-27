@@ -1,24 +1,42 @@
 import styles from './profile.module.css';
-import React, { FC, useState, useEffect, useCallback } from 'react';
+import React, {
+  FC,
+  useState,
+  useRef,
+  useEffect,
+  useCallback,
+  useMemo
+} from 'react';
 import {
   Input,
-  PasswordInput,
   Button
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import ProfileNav from '../../components/profile-nav/profile-nav';
 import InputWrapper from '../../components/form/components/input-wrapper/input-wrapper';
+import Loader from '../../components/loader/loader';
 import { useAppSelector, useAppDispatch } from '../../services/hooks';
-import { useHistory } from 'react-router-dom';
 import { patchUser } from '../../services/slices/user';
 //--------------------------------------------------------------------------------
 
 const Profile: FC = () => {
   const dispatch = useAppDispatch();
-  const history = useHistory();
+  const nameInputRef = useRef<HTMLInputElement>(null);
+  const loginInputRef = useRef<HTMLInputElement>(null);
+  const pwdInputRef = useRef<HTMLInputElement>(null);
+  const innitialInputState = {
+    nameState: true,
+    loginState: true,
+    pwdState: true
+  };
+  const [inputsState, setInputsState] = useState(innitialInputState);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [pass, setPass] = useState('');
-  const { user } = useAppSelector(state => state.user);
+  const { user, status } = useAppSelector(state => state.user);
+  const shouldShowBtns = useMemo(
+    () => name !== user.name || email !== user.email,
+    [user, name, email]
+  );
   //-------------------------------------------------------------------------------
 
   useEffect(() => {
@@ -45,7 +63,11 @@ const Profile: FC = () => {
     [user]
   );
 
-  return (
+  return status === 'pending' ? (
+    <div style={{ paddingTop: 220 }}>
+      <Loader />
+    </div>
+  ) : (
     <main className={styles.main}>
       <ProfileNav />
       <form onSubmit={handleSubmit} className={styles.form}>
@@ -57,6 +79,15 @@ const Profile: FC = () => {
             onChange={evt => setName(evt.target.value)}
             icon="EditIcon"
             placeholder="Имя"
+            onIconClick={async () => {
+              await setInputsState({ ...innitialInputState, nameState: false });
+              nameInputRef.current && nameInputRef.current.focus();
+            }}
+            onBlur={() => {
+              setInputsState({ ...innitialInputState, nameState: true });
+            }}
+            disabled={inputsState.nameState}
+            ref={nameInputRef}
           />
         </InputWrapper>
 
@@ -68,22 +99,48 @@ const Profile: FC = () => {
             onChange={evt => setEmail(evt.target.value)}
             icon="EditIcon"
             placeholder="Логин"
+            onIconClick={async () => {
+              await setInputsState({
+                ...innitialInputState,
+                loginState: false
+              });
+              loginInputRef.current && loginInputRef.current.focus();
+            }}
+            onBlur={() => {
+              setInputsState({ ...innitialInputState, loginState: true });
+            }}
+            disabled={inputsState.loginState}
+            ref={loginInputRef}
           />
         </InputWrapper>
 
         <InputWrapper>
-          <PasswordInput
+          <Input
             name="newPass"
+            type="password"
             value={pass}
             onChange={evt => setPass(evt.target.value)}
+            icon="EditIcon"
+            placeholder="Пароль"
+            onIconClick={async () => {
+              await setInputsState({ ...innitialInputState, pwdState: false });
+              pwdInputRef.current && pwdInputRef.current.focus();
+            }}
+            onBlur={() => {
+              setInputsState({ ...innitialInputState, pwdState: true });
+            }}
+            disabled={inputsState.pwdState}
+            ref={pwdInputRef}
           />
         </InputWrapper>
-        <div className={styles.buttons}>
-          <Button type="secondary" size="medium" onClick={handleReset}>
-            Отмена
-          </Button>
-          <Button size="small">Сохранить</Button>
-        </div>
+        {shouldShowBtns && (
+          <div className={styles.buttons}>
+            <Button type="secondary" size="medium" onClick={handleReset}>
+              Отмена
+            </Button>
+            <Button size="small">Сохранить</Button>
+          </div>
+        )}
       </form>
     </main>
   );

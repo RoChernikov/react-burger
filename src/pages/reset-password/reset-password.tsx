@@ -2,9 +2,11 @@ import styles from './reset-password.module.css';
 import React, { FC, useState, useCallback } from 'react';
 import { useHistory, Redirect } from 'react-router-dom';
 import {
-  Input,
-  PasswordInput
-} from '@ya.praktikum/react-developer-burger-ui-components';
+  checkValidate,
+  passSchema,
+  resetCodeSchema
+} from '../../validations/user-validation';
+import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import Form from '../../components/form/form';
 import Submit from '../../components/form/components/submit/submit';
 import InputWrapper from '../../components/form/components/input-wrapper/input-wrapper';
@@ -18,30 +20,23 @@ const ResetPassPage: FC = () => {
   const dispatch = useAppDispatch();
   const history = useHistory<ILocationParams>();
   const [password, setPassword] = useState('');
-  const [value, setValue] = useState('');
+  const [passErr, setPassErr] = useState(false);
+  const [showPass, setShowPass] = useState(false);
+  const [code, setCode] = useState('');
+  const [codeErr, setCodeErr] = useState(false);
   const { isAuth, canResetPwd } = useAppSelector(state => state.user);
   //-------------------------------------------------------------------------------
   const handleSubmit = useCallback(
     (evt: React.SyntheticEvent) => {
       evt.preventDefault();
       dispatch(
-        resetPassword(password, value, () => {
+        resetPassword(password, code, () => {
           history.replace({ pathname: '/login' });
         })
       );
     },
-    [dispatch, password, value, history]
+    [dispatch, password, code, history]
   );
-
-  if (canResetPwd === false) {
-    return (
-      <Redirect
-        to={{
-          pathname: '/forgot-password'
-        }}
-      />
-    );
-  }
 
   if (isAuth) {
     return (
@@ -53,25 +48,48 @@ const ResetPassPage: FC = () => {
     );
   }
 
+  if (canResetPwd === false) {
+    return (
+      <Redirect
+        to={{
+          pathname: '/forgot-password'
+        }}
+      />
+    );
+  }
+
   return (
     <main className={styles.main}>
       <Form onSubmit={handleSubmit} title="Восстановление пароля">
         <InputWrapper>
-          <PasswordInput
-            name="password"
+          <Input
+            type={showPass ? 'text' : 'password'}
+            placeholder="Пароль"
             value={password}
-            onChange={e => setPassword(e.target.value)}
+            error={passErr}
+            errorText="Некорректный пароль"
+            name={'password'}
+            size="default"
+            icon="ShowIcon"
+            onIconClick={() => setShowPass(!showPass)}
+            onChange={e => {
+              setPassword(e.target.value);
+              checkValidate(passSchema, setPassErr, e.target.value);
+            }}
           />
         </InputWrapper>
         <InputWrapper>
           <Input
             name="code"
-            value={value}
-            onChange={e => setValue(e.target.value)}
+            value={code}
+            onChange={e => {
+              setCode(e.target.value);
+              checkValidate(resetCodeSchema, setCodeErr, e.target.value);
+            }}
             type="text"
             placeholder="Введите код из письма"
-            error={false}
-            errorText="Ошибка"
+            error={codeErr}
+            errorText="Неверный формат кода"
           />
         </InputWrapper>
         <Submit>Сохранить</Submit>

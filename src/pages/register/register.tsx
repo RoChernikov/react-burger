@@ -2,6 +2,12 @@ import styles from './register.module.css';
 import React, { FC, useCallback, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import {
+  checkValidate,
+  nameSchema,
+  emailSchema,
+  passSchema
+} from '../../validations/user-validation';
+import {
   Input,
   PasswordInput
 } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -16,8 +22,12 @@ import { register } from '../../services/slices/user';
 const RegisterPage: FC = () => {
   const dispatch = useAppDispatch();
   const [name, setName] = useState('');
+  const [nameErr, setNameErr] = useState(false);
   const [email, setEmail] = useState('');
+  const [emailErr, setEmailErr] = useState(false);
   const [password, setPassword] = useState('');
+  const [passErr, setPassErr] = useState(false);
+  const [showPass, setShowPass] = useState(false);
   const { isAuth } = useAppSelector(state => state.user);
   //-------------------------------------------------------------------------------
 
@@ -46,11 +56,14 @@ const RegisterPage: FC = () => {
           <Input
             name="name"
             value={name}
-            onChange={e => setName(e.target.value)}
+            onChange={e => {
+              setName(e.target.value);
+              checkValidate(nameSchema, setNameErr, e.target.value);
+            }}
             type="text"
             placeholder="Имя"
-            error={false}
-            errorText="Ошибка"
+            error={nameErr}
+            errorText="Некорректное имя"
           />
         </InputWrapper>
         <InputWrapper>
@@ -59,16 +72,29 @@ const RegisterPage: FC = () => {
             value={email}
             type="text"
             placeholder="E-mail"
-            error={false}
-            errorText="Ошибка"
-            onChange={e => setEmail(e.target.value)}
+            error={emailErr}
+            errorText="Некорректный формат e-mail"
+            onChange={e => {
+              setEmail(e.target.value);
+              checkValidate(emailSchema, setEmailErr, e.target.value);
+            }}
           />
         </InputWrapper>
         <InputWrapper>
-          <PasswordInput
-            name="password"
+          <Input
+            type={showPass ? 'text' : 'password'}
+            placeholder="Пароль"
             value={password}
-            onChange={e => setPassword(e.target.value)}
+            error={passErr}
+            errorText="Некорректный пароль"
+            name={'password'}
+            size="default"
+            icon="ShowIcon"
+            onIconClick={() => setShowPass(!showPass)}
+            onChange={e => {
+              setPassword(e.target.value);
+              checkValidate(passSchema, setPassErr, e.target.value);
+            }}
           />
         </InputWrapper>
         <Submit>Зарегистрироваться</Submit>

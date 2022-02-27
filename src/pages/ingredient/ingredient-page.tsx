@@ -19,7 +19,7 @@ const IngredientPage: FC = () => {
   return (
     <main className={styles.main} style={mainStyle}>
       {ingredientsRequest && !ingredient ? (
-        <div style={{ paddingTop: 120 }}>
+        <div style={{ paddingTop: 220 }}>
           <Loader />
         </div>
       ) : ingredient ? (

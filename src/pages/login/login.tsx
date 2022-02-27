@@ -11,11 +11,13 @@ import InputWrapper from '../../components/form/components/input-wrapper/input-w
 import FormHint from '../../components/form/components/form-hint/form-hint';
 import { useAppDispatch, useAppSelector } from '../../services/hooks';
 import { signIn } from '../../services/slices/user';
+import { ILocationParams } from '../../utils/interfaces';
 //--------------------------------------------------------------------------------
 
 const LoginPage: FC = () => {
   const dispatch = useAppDispatch();
-  const history = useHistory();
+  const history = useHistory<ILocationParams>();
+  const goBackPath = history.location.state?.from.pathname;
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { isAuth } = useAppSelector(state => state.user);
@@ -24,20 +26,16 @@ const LoginPage: FC = () => {
   const handleSubmit = useCallback(
     (evt: React.SyntheticEvent) => {
       evt.preventDefault();
-      dispatch(
-        signIn({ email, password }, () => {
-          history.replace({ pathname: '/' });
-        })
-      );
+      dispatch(signIn({ email, password }));
     },
-    [dispatch, email, password, history]
+    [dispatch, email, password]
   );
 
   if (isAuth) {
     return (
       <Redirect
         to={{
-          pathname: '/'
+          pathname: goBackPath || '/'
         }}
       />
     );

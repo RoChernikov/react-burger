@@ -27,3 +27,9 @@
 .link:hover svg {
   fill: #f2f2f3;
 }
+
+.link > p {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}

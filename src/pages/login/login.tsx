@@ -2,9 +2,11 @@ import styles from './login.module.css';
 import React, { FC, useState, useCallback } from 'react';
 import { useHistory, Redirect } from 'react-router-dom';
 import {
-  Input,
-  PasswordInput
-} from '@ya.praktikum/react-developer-burger-ui-components';
+  checkValidate,
+  emailSchema,
+  passSchema
+} from '../../validations/user-validation';
+import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import Form from '../../components/form/form';
 import Submit from '../../components/form/components/submit/submit';
 import InputWrapper from '../../components/form/components/input-wrapper/input-wrapper';
@@ -19,7 +21,10 @@ const LoginPage: FC = () => {
   const history = useHistory<ILocationParams>();
   const goBackPath = history.location.state?.from.pathname;
   const [email, setEmail] = useState('');
+  const [emailErr, setEmailErr] = useState(false);
   const [password, setPassword] = useState('');
+  const [passErr, setPassErr] = useState(false);
+  const [showPass, setShowPass] = useState(false);
   const { isAuth } = useAppSelector(state => state.user);
   //-------------------------------------------------------------------------------
 
@@ -50,16 +55,29 @@ const LoginPage: FC = () => {
             value={email}
             type="text"
             placeholder="E-mail"
-            error={false}
-            errorText="Ошибка"
-            onChange={e => setEmail(e.target.value)}
+            error={emailErr}
+            errorText="Некорректный формат e-mail"
+            onChange={e => {
+              setEmail(e.target.value);
+              checkValidate(emailSchema, setEmailErr, e.target.value);
+            }}
           />
         </InputWrapper>
         <InputWrapper>
-          <PasswordInput
-            name="password"
+          <Input
+            type={showPass ? 'text' : 'password'}
+            placeholder="Пароль"
             value={password}
-            onChange={e => setPassword(e.target.value)}
+            error={passErr}
+            errorText="Некорректный пароль"
+            name={'password'}
+            size="default"
+            icon="ShowIcon"
+            onIconClick={() => setShowPass(!showPass)}
+            onChange={e => {
+              setPassword(e.target.value);
+              checkValidate(passSchema, setPassErr, e.target.value);
+            }}
           />
         </InputWrapper>
         <Submit>Войти</Submit>

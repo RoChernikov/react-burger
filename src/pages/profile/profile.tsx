@@ -8,6 +8,12 @@ import React, {
   useMemo
 } from 'react';
 import {
+  checkValidate,
+  nameSchema,
+  emailSchema,
+  passSchema
+} from '../../validations/user-validation';
+import {
   Input,
   Button
 } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -30,12 +36,15 @@ const Profile: FC = () => {
   };
   const [inputsState, setInputsState] = useState(innitialInputState);
   const [name, setName] = useState('');
+  const [nameErr, setNameErr] = useState(false);
   const [email, setEmail] = useState('');
+  const [emailErr, setEmailErr] = useState(false);
   const [pass, setPass] = useState('');
+  const [passErr, setPassErr] = useState(false);
   const { user, status } = useAppSelector(state => state.user);
   const shouldShowBtns = useMemo(
-    () => name !== user.name || email !== user.email,
-    [user, name, email]
+    () => name !== user.name || email !== user.email || pass !== '',
+    [user, name, email, pass]
   );
   //-------------------------------------------------------------------------------
 
@@ -59,6 +68,10 @@ const Profile: FC = () => {
       evt.preventDefault();
       setName(user.name);
       setEmail(user.email);
+      setPass('');
+      setPassErr(false);
+      checkValidate(nameSchema, setNameErr, user.name);
+      checkValidate(emailSchema, setEmailErr, user.email);
     },
     [user]
   );
@@ -76,9 +89,14 @@ const Profile: FC = () => {
             name="name"
             type="text"
             value={name}
-            onChange={evt => setName(evt.target.value)}
+            onChange={e => {
+              setName(e.target.value);
+              checkValidate(nameSchema, setNameErr, e.target.value);
+            }}
             icon="EditIcon"
             placeholder="Имя"
+            error={nameErr}
+            errorText="Некорректное имя"
             onIconClick={async () => {
               await setInputsState({ ...innitialInputState, nameState: false });
               nameInputRef.current && nameInputRef.current.focus();
@@ -96,9 +114,14 @@ const Profile: FC = () => {
             name="login"
             type="text"
             value={email}
-            onChange={evt => setEmail(evt.target.value)}
+            onChange={e => {
+              setEmail(e.target.value);
+              checkValidate(emailSchema, setEmailErr, e.target.value);
+            }}
             icon="EditIcon"
             placeholder="Логин"
+            error={emailErr}
+            errorText="Некорректный формат e-mail"
             onIconClick={async () => {
               await setInputsState({
                 ...innitialInputState,
@@ -113,15 +136,19 @@ const Profile: FC = () => {
             ref={loginInputRef}
           />
         </InputWrapper>
-
         <InputWrapper>
           <Input
             name="newPass"
             type="password"
             value={pass}
-            onChange={evt => setPass(evt.target.value)}
+            onChange={e => {
+              setPass(e.target.value);
+              checkValidate(passSchema, setPassErr, e.target.value);
+            }}
             icon="EditIcon"
             placeholder="Пароль"
+            error={passErr}
+            errorText="Некорректный пароль"
             onIconClick={async () => {
               await setInputsState({ ...innitialInputState, pwdState: false });
               pwdInputRef.current && pwdInputRef.current.focus();

@@ -1,6 +1,7 @@
 import styles from './forgot-password.module.css';
 import React, { FC, useState, useCallback } from 'react';
 import { useHistory, Redirect } from 'react-router-dom';
+import { checkValidate, emailSchema } from '../../validations/user-validation';
 import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import Form from '../../components/form/form';
 import Submit from '../../components/form/components/submit/submit';
@@ -14,6 +15,7 @@ const ForgotPassPage: FC = () => {
   const dispatch = useAppDispatch();
   const history = useHistory();
   const [email, setEmail] = useState('');
+  const [emailErr, setEmailErr] = useState(false);
   const { isAuth } = useAppSelector(state => state.user);
   //-------------------------------------------------------------------------------
 
@@ -46,11 +48,14 @@ const ForgotPassPage: FC = () => {
           <Input
             name="email"
             value={email}
-            onChange={e => setEmail(e.target.value)}
             type="text"
-            placeholder="Укажите e-mail"
-            error={false}
-            errorText="Ошибка"
+            placeholder="E-mail"
+            error={emailErr}
+            errorText="Некорректный формат e-mail"
+            onChange={e => {
+              setEmail(e.target.value);
+              checkValidate(emailSchema, setEmailErr, e.target.value);
+            }}
           />
         </InputWrapper>
         <Submit>Восстановить</Submit>

@@ -5,16 +5,4 @@
   bottom: 0;
   left: 0;
   background-color: rgba(0, 0, 0, 0.6);
-  transform: scale(1.1);
-  animation: appearance 0.1s forwards;
-  animation-delay: 0.3s;
-}
-
-@keyframes appearance {
-  0% {
-    transform: scale(1.1);
-  }
-  100% {
-    transform: scale(1);
-  }
 }

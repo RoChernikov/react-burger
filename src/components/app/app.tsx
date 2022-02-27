@@ -37,9 +37,9 @@ const App: FC = () => {
     }
   }, [dispatch, ingredientsSuccess]);
 
-  let location = useLocation<ILocationParams>();
+  const location = useLocation<ILocationParams>();
 
-  let background =
+  const background =
     history.action === 'PUSH' && location.state && location.state.background;
 
   return (

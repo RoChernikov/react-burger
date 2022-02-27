@@ -10,8 +10,17 @@
 
 - с помощью перетаскивания соберите свой межгалактический бургер
 - список ингредиентов приходит с публичного API
+- регистрация/авторизация пользователя, восстановление пароля
+- Хранение токенов в cookie
+- Защищенный роутинг
+
+### Функционал в разработке:
+
+- Лента заказов (WebSocket)
 
 <a  href="http://rochernikov.github.io/react-burger/" target="_blank" align="center"><img src="./readme_src/demo.gif" width="100%" alt="Демо"></a>
+<br>
+<a  href="http://rochernikov.github.io/react-burger/" target="_blank" align="center"><img src="./readme_src/demo2.gif" width="100%" alt="Демо2"></a>
 
 ### Технологии, использованные при создании:
 
@@ -19,7 +28,9 @@
 - TypeScript
 - Redux (Redux-toolkit, thunk)
 - React DND
+- React Router
 - Работа с публичным API
+- JWT Token
 - Flexbox
 - Grid Layout
 - CSS - animation

@@ -65,10 +65,12 @@ export const updateToken: AppThunk = () => (dispatch: AppDispatch) => {
     .then(res => {
       setCookie('accessToken', res.accessToken.split('Bearer ')[1]);
       setCookie('refreshToken', res.refreshToken);
+      dispatch(getUser());
+      dispatch(setStatusSuccess());
     })
     .catch(err => {
       dispatch(setStatusFailed());
-      console.log(err);
+      console.log(err.message);
     });
 };
 
@@ -84,7 +86,7 @@ export const signIn: AppThunk = (data: IForm) => (dispatch: AppDispatch) => {
     })
     .catch(err => {
       dispatch(setStatusFailed());
-      console.log(err);
+      console.log(err.message);
     });
 };
 
@@ -102,7 +104,7 @@ export const signOut: AppThunk =
       })
       .catch(err => {
         dispatch(setStatusFailed());
-        console.log(err);
+        console.log(err.message);
       });
   };
 
@@ -118,34 +120,23 @@ export const register: AppThunk = (data: IForm) => (dispatch: AppDispatch) => {
     })
     .catch(err => {
       dispatch(setStatusFailed());
-      console.log(err);
+      console.log(err.message);
     });
 };
 
 export const getUser: AppThunk = () => (dispatch: AppDispatch) => {
   dispatch(setStatusPending());
-  Api.updateToken()
+  Api.getUser()
     .then(res => {
-      setCookie('accessToken', res.accessToken.split('Bearer ')[1]);
-      setCookie('refreshToken', res.refreshToken);
-    })
-    .then(() => {
-      Api.getUser()
-        .then(res => {
-          dispatch(setUser(res.user));
-          dispatch(setStatusSuccess());
-        })
-        .catch(err => {
-          dispatch(updateToken());
-          dispatch(setStatusFailed());
-          console.log(err);
-        });
+      dispatch(setUser(res.user));
+      dispatch(setStatusSuccess());
     })
     .catch(err => {
-      dispatch(updateToken());
-      dispatch(setStatusFailed());
-      dispatch(setAuth(false));
-      console.log(err);
+      if (err.message === 'jwt expired') {
+        dispatch(updateToken());
+      } else {
+        return Promise.reject(err.message);
+      }
     });
 };
 
@@ -158,7 +149,7 @@ export const patchUser: AppThunk = (data: TUser) => (dispatch: AppDispatch) => {
     })
     .catch(err => {
       dispatch(setStatusFailed());
-      console.log(err);
+      console.log(err.message);
     });
 };
 
@@ -173,7 +164,7 @@ export const forgotPassword: AppThunk =
       })
       .catch(err => {
         dispatch(setStatusFailed());
-        console.log(err);
+        console.log(err.message);
       });
   };
 
@@ -188,6 +179,6 @@ export const resetPassword: AppThunk =
       })
       .catch(err => {
         dispatch(setStatusFailed());
-        console.log(err);
+        console.log(err.message);
       });
   };

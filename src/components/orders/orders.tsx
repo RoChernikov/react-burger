@@ -3,16 +3,16 @@ import React, { FC } from 'react';
 import OrderCard from './components/order-card/order-card';
 //--------------------------------------------------------------------------------
 
-const Orders: FC = () => {
+const Orders: FC<{ withStatus?: boolean }> = ({ withStatus }) => {
   return (
     <ul className={styles.orders}>
-      <OrderCard />
-      <OrderCard />
-      <OrderCard />
-      <OrderCard />
-      <OrderCard />
-      <OrderCard />
-      <OrderCard />
+      <OrderCard withStatus={withStatus} />
+      <OrderCard withStatus={withStatus} />
+      <OrderCard withStatus={withStatus} />
+      <OrderCard withStatus={withStatus} />
+      <OrderCard withStatus={withStatus} />
+      <OrderCard withStatus={withStatus} />
+      <OrderCard withStatus={withStatus} />
     </ul>
   );
 };

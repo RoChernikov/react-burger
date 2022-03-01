@@ -83,92 +83,100 @@ const Profile: FC = () => {
   ) : (
     <main className={styles.main}>
       <ProfileNav />
-      <form onSubmit={handleSubmit} className={styles.form}>
-        <InputWrapper>
-          <Input
-            name="name"
-            type="text"
-            value={name}
-            onChange={e => {
-              setName(e.target.value);
-              checkValidate(nameSchema, setNameErr, e.target.value);
-            }}
-            icon="EditIcon"
-            placeholder="Имя"
-            error={nameErr}
-            errorText="Некорректное имя"
-            onIconClick={async () => {
-              await setInputsState({ ...innitialInputState, nameState: false });
-              nameInputRef.current && nameInputRef.current.focus();
-            }}
-            onBlur={() => {
-              setInputsState({ ...innitialInputState, nameState: true });
-            }}
-            disabled={inputsState.nameState}
-            ref={nameInputRef}
-          />
-        </InputWrapper>
+      <section className={styles.section}>
+        <form onSubmit={handleSubmit} className={styles.form}>
+          <InputWrapper>
+            <Input
+              name="name"
+              type="text"
+              value={name}
+              onChange={e => {
+                setName(e.target.value);
+                checkValidate(nameSchema, setNameErr, e.target.value);
+              }}
+              icon="EditIcon"
+              placeholder="Имя"
+              error={nameErr}
+              errorText="Некорректное имя"
+              onIconClick={async () => {
+                await setInputsState({
+                  ...innitialInputState,
+                  nameState: false
+                });
+                nameInputRef.current && nameInputRef.current.focus();
+              }}
+              onBlur={() => {
+                setInputsState({ ...innitialInputState, nameState: true });
+              }}
+              disabled={inputsState.nameState}
+              ref={nameInputRef}
+            />
+          </InputWrapper>
 
-        <InputWrapper>
-          <Input
-            name="login"
-            type="text"
-            value={email}
-            onChange={e => {
-              setEmail(e.target.value);
-              checkValidate(emailSchema, setEmailErr, e.target.value);
-            }}
-            icon="EditIcon"
-            placeholder="Логин"
-            error={emailErr}
-            errorText="Некорректный формат e-mail"
-            onIconClick={async () => {
-              await setInputsState({
-                ...innitialInputState,
-                loginState: false
-              });
-              loginInputRef.current && loginInputRef.current.focus();
-            }}
-            onBlur={() => {
-              setInputsState({ ...innitialInputState, loginState: true });
-            }}
-            disabled={inputsState.loginState}
-            ref={loginInputRef}
-          />
-        </InputWrapper>
-        <InputWrapper>
-          <Input
-            name="newPass"
-            type="password"
-            value={pass}
-            onChange={e => {
-              setPass(e.target.value);
-              checkValidate(passSchema, setPassErr, e.target.value);
-            }}
-            icon="EditIcon"
-            placeholder="Пароль"
-            error={passErr}
-            errorText="Некорректный пароль"
-            onIconClick={async () => {
-              await setInputsState({ ...innitialInputState, pwdState: false });
-              pwdInputRef.current && pwdInputRef.current.focus();
-            }}
-            onBlur={() => {
-              setInputsState({ ...innitialInputState, pwdState: true });
-            }}
-            disabled={inputsState.pwdState}
-            ref={pwdInputRef}
-          />
-        </InputWrapper>
-        {shouldShowBtns && (
-          <div className={styles.buttons}>
-            <Button type="secondary" size="medium" onClick={handleReset}>
-              Отмена
-            </Button>
-            <Button size="small">Сохранить</Button>
-          </div>
-        )}
-      </form>
+          <InputWrapper>
+            <Input
+              name="login"
+              type="text"
+              value={email}
+              onChange={e => {
+                setEmail(e.target.value);
+                checkValidate(emailSchema, setEmailErr, e.target.value);
+              }}
+              icon="EditIcon"
+              placeholder="Логин"
+              error={emailErr}
+              errorText="Некорректный формат e-mail"
+              onIconClick={async () => {
+                await setInputsState({
+                  ...innitialInputState,
+                  loginState: false
+                });
+                loginInputRef.current && loginInputRef.current.focus();
+              }}
+              onBlur={() => {
+                setInputsState({ ...innitialInputState, loginState: true });
+              }}
+              disabled={inputsState.loginState}
+              ref={loginInputRef}
+            />
+          </InputWrapper>
+          <InputWrapper>
+            <Input
+              name="newPass"
+              type="password"
+              value={pass}
+              onChange={e => {
+                setPass(e.target.value);
+                checkValidate(passSchema, setPassErr, e.target.value);
+              }}
+              icon="EditIcon"
+              placeholder="Пароль"
+              error={passErr}
+              errorText="Некорректный пароль"
+              onIconClick={async () => {
+                await setInputsState({
+                  ...innitialInputState,
+                  pwdState: false
+                });
+                pwdInputRef.current && pwdInputRef.current.focus();
+              }}
+              onBlur={() => {
+                setInputsState({ ...innitialInputState, pwdState: true });
+              }}
+              disabled={inputsState.pwdState}
+              ref={pwdInputRef}
+            />
+          </InputWrapper>
+          {shouldShowBtns && (
+            <div className={styles.buttons}>
+              <Button type="secondary" size="medium" onClick={handleReset}>
+                Отмена
+              </Button>
+              <Button size="small">Сохранить</Button>
+            </div>
+          )}
+        </form>
+      </section>
     </main>
   );
 };

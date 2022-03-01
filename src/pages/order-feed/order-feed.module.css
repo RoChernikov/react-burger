@@ -2,9 +2,10 @@
   display: grid;
   width: 100%;
   grid-template-rows: min-content auto;
-  column-gap: 60px;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 76px;
   height: 100%;
-  max-width: 1280px;
+  max-width: 1248px;
   opacity: 0;
   transform: scale(0.8);
   animation: appearance 0.3s forwards;

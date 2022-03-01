@@ -1,6 +1,5 @@
 .orderCard {
   width: 100%;
-  min-height: 214px;
   border-radius: 40px;
   box-sizing: border-box;
   background-color: #1c1c21;
@@ -9,7 +8,6 @@
 .link {
   display: flex;
   flex-direction: column;
-  gap: 24px;
   text-decoration: none;
   color: inherit;
 }
@@ -27,6 +25,7 @@
 }
 
 .priceInfo {
+  margin-top: 24px;
   display: flex;
   align-items: center;
 }
@@ -36,6 +35,7 @@
   padding: 0;
   list-style: none;
   display: flex;
+  justify-content: flex-start;
   flex-direction: row-reverse;
 }
 

@@ -7,7 +7,7 @@ import formatDate from '../../../../utils/format-date';
 import IngredientIcon from '../../../ingredient-icon/ingredient-icon';
 //--------------------------------------------------------------------------------
 
-const OrderCard: FC = () => {
+const OrderCard: FC<{ withStatus?: boolean }> = ({ withStatus }) => {
   const location = useLocation<ILocationParams>();
   return (
     <li className={`p-6 ${styles.orderCard}`}>
@@ -23,9 +23,14 @@ const OrderCard: FC = () => {
             {formatDate('2022-02-28T21:20:29.552Z')} i-GMT+3
           </time>
         </p>
-        <h2 className={`text text_type_main-medium ${styles.title}`}>
+        <h2 className={`text text_type_main-medium mt-6 ${styles.title}`}>
           {'Interstellar бургер'}
         </h2>
+        {withStatus && (
+          <p className={`text text_type_main-default mt-2 ${styles.subTitle}`}>
+            Готовится
+          </p>
+        )}
         <div className={styles.priceInfo}>
           <ul className={styles.ingredientsList}>
             <IngredientIcon

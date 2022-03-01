@@ -10,7 +10,6 @@
   flex-direction: column;
   gap: 16px;
   padding: 0 8px;
-  max-width: 608px;
   width: 100%;
   max-height: calc(100vh - 186px);
 }

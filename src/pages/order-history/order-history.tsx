@@ -1,13 +1,17 @@
 import styles from './order-history.module.css';
 import React, { FC } from 'react';
-import DeveloperGuy from '../../components/developer-guy/developer-guy';
+import ProfileNav from '../../components/profile-nav/profile-nav';
+import Orders from '../../components/orders/orders';
 //--------------------------------------------------------------------------------
 
 const OrderHistoryPage: FC = () => {
   return (
-    <div className={styles.container}>
-      <DeveloperGuy>Страница в разработке!</DeveloperGuy>
-    </div>
+    <main className={styles.main}>
+      <ProfileNav />
+      <section className={styles.section}>
+        <Orders withStatus />
+      </section>
+    </main>
   );
 };
 

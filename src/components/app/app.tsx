@@ -6,8 +6,8 @@ import HomePage from '../../pages/home/home';
 import LoginPage from '../../pages/login/login';
 import RegisterPage from '../../pages/register/register';
 import ProfilePage from '../../pages/profile/profile';
-import OrdersPage from '../../pages/orders/orders';
-import FeedPage from '../../pages/feed/feed';
+import OrderHistoryPage from '../../pages/order-history/order-history';
+import OrderFeedPage from '../../pages/order-feed/order-feed';
 import ForgotPassPage from '../../pages/forgot-password/forgot-password';
 import ResetPassPage from '../../pages/reset-password/reset-password';
 import IngredientPage from '../../pages/ingredient/ingredient-page';
@@ -56,9 +56,9 @@ const App: FC = () => {
         <ProtectedRoute
           exact
           path="/profile/orders"
-          children={<OrdersPage />}
+          children={<OrderHistoryPage />}
         />
-        <ProtectedRoute exact path="/feed" children={<FeedPage />} />
+        <ProtectedRoute exact path="/feed" children={<OrderFeedPage />} />
         <Route children={<NotFound404 />} />
       </Switch>
       {background && (

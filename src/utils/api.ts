@@ -14,18 +14,15 @@ class Api {
     };
   }
 
-  _getResponceData(res: Response) {
-    if (!res.ok) {
-      return Promise.reject(`Ошибка: ${res.status}`);
-    }
-    return res.json();
+  _getResponseData(res: Response) {
+    return res.ok ? res.json() : res.json().then(err => Promise.reject(err));
   }
 
   getIngredients() {
     return fetch(`${BASE_URL}/ingredients`, {
       method: 'GET',
       headers: this._headers
-    }).then(this._getResponceData);
+    }).then(this._getResponseData);
   }
 
   sendOrder(ingredients: string[]) {
@@ -33,7 +30,7 @@ class Api {
       method: 'POST',
       headers: this._headers,
       body: JSON.stringify({ ingredients })
-    }).then(this._getResponceData);
+    }).then(this._getResponseData);
   }
 
   register(data: IForm) {
@@ -41,7 +38,7 @@ class Api {
       method: 'POST',
       headers: this._headers,
       body: JSON.stringify(data)
-    }).then(this._getResponceData);
+    }).then(this._getResponseData);
   }
 
   signIn(data: IForm) {
@@ -49,7 +46,7 @@ class Api {
       method: 'POST',
       headers: this._headers,
       body: JSON.stringify(data)
-    }).then(this._getResponceData);
+    }).then(this._getResponseData);
   }
 
   updateToken() {
@@ -57,7 +54,7 @@ class Api {
       method: 'POST',
       headers: this._headers,
       body: JSON.stringify({ token: getCookie('refreshToken') })
-    }).then(this._getResponceData);
+    }).then(this._getResponseData);
   }
 
   getUser() {
@@ -67,7 +64,7 @@ class Api {
         ...this._headers,
         Authorization: `Bearer ${getCookie('accessToken')}`
       }
-    }).then(this._getResponceData);
+    }).then(this._getResponseData);
   }
 
   patchUser(data: { name: string; email: string }) {
@@ -78,7 +75,7 @@ class Api {
         Authorization: `Bearer ${getCookie('accessToken')}`
       },
       body: JSON.stringify(data)
-    }).then(this._getResponceData);
+    }).then(this._getResponseData);
   }
 
   signOut() {
@@ -86,7 +83,7 @@ class Api {
       method: 'POST',
       headers: this._headers,
       body: JSON.stringify({ token: getCookie('refreshToken') })
-    }).then(this._getResponceData);
+    }).then(this._getResponseData);
   }
 
   forgotPassword(email: string) {
@@ -94,7 +91,7 @@ class Api {
       method: 'POST',
       headers: this._headers,
       body: JSON.stringify({ email })
-    }).then(this._getResponceData);
+    }).then(this._getResponseData);
   }
 
   resetPassword(data: { password: string; token: string }) {
@@ -102,7 +99,7 @@ class Api {
       method: 'POST',
       headers: this._headers,
       body: JSON.stringify(data)
-    }).then(this._getResponceData);
+    }).then(this._getResponseData);
   }
 }
 

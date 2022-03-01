@@ -86,3 +86,9 @@ export interface ICookieProps {
   [name: string]: string | number | boolean | Date | undefined;
   expires?: Date | number | string;
 }
+
+export interface IIngIcon {
+  img: string;
+  extra?: number;
+  isDiv?: boolean;
+}

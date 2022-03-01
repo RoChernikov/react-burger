@@ -23,7 +23,7 @@ const OrderCard: FC = () => {
             {formatDate('2022-02-28T21:20:29.552Z')} i-GMT+3
           </time>
         </p>
-        <h2 className={'text text_type_main-medium'}>
+        <h2 className={`text text_type_main-medium ${styles.title}`}>
           {'Interstellar бургер'}
         </h2>
         <div className={styles.priceInfo}>

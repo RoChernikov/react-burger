@@ -92,3 +92,8 @@ export interface IIngIcon {
   extra?: number;
   isDiv?: boolean;
 }
+
+export interface IStatusList {
+  title: string;
+  hightlight?: boolean;
+}

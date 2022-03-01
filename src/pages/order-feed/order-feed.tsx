@@ -1,7 +1,7 @@
 import styles from './order-feed.module.css';
 import React, { FC } from 'react';
 import Feed from '../../components/feed/feed';
-import FeedStats from '../../components/feed-stats/feed-stats';
+import FeedStats from './components/feed-stats/feed-stats';
 //--------------------------------------------------------------------------------
 
 const OrderFeedPage: FC = () => {

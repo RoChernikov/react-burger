@@ -26,7 +26,7 @@
 
 .logoWrapper {
   justify-self: center;
-  transition: all 0.2s;
+  transition: all 0.2s ease;
 }
 
 .logoWrapper:hover {
@@ -39,9 +39,9 @@
 }
 
 .loggedIn a {
-  color: rgba(0, 255, 98, 0.3);
+  color: #75ebbe;
 }
 
 .loggedIn svg {
-  fill: rgba(0, 255, 98, 0.3);
+  fill: #75ebbe;
 }

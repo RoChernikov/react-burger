@@ -8,7 +8,7 @@ import {
 } from '../../validations/user-validation';
 import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import Form from '../../components/form/form';
-import Submit from '../../components/form/components/submit/submit';
+import Submit from '../../components/submit/submit';
 import InputWrapper from '../../components/form/components/input-wrapper/input-wrapper';
 import FormHint from '../../components/form/components/form-hint/form-hint';
 import { useAppDispatch, useAppSelector } from '../../services/hooks';
@@ -25,6 +25,7 @@ const LoginPage: FC = () => {
   const [password, setPassword] = useState('');
   const [passErr, setPassErr] = useState(false);
   const [showPass, setShowPass] = useState(false);
+  const disable = emailErr || passErr || email === '' || password === '';
   const { isAuth } = useAppSelector(state => state.user);
   //-------------------------------------------------------------------------------
 
@@ -55,8 +56,10 @@ const LoginPage: FC = () => {
             value={email}
             type="text"
             placeholder="E-mail"
-            error={emailErr}
-            errorText="Некорректный формат e-mail"
+            error={emailErr || email === ''}
+            errorText={
+              email === '' ? 'Заполните поле' : 'Некорректный формат e-mail'
+            }
             onChange={e => {
               setEmail(e.target.value);
               checkValidate(emailSchema, setEmailErr, e.target.value);
@@ -68,8 +71,10 @@ const LoginPage: FC = () => {
             type={showPass ? 'text' : 'password'}
             placeholder="Пароль"
             value={password}
-            error={passErr}
-            errorText="Некорректный пароль"
+            error={passErr || password === ''}
+            errorText={
+              password === '' ? 'Заполните поле' : 'Некорректный пароль'
+            }
             name={'password'}
             size="default"
             icon="ShowIcon"
@@ -80,7 +85,9 @@ const LoginPage: FC = () => {
             }}
           />
         </InputWrapper>
-        <Submit>Войти</Submit>
+        <Submit disabled={disable} wrapStyles={{ marginBottom: '80px' }}>
+          Войти
+        </Submit>
         <FormHint link="/register" caption="Зарегистрироваться">
           Вы - новый пользователь?
         </FormHint>

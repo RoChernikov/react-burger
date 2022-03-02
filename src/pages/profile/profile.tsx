@@ -20,6 +20,7 @@ import {
 import ProfileNav from '../../components/profile-nav/profile-nav';
 import InputWrapper from '../../components/form/components/input-wrapper/input-wrapper';
 import Loader from '../../components/loader/loader';
+import Submit from '../../components/submit/submit';
 import { useAppSelector, useAppDispatch } from '../../services/hooks';
 import { patchUser } from '../../services/slices/user';
 //--------------------------------------------------------------------------------
@@ -41,6 +42,7 @@ const Profile: FC = () => {
   const [emailErr, setEmailErr] = useState(false);
   const [pass, setPass] = useState('');
   const [passErr, setPassErr] = useState(false);
+  const disable = nameErr || emailErr || passErr || name === '' || email === '';
   const { user, status } = useAppSelector(state => state.user);
   const shouldShowBtns = useMemo(
     () => name !== user.name || email !== user.email || pass !== '',
@@ -96,8 +98,10 @@ const Profile: FC = () => {
               }}
               icon="EditIcon"
               placeholder="Имя"
-              error={nameErr}
-              errorText="Некорректное имя"
+              error={nameErr || name === ''}
+              errorText={
+                name === '' ? 'Заполните поле' : 'Некорректный формат имени'
+              }
               onIconClick={async () => {
                 await setInputsState({
                   ...innitialInputState,
@@ -124,8 +128,10 @@ const Profile: FC = () => {
               }}
               icon="EditIcon"
               placeholder="Логин"
-              error={emailErr}
-              errorText="Некорректный формат e-mail"
+              error={emailErr || email === ''}
+              errorText={
+                email === '' ? 'Заполните поле' : 'Некорректный формат e-mail'
+              }
               onIconClick={async () => {
                 await setInputsState({
                   ...innitialInputState,
@@ -169,10 +175,10 @@ const Profile: FC = () => {
           </InputWrapper>
           {shouldShowBtns && (
             <div className={styles.buttons}>
-              <Button type="secondary" size="medium" onClick={handleReset}>
+              <Button type="secondary" size="small" onClick={handleReset}>
                 Отмена
               </Button>
-              <Button size="small">Сохранить</Button>
+              <Submit disabled={disable}>Сохранить</Submit>
             </div>
           )}
         </form>

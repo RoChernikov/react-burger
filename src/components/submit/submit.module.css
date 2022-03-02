@@ -1,0 +1,14 @@
+.wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.wrapper > button {
+  user-select: none;
+}
+
+.wrapper > button[disabled] {
+  filter: grayscale(0.7);
+  opacity: 30%;
+  pointer-events: none;
+}

@@ -12,9 +12,14 @@
   display: block;
   color: #8585ad;
   text-decoration: none;
+  transition: all 0.2s ease;
 }
 
 .link_active {
+  color: white;
+}
+
+.link:hover {
   color: white;
 }
 
@@ -22,6 +27,7 @@
   border: none;
   margin: 0;
   background: transparent;
+  transition: all 0.2s ease;
 }
 
 .button:hover {

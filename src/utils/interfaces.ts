@@ -57,6 +57,9 @@ export interface IInputWrapper {
 
 export interface ISubmit {
   children: ReactNode;
+  disabled?: boolean;
+  onClick?: (evt: React.SyntheticEvent) => void;
+  wrapStyles?: React.CSSProperties;
 }
 
 export interface IFormHint {

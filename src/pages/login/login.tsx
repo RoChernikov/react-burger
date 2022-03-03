@@ -26,7 +26,7 @@ const LoginPage: FC = () => {
   const [passErr, setPassErr] = useState(false);
   const [showPass, setShowPass] = useState(false);
   const disable = emailErr || passErr || email === '' || password === '';
-  const { isAuth } = useAppSelector(state => state.user);
+  const { isAuth, loginError } = useAppSelector(state => state.user);
   //-------------------------------------------------------------------------------
 
   const handleSubmit = useCallback(
@@ -50,13 +50,18 @@ const LoginPage: FC = () => {
   return (
     <main className={styles.main}>
       <Form onSubmit={handleSubmit} title="Вход">
+        {loginError === 'email or password are incorrect' && (
+          <p className={`text text_type_main-default ${styles.errorTitle}`}>
+            Нeверный e-mail или пароль
+          </p>
+        )}
         <InputWrapper>
           <Input
             name="email"
             value={email}
             type="text"
             placeholder="E-mail"
-            error={emailErr || email === ''}
+            error={emailErr}
             errorText={
               email === '' ? 'Заполните поле' : 'Некорректный формат e-mail'
             }
@@ -71,7 +76,7 @@ const LoginPage: FC = () => {
             type={showPass ? 'text' : 'password'}
             placeholder="Пароль"
             value={password}
-            error={passErr || password === ''}
+            error={passErr}
             errorText={
               password === '' ? 'Заполните поле' : 'Некорректный пароль'
             }

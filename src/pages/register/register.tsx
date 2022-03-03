@@ -69,7 +69,7 @@ const RegisterPage: FC = () => {
             }}
             type="text"
             placeholder="Имя"
-            error={nameErr || name === ''}
+            error={nameErr}
             errorText={
               name === '' ? 'Заполните поле' : 'Некорректный формат имени'
             }
@@ -81,7 +81,7 @@ const RegisterPage: FC = () => {
             value={email}
             type="text"
             placeholder="E-mail"
-            error={emailErr || email === ''}
+            error={emailErr}
             errorText={
               email === '' ? 'Заполните поле' : 'Некорректный формат e-mail'
             }
@@ -96,7 +96,7 @@ const RegisterPage: FC = () => {
             type={showPass ? 'text' : 'password'}
             placeholder="Пароль"
             value={password}
-            error={passErr || password === ''}
+            error={passErr}
             errorText={
               password === '' ? 'Заполните поле' : 'Некорректный пароль'
             }

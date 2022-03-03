@@ -23,6 +23,8 @@ import Loader from '../../components/loader/loader';
 import Submit from '../../components/submit/submit';
 import { useAppSelector, useAppDispatch } from '../../services/hooks';
 import { patchUser } from '../../services/slices/user';
+import { Route } from 'react-router-dom';
+import Orders from '../../components/orders/orders';
 //--------------------------------------------------------------------------------
 
 const Profile: FC = () => {
@@ -85,104 +87,111 @@ const Profile: FC = () => {
   ) : (
     <main className={styles.main}>
       <ProfileNav />
-      <section className={styles.section}>
-        <form onSubmit={handleSubmit} className={styles.form}>
-          <InputWrapper>
-            <Input
-              name="name"
-              type="text"
-              value={name}
-              onChange={e => {
-                setName(e.target.value);
-                checkValidate(nameSchema, setNameErr, e.target.value);
-              }}
-              icon="EditIcon"
-              placeholder="Имя"
-              error={nameErr || name === ''}
-              errorText={
-                name === '' ? 'Заполните поле' : 'Некорректный формат имени'
-              }
-              onIconClick={async () => {
-                await setInputsState({
-                  ...innitialInputState,
-                  nameState: false
-                });
-                nameInputRef.current && nameInputRef.current.focus();
-              }}
-              onBlur={() => {
-                setInputsState({ ...innitialInputState, nameState: true });
-              }}
-              disabled={inputsState.nameState}
-              ref={nameInputRef}
-            />
-          </InputWrapper>
+      <Route exact path="/profile">
+        <section className={styles.section}>
+          <form onSubmit={handleSubmit} className={styles.form}>
+            <InputWrapper>
+              <Input
+                name="name"
+                type="text"
+                value={name}
+                onChange={e => {
+                  setName(e.target.value);
+                  checkValidate(nameSchema, setNameErr, e.target.value);
+                }}
+                icon="EditIcon"
+                placeholder="Имя"
+                error={nameErr}
+                errorText={
+                  name === '' ? 'Заполните поле' : 'Некорректный формат имени'
+                }
+                onIconClick={async () => {
+                  await setInputsState({
+                    ...innitialInputState,
+                    nameState: false
+                  });
+                  nameInputRef.current && nameInputRef.current.focus();
+                }}
+                onBlur={() => {
+                  setInputsState({ ...innitialInputState, nameState: true });
+                }}
+                disabled={inputsState.nameState}
+                ref={nameInputRef}
+              />
+            </InputWrapper>
 
-          <InputWrapper>
-            <Input
-              name="login"
-              type="text"
-              value={email}
-              onChange={e => {
-                setEmail(e.target.value);
-                checkValidate(emailSchema, setEmailErr, e.target.value);
-              }}
-              icon="EditIcon"
-              placeholder="Логин"
-              error={emailErr || email === ''}
-              errorText={
-                email === '' ? 'Заполните поле' : 'Некорректный формат e-mail'
-              }
-              onIconClick={async () => {
-                await setInputsState({
-                  ...innitialInputState,
-                  loginState: false
-                });
-                loginInputRef.current && loginInputRef.current.focus();
-              }}
-              onBlur={() => {
-                setInputsState({ ...innitialInputState, loginState: true });
-              }}
-              disabled={inputsState.loginState}
-              ref={loginInputRef}
-            />
-          </InputWrapper>
-          <InputWrapper>
-            <Input
-              name="newPass"
-              type="password"
-              value={pass}
-              onChange={e => {
-                setPass(e.target.value);
-                checkValidate(passSchema, setPassErr, e.target.value);
-              }}
-              icon="EditIcon"
-              placeholder="Пароль"
-              error={passErr}
-              errorText="Некорректный пароль"
-              onIconClick={async () => {
-                await setInputsState({
-                  ...innitialInputState,
-                  pwdState: false
-                });
-                pwdInputRef.current && pwdInputRef.current.focus();
-              }}
-              onBlur={() => {
-                setInputsState({ ...innitialInputState, pwdState: true });
-              }}
-              disabled={inputsState.pwdState}
-              ref={pwdInputRef}
-            />
-          </InputWrapper>
-          {shouldShowBtns && (
-            <div className={styles.buttons}>
-              <Button type="secondary" size="small" onClick={handleReset}>
-                Отмена
-              </Button>
-              <Submit disabled={disable}>Сохранить</Submit>
-            </div>
-          )}
-        </form>
-      </section>
+            <InputWrapper>
+              <Input
+                name="login"
+                type="text"
+                value={email}
+                onChange={e => {
+                  setEmail(e.target.value);
+                  checkValidate(emailSchema, setEmailErr, e.target.value);
+                }}
+                icon="EditIcon"
+                placeholder="Логин"
+                error={emailErr}
+                errorText={
+                  email === '' ? 'Заполните поле' : 'Некорректный формат e-mail'
+                }
+                onIconClick={async () => {
+                  await setInputsState({
+                    ...innitialInputState,
+                    loginState: false
+                  });
+                  loginInputRef.current && loginInputRef.current.focus();
+                }}
+                onBlur={() => {
+                  setInputsState({ ...innitialInputState, loginState: true });
+                }}
+                disabled={inputsState.loginState}
+                ref={loginInputRef}
+              />
+            </InputWrapper>
+            <InputWrapper>
+              <Input
+                name="newPass"
+                type="password"
+                value={pass}
+                onChange={e => {
+                  setPass(e.target.value);
+                  checkValidate(passSchema, setPassErr, e.target.value);
+                }}
+                icon="EditIcon"
+                placeholder="Пароль"
+                error={passErr}
+                errorText="Некорректный пароль"
+                onIconClick={async () => {
+                  await setInputsState({
+                    ...innitialInputState,
+                    pwdState: false
+                  });
+                  pwdInputRef.current && pwdInputRef.current.focus();
+                }}
+                onBlur={() => {
+                  setInputsState({ ...innitialInputState, pwdState: true });
+                }}
+                disabled={inputsState.pwdState}
+                ref={pwdInputRef}
+              />
+            </InputWrapper>
+            {shouldShowBtns && (
+              <div className={styles.buttons}>
+                <Button type="secondary" size="small" onClick={handleReset}>
+                  Отмена
+                </Button>
+                <Submit disabled={disable}>Сохранить</Submit>
+              </div>
+            )}
+          </form>
+        </section>
+      </Route>
+      <Route path="/profile/orders">
+        <section className={styles.section}>
+          <Orders withStatus />
+        </section>
+      </Route>
     </main>
   );
 };

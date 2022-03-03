@@ -54,6 +54,7 @@
   height: 625px;
   position: relative;
   left: 300px;
+  bottom: 0;
 }
 
 .devBody,

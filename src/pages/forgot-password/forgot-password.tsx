@@ -51,7 +51,7 @@ const ForgotPassPage: FC = () => {
             value={email}
             type="text"
             placeholder="E-mail"
-            error={emailErr || email === ''}
+            error={emailErr}
             errorText={
               email === '' ? 'Заполните поле' : 'Некорректный формат e-mail'
             }

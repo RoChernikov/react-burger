@@ -61,9 +61,11 @@ const AppHeader: FC = () => {
                 type={path === '/profile' ? 'primary' : 'secondary'}
               />
             }>
-            {status === 'pending'
-              ? 'Загрузка...'
-              : `${user?.name}` || 'Личный кабинет'}
+            {status === 'pending' ? (
+              <span className={styles.textLoader}></span>
+            ) : (
+              `${user?.name}` || 'Личный кабинет'
+            )}
           </HeaderLink>
         </div>
       </nav>

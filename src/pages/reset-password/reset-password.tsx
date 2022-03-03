@@ -67,7 +67,7 @@ const ResetPassPage: FC = () => {
             type={showPass ? 'text' : 'password'}
             placeholder="Пароль"
             value={password}
-            error={passErr || password === ''}
+            error={passErr}
             errorText={
               password === '' ? 'Заполните поле' : 'Некорректный пароль'
             }
@@ -91,7 +91,7 @@ const ResetPassPage: FC = () => {
             }}
             type="text"
             placeholder="Введите код из письма"
-            error={codeErr || code === ''}
+            error={codeErr}
             errorText={code === '' ? 'Заполните поле' : 'Неверный формат кода'}
           />
         </InputWrapper>

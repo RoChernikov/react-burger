@@ -9,6 +9,7 @@
   border: none;
   text-decoration: none;
   transition: all 0.2s ease;
+  min-width: 210px;
 }
 
 .link_active {
@@ -37,4 +38,6 @@
 
 .link > svg {
   transition: all 0.2s ease;
+  width: 24px;
+  height: 24px;
 }

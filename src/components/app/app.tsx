@@ -52,12 +52,12 @@ const App: FC = () => {
         <Route exact path="/forgot-password" children={<ForgotPassPage />} />
         <Route exact path="/reset-password" children={<ResetPassPage />} />
         <Route exact path="/ingredients/:id" children={<IngredientPage />} />
-        <ProtectedRoute exact path="/profile" children={<ProfilePage />} />
-        <ProtectedRoute
+        <ProtectedRoute path="/profile" children={<ProfilePage />} />
+        {/* <ProtectedRoute
           exact
           path="/profile/orders"
           children={<OrderHistoryPage />}
-        />
+        /> */}
         <ProtectedRoute exact path="/feed" children={<OrderFeedPage />} />
         <Route children={<NotFound404 />} />
       </Switch>

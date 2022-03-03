@@ -36,7 +36,7 @@ const HomePage: FC = () => {
 
   const closeOrderDetailsModal = useCallback(() => {
     dispatch(deleteOrder());
-  }, [dispatch, deleteOrder]);
+  }, [dispatch]);
 
   return ingredientsRequest || orderNumberRequest ? (
     <Loader />

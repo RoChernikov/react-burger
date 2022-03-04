@@ -13,7 +13,7 @@ const IngredientIcon: FC<IIngIcon> = ({ img, extra, isDiv = false }) => {
       )}
     </li>
   ) : (
-    <div className={styles.ingredient}>
+    <div className={styles.ingredient} style={{ margin: '0' }}>
       <img className={styles.image} src={img} alt="ингредиент" />
       {extra && (
         <div

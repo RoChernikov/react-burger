@@ -1,6 +1,6 @@
 import styles from './burger-constructor.module.css';
 import React, { useCallback, useMemo, forwardRef, useState } from 'react';
-import { useHistory, Redirect } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import {
   Button,
   CurrencyIcon,

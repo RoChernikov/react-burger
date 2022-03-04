@@ -1,0 +1,17 @@
+.ingredient {
+  display: flex;
+  align-items: center;
+}
+
+.title {
+  width: 100%;
+  max-width: 415px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.price {
+  display: flex;
+  align-items: center;
+}

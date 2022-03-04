@@ -10,6 +10,7 @@ import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { useAppDispatch, useAppSelector } from '../../services/hooks';
 import { deleteOrder, getOrderNumber } from '../../services/slices/order';
+import OrderInfo from '../../components/order-info/order-info';
 //--------------------------------------------------------------------------------
 
 const HomePage: FC = () => {

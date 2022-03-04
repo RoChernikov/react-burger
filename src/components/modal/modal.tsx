@@ -24,7 +24,7 @@ const Modal: FC<TCloseModal> = ({ closeModal, children }) => {
 
   return createPortal(
     <div className={styles.popup}>
-      <div className={`p-10 pb-15 ${styles.popupContainer}`}>
+      <div className={`pb-15 ${styles.popupContainer}`}>
         <button
           onClick={closeModal}
           className={`mt-15 mr-10 ${styles.closeButton}`}

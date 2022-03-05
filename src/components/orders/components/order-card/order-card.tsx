@@ -5,15 +5,16 @@ import { ILocationParams } from '../../../../utils/interfaces';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import formatDate from '../../../../utils/format-date';
 import IngredientIcon from '../../../ingredient-icon/ingredient-icon';
+import { IOrders } from '../../../../utils/interfaces';
 //--------------------------------------------------------------------------------
 
-const OrderCard: FC<{ withStatus?: boolean }> = ({ withStatus }) => {
+const OrderCard: FC<IOrders> = ({ withStatus, path }) => {
   const location = useLocation<ILocationParams>();
   return (
     <li className={`p-6 ${styles.orderCard}`}>
       <Link
         to={{
-          pathname: `feed/${'id'}`,
+          pathname: `${path}${'id'}`,
           state: { background: location }
         }}
         className={styles.link}>

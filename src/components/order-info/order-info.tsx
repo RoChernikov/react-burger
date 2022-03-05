@@ -7,9 +7,7 @@ import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components
 const OrderInfo: FC = () => {
   return (
     <div className={styles.orderInfo}>
-      <p className={`text text_type_digits-default mt-5 ${styles.id}`}>
-        #034533
-      </p>
+      <p className="text text_type_digits-default mt-5">#034533</p>
       <h1 className="text text_type_main-medium mt-10">
         Black Hole Singularity острый бургер
       </h1>

@@ -100,3 +100,8 @@ export interface IStatusList {
   title: string;
   hightlight?: boolean;
 }
+
+export interface IOrders {
+  path: string;
+  withStatus?: boolean;
+}

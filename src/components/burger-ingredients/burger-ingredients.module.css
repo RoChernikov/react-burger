@@ -3,6 +3,9 @@
   flex-direction: column;
   width: 100%;
   max-width: 600px;
+  opacity: 0;
+  transform: translate(-100vw, 0);
+  animation: appearance 0.4s forwards ease-out;
 }
 
 .tab {
@@ -34,4 +37,15 @@
 
 .ingredients::-webkit-scrollbar-thumb:hover {
   background: #8282da;
+}
+
+@keyframes appearance {
+  0% {
+    transform: translate(-100vw, 0);
+    opacity: 0;
+  }
+  100% {
+    transform: translate(0);
+    opacity: 1;
+  }
 }

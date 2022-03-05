@@ -9,7 +9,7 @@ const OrderHistoryPage: FC = () => {
     <main className={styles.main}>
       <ProfileNav />
       <section className={styles.section}>
-        <Orders withStatus />
+        <Orders path="profile/orders/" withStatus />
       </section>
     </main>
   );

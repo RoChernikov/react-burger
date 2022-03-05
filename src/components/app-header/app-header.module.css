@@ -47,11 +47,3 @@
 .loggedIn svg {
   fill: #75ebbe;
 }
-
-.textLoader {
-  display: block;
-  height: 16px;
-  width: 135px;
-  background-color: rgb(133, 133, 173);
-  border-radius: 50px;
-}

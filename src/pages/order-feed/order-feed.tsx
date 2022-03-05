@@ -11,10 +11,12 @@ const OrderFeedPage: FC = () => {
         className={`text text_type_main-large mt-10 mb-5 ml-2 ${styles.title}`}>
         Лента заказов
       </h1>
-      <section>
-        <Orders />
+      <section className={styles.ordersSection}>
+        <Orders path="feed/" />
       </section>
-      <FeedStats />
+      <section className={styles.statsSection}>
+        <FeedStats />
+      </section>
     </main>
   );
 };

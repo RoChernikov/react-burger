@@ -189,7 +189,7 @@ const Profile: FC = () => {
       </Route>
       <Route path="/profile/orders">
         <section className={styles.section}>
-          <Orders withStatus />
+          <Orders path="/profile/orders/" withStatus />
         </section>
       </Route>
     </main>

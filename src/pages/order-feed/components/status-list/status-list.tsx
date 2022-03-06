@@ -29,6 +29,21 @@ const StatusList: FC<IStatusList> = ({ title, hightlight }) => {
         <li className={'text text_type_digits-default'} style={style}>
           034525
         </li>
+        <li className={'text text_type_digits-default'} style={style}>
+          034533
+        </li>
+        <li className={'text text_type_digits-default'} style={style}>
+          034532
+        </li>
+        <li className={'text text_type_digits-default'} style={style}>
+          034530
+        </li>
+        <li className={'text text_type_digits-default'} style={style}>
+          034527
+        </li>
+        <li className={'text text_type_digits-default'} style={style}>
+          034525
+        </li>
       </ul>
     </div>
   );

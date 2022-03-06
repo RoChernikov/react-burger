@@ -10,9 +10,11 @@
 .list {
   display: flex;
   flex-direction: column;
+  flex-wrap: wrap;
   gap: 8px;
   min-height: 152px;
   margin-bottom: 0;
   padding: 0;
   list-style: none;
+  max-height: 170px;
 }

@@ -7,10 +7,7 @@ import {
   emailSchema,
   passSchema
 } from '../../validations/user-validation';
-import {
-  Input,
-  PasswordInput
-} from '@ya.praktikum/react-developer-burger-ui-components';
+import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import Form from '../../components/form/form';
 import Submit from '../../components/submit/submit';
 import InputWrapper from '../../components/form/components/input-wrapper/input-wrapper';

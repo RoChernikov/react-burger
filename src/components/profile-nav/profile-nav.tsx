@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import styles from './profile-nav.module.css';
 import { NavLink } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../../services/hooks';
+import { useAppDispatch } from '../../services/hooks';
 import { signOut } from '../../services/slices/user';
 //--------------------------------------------------------------------------------
 

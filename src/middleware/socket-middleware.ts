@@ -7,7 +7,6 @@ export const socketMiddleware = (
 ): Middleware => {
   return store => {
     let socket: WebSocket | null = null;
-
     return next => (action: any) => {
       const { dispatch } = store;
       const { type, payload } = action;
@@ -34,6 +33,7 @@ export const socketMiddleware = (
           const { success, ...restParsedData } = parsedData;
 
           dispatch({ type: onMessage, payload: restParsedData });
+          console.log(parsedData);
         };
 
         socket.onclose = () => {

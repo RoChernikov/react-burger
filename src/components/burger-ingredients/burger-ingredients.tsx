@@ -53,7 +53,7 @@ const BurgerIngredients: FC = () => {
     evt => {
       dispatch(selectMeal(evt));
     },
-    [dispatch, selectMeal]
+    [dispatch]
   );
 
   const inViewOptions = {
@@ -74,7 +74,7 @@ const BurgerIngredients: FC = () => {
     } else if (inViewMain) {
       dispatch(selectMeal('main'));
     }
-  }, [dispatch, selectMeal, inViewBun, inViewMain, inViewSauce]);
+  }, [dispatch, inViewBun, inViewMain, inViewSauce]);
 
   return (
     <section className={`mt-10 ml-5 ${styles.constructor}`}>

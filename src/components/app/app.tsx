@@ -20,6 +20,8 @@ import IngredientDetails from '../ingredient-details/ingredient-details';
 import OrderInfo from '../order-info/order-info';
 //--------------------------------------------------------------------------------
 
+import { wsInit } from '../../services/slices/ws-orders';
+
 const App: FC = () => {
   const history = useHistory();
   const closeModal = useCallback(
@@ -41,6 +43,10 @@ const App: FC = () => {
   const location = useLocation<ILocationParams>();
 
   const background = location.state && location.state.background;
+
+  useEffect(() => {
+    dispatch(wsInit());
+  }, [dispatch]);
 
   return (
     <>

@@ -4,16 +4,17 @@ import OrderCard from './components/order-card/order-card';
 import { IOrders } from '../../utils/interfaces';
 //--------------------------------------------------------------------------------
 
-const Orders: FC<IOrders> = ({ withStatus, path }) => {
+const Orders: FC<IOrders> = ({ withStatus, path, orders }) => {
   return (
     <ul className={styles.orders}>
-      <OrderCard path={path} withStatus={withStatus} />
-      <OrderCard path={path} withStatus={withStatus} />
-      <OrderCard path={path} withStatus={withStatus} />
-      <OrderCard path={path} withStatus={withStatus} />
-      <OrderCard path={path} withStatus={withStatus} />
-      <OrderCard path={path} withStatus={withStatus} />
-      <OrderCard path={path} withStatus={withStatus} />
+      {orders.map(order => (
+        <OrderCard
+          key={order._id}
+          path={path}
+          withStatus={withStatus}
+          data={order}
+        />
+      ))}
     </ul>
   );
 };

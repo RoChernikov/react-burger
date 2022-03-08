@@ -1,22 +1,19 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-// import { AppDispatch } from '../../services/store';
-import { TWsOrder, TStatus } from './../../utils/types';
+import { TWsOrder, TOnMessagePayload } from './../../utils/types';
 //--------------------------------------------------------------------------------
 
 interface IWsOrdersState {
-  wsStatus: TStatus;
-  wsConnected: boolean;
-  orders: TWsOrder[] | undefined;
-  totalSum: number | undefined;
-  totalSumToday: number | undefined;
+  wsRequest: boolean;
+  wsOpen: boolean;
+  wsFailed: boolean;
+  orders: TWsOrder[];
 }
 
 const initialState: IWsOrdersState = {
-  wsStatus: 'success',
-  wsConnected: false,
-  orders: undefined,
-  totalSum: undefined,
-  totalSumToday: undefined
+  wsRequest: false,
+  wsOpen: false,
+  wsFailed: false,
+  orders: []
 };
 
 export const wsOrdersSlice = createSlice({
@@ -24,31 +21,52 @@ export const wsOrdersSlice = createSlice({
   initialState,
   reducers: {
     wsInit(state) {
-      state.wsStatus = 'pending';
+      state.wsRequest = true;
+      state.wsOpen = false;
+      state.wsFailed = false;
     },
     sendMessage(state, action: PayloadAction) {},
     onOpen(state) {
-      state.wsStatus = 'success';
-      state.wsConnected = true;
+      state.wsRequest = false;
+      state.wsOpen = true;
+      state.wsFailed = false;
     },
     onClose(state) {
-      state.wsConnected = false;
+      state.wsRequest = false;
+      state.wsOpen = false;
     },
     onError(state) {
-      state.wsStatus = 'failed';
-      state.wsConnected = false;
+      state.wsRequest = false;
+      state.wsOpen = false;
+      state.wsFailed = true;
     },
-    onMessage(state) {}
+    onMessage(state, action: PayloadAction<TOnMessagePayload>) {
+      state.orders = action.payload.orders;
+    },
+    wsClose(state) {
+      state.wsRequest = false;
+      state.wsOpen = false;
+      state.wsFailed = false;
+    }
   }
 });
 
-export const { wsInit } = wsOrdersSlice.actions;
+export const {
+  wsInit,
+  sendMessage,
+  onOpen,
+  onClose,
+  onError,
+  onMessage,
+  wsClose
+} = wsOrdersSlice.actions;
 
 export const WS_ORDER_ACTION_TYPES = {
-  wsInit: wsInit().type,
-  wsSendMessage: 'wsOrder/sendMessage',
-  onOpen: 'wsOrder/onOpen',
-  onClose: 'wsOrder/onClose',
-  onError: 'wsOrder/onError',
-  onMessage: 'wsOrder/onMessage'
+  wsInit: wsInit.type,
+  wsSendMessage: sendMessage.type,
+  onOpen: onOpen.type,
+  onClose: onClose.type,
+  onError: onError.type,
+  onMessage: onMessage.type,
+  wsClose: wsClose.type
 };

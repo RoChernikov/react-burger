@@ -1,5 +1,5 @@
 import { ReactNode, SyntheticEvent } from 'react';
-import { TIngredient, TMeal } from './types';
+import { TIngredient, TMeal, TWsOrder } from './types';
 import { Location } from 'history';
 
 export interface IHeaderLink {
@@ -103,5 +103,12 @@ export interface IStatusList {
 
 export interface IOrders {
   path: string;
+  orders: TWsOrder[];
+  withStatus?: boolean;
+}
+
+export interface IOrder {
+  path: string;
+  data: TWsOrder;
   withStatus?: boolean;
 }

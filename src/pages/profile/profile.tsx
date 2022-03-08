@@ -25,6 +25,7 @@ import { useAppSelector, useAppDispatch } from '../../services/hooks';
 import { patchUser } from '../../services/slices/user';
 import { Route } from 'react-router-dom';
 import Orders from '../../components/orders/orders';
+import { wsInit, wsClose } from '../../services/slices/ws-orders';
 //--------------------------------------------------------------------------------
 
 const Profile: FC = () => {
@@ -50,7 +51,18 @@ const Profile: FC = () => {
     () => name !== user.name || email !== user.email || pass !== '',
     [user, name, email, pass]
   );
+  const { wsRequest, wsFailed, orders } = useAppSelector(
+    state => state.wsOrders
+  );
   //-------------------------------------------------------------------------------
+
+  useEffect(() => {
+    dispatch(wsInit());
+
+    return () => {
+      dispatch(wsClose());
+    };
+  }, [dispatch]);
 
   useEffect(() => {
     if (user) {
@@ -189,7 +201,7 @@ const Profile: FC = () => {
       </Route>
       <Route path="/profile/orders">
         <section className={styles.section}>
-          <Orders path="/profile/orders/" withStatus />
+          <Orders path="/profile/orders/" withStatus orders={orders} />
         </section>
       </Route>
     </main>

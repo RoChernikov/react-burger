@@ -17,7 +17,7 @@ const OrderInfo: FC = () => {
         Выполнен
       </p>
       <p className="text text_type_main-medium mt-15">Состав:</p>
-      <ul className={`custom-scroll mt-6 ${styles.list}`}>
+      <ul className={`mt-6 ${styles.list}`}>
         <Ingredient />
         <Ingredient />
         <Ingredient />

@@ -65,6 +65,29 @@ export const getIngredientsApi: AppThunk = () => (dispatch: AppDispatch) => {
     });
 };
 
-export const selectIngredientById = (id: any) => (state: any) => {
-  return state.ingredients.ingredients.find((ing: any) => ing._id === id);
+export const selectIngredientById = (id: string) => (state: any) => {
+  return state.ingredients.ingredients.find(
+    (ing: TIngredient) => ing._id === id
+  );
+};
+
+export const getIconsByIds = (ids: string[]) => (state: any) => {
+  return [...ids]
+    .reverse()
+    .map(
+      id =>
+        state.ingredients.ingredients.find((ing: TIngredient) => ing._id === id)
+          .image_mobile
+    );
+};
+
+export const calcPriceByIds = (ids: string[]) => (state: any) => {
+  const ings = ids.map(id =>
+    state.ingredients.ingredients.find((ing: TIngredient) => ing._id === id)
+  );
+  const totalPrice = ids.reduce((acc, id) => {
+    const ingPrice = ings.find((ing: TIngredient) => ing._id === id).price;
+    return acc + ingPrice;
+  }, ings.find(ing => ing.type === 'bun').price);
+  return totalPrice;
 };

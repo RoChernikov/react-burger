@@ -28,8 +28,6 @@
 
 .list::-webkit-scrollbar-thumb {
   background: #8585ad;
-  border: none;
-  border-radius: 0;
 }
 
 .list::-webkit-scrollbar-thumb:hover {

@@ -47,3 +47,10 @@ export type TWsOrder = {
   number: number;
   ingredients: string[];
 };
+
+export type TOnMessagePayload = {
+  success: boolean;
+  orders: TWsOrder[];
+  total: number;
+  totalToday: number;
+};

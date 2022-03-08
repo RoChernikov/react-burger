@@ -18,12 +18,6 @@
   align-items: center;
 }
 
-.title {
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
-}
-
 .priceInfo {
   margin-top: 24px;
   display: flex;

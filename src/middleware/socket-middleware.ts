@@ -11,8 +11,15 @@ export const socketMiddleware = (
       const { dispatch } = store;
       const { type, payload } = action;
       const accessToken = getCookie('accessToken');
-      const { wsInit, wsSendMessage, onOpen, onClose, onError, onMessage } =
-        wsActions;
+      const {
+        wsInit,
+        wsSendMessage,
+        onOpen,
+        onClose,
+        onError,
+        onMessage,
+        wsClose
+      } = wsActions;
 
       if (type === wsInit) {
         socket = new WebSocket(wsUrl);
@@ -33,7 +40,7 @@ export const socketMiddleware = (
           const { success, ...restParsedData } = parsedData;
 
           dispatch({ type: onMessage, payload: restParsedData });
-          console.log(parsedData);
+          console.log(parsedData.orders[0]);
         };
 
         socket.onclose = () => {
@@ -43,6 +50,9 @@ export const socketMiddleware = (
         if (type === wsSendMessage) {
           const message = { ...payload, token: accessToken };
           socket.send(JSON.stringify(message));
+        }
+        if (type === wsClose) {
+          socket.close();
         }
       }
 

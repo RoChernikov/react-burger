@@ -7,14 +7,13 @@ import formatDate from '../../../../utils/format-date';
 import IngredientIcon from '../../../ingredient-icon/ingredient-icon';
 import { useAppSelector } from '../../../../services/hooks';
 import { IOrder } from '../../../../utils/interfaces';
-import { getOrderData } from '../../../../services/slices/ingredients';
+import { getOrderDataByIds } from '../../../../services/slices/ingredients';
 //--------------------------------------------------------------------------------
 
 const OrderCard: FC<IOrder> = ({ withStatus, path, data }) => {
   const location = useLocation<ILocationParams>();
-  // const totalPrice = useAppSelector(calcPriceByIds(data.ingredients));
-  const { bunIcon, restIngIcons, totalPrice } = useAppSelector(
-    getOrderData(data.ingredients)
+  const { ingredients, totalPrice } = useAppSelector(
+    getOrderDataByIds(data.ingredients)
   );
 
   let status = '';
@@ -57,19 +56,18 @@ const OrderCard: FC<IOrder> = ({ withStatus, path, data }) => {
         )}
         <div className={styles.priceInfo}>
           <ul className={styles.ingredientsList}>
-            {restIngIcons.length > 4 && (
+            {ingredients.length > 5 && (
               <IngredientIcon
-                img={restIngIcons[4]}
-                extra={restIngIcons.length - 4}
+                img={ingredients[5].image_mobile}
+                extra={ingredients.length - 5}
               />
             )}
-            {restIngIcons
+            {ingredients
               .reverse()
-              .slice(-4)
-              .map((icon, i) => (
-                <IngredientIcon img={icon} key={i} />
-              ))}
-            <IngredientIcon img={bunIcon} />
+              .slice(-5)
+              .map((ing, i) => {
+                return <IngredientIcon img={ing.image_mobile} key={i} />;
+              })}
           </ul>
           <p className={styles.priceWrapper}>
             <span className={`text text_type_digits-default ${styles.price}`}>

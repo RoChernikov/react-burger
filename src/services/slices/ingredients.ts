@@ -72,23 +72,31 @@ export const selectIngredientById = (id: string) => (state: any) => {
   );
 };
 
-//returns total price of the order, bun icon and array of the rest of the icons by array of ingredients ids
-export const getOrderData = (ids: string[]) => (state: any) => {
-  //find ingredients by ids
-  const ings = ids.map(id =>
+export const getOrderDataByIds = (ids: string[]) => (state: any) => {
+  const allIngs = ids.map(id =>
     state.ingredients.ingredients.find((ing: TIngredient) => ing._id === id)
   );
+  const uniqIngs = allIngs
+    .filter(function (item, pos) {
+      return allIngs.indexOf(item) === pos;
+    })
+    .map(ing => ({
+      ...ing,
+      qty: allIngs.reduce((acc, item) => {
+        if (ing._id === item._id) {
+          acc++;
+        }
+        return acc;
+      }, 0)
+    }));
+
+  const totalPrice = allIngs.reduce((acc, ing) => {
+    acc += ing.price;
+    return acc;
+  }, allIngs.find(ing => ing.type === 'bun').price);
+
   return {
-    //return bun icon
-    bunIcon: ings.find(ing => ing.type === 'bun').image_mobile,
-    //return the rest of the icons
-    restIngIcons: ings
-      .filter(ing => ing.type !== 'bun')
-      .map(ing => ing.image_mobile),
-    //return total price of the order
-    totalPrice: ids.reduce((acc, id) => {
-      const ingPrice = ings.find((ing: TIngredient) => ing._id === id).price;
-      return acc + ingPrice;
-    }, ings.find(ing => ing.type === 'bun').price)
+    ingredients: uniqIngs,
+    totalPrice: totalPrice
   };
 };

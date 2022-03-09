@@ -76,3 +76,8 @@ export const WS_ORDER_ACTION_TYPES = {
   onMessage: onMessage.type,
   wsClose: wsClose.type
 };
+
+//returns order by its id
+export const selectOrderById = (id: string) => (state: any) => {
+  return state.wsOrders.orders.find((order: TWsOrder) => order._id === id);
+};

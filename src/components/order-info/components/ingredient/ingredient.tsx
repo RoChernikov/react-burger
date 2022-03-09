@@ -2,20 +2,20 @@ import styles from './ingredient.module.css';
 import React, { FC } from 'react';
 import IngredientIcon from '../../../ingredient-icon/ingredient-icon';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { IWsIngredient } from '../../../../utils/interfaces';
 //--------------------------------------------------------------------------------
 
-const Ingredient: FC = () => {
+const Ingredient: FC<{ ingredient: IWsIngredient }> = ({ ingredient }) => {
   return (
     <li className={styles.ingredient}>
-      <IngredientIcon
-        img="https://code.s3.yandex.net/react/code/bun-01-mobile.png"
-        isDiv
-      />
+      <IngredientIcon img={ingredient.image_mobile} isDiv />
       <p className={`text text_type_main-default ml-4 mr-4 ${styles.title}`}>
-        Флюоресцентная булка R2-D3
+        {ingredient.name}
       </p>
       <p className={styles.price}>
-        <span className="text text_type_digits-default mr-2">2 x 20</span>{' '}
+        <span className="text text_type_digits-default mr-2">
+          {ingredient.type === 'bun' ? 2 : ingredient.qty} x {ingredient.price}
+        </span>{' '}
         <CurrencyIcon type="primary" />
       </p>
     </li>

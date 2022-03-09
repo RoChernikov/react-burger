@@ -120,3 +120,7 @@ export interface IFeedStats {
   doneOrders: number[];
   pendingOrders: number[];
 }
+
+export interface IWsIngredient extends TIngredient {
+  qty: number;
+}

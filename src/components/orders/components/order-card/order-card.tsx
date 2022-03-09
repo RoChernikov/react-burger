@@ -1,5 +1,5 @@
 import styles from './order-card.module.css';
-import React, { FC, useEffect } from 'react';
+import React, { FC } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { ILocationParams } from '../../../../utils/interfaces';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -7,20 +7,28 @@ import formatDate from '../../../../utils/format-date';
 import IngredientIcon from '../../../ingredient-icon/ingredient-icon';
 import { useAppSelector } from '../../../../services/hooks';
 import { IOrder } from '../../../../utils/interfaces';
-import {
-  getIconsByIds,
-  calcPriceByIds
-} from '../../../../services/slices/ingredients';
+import { getOrderData } from '../../../../services/slices/ingredients';
 //--------------------------------------------------------------------------------
 
 const OrderCard: FC<IOrder> = ({ withStatus, path, data }) => {
   const location = useLocation<ILocationParams>();
-  const icons = useAppSelector(getIconsByIds(data.ingredients));
-  const totalPrice = useAppSelector(calcPriceByIds(data.ingredients));
+  // const totalPrice = useAppSelector(calcPriceByIds(data.ingredients));
+  const { bunIcon, restIngIcons, totalPrice } = useAppSelector(
+    getOrderData(data.ingredients)
+  );
 
-  useEffect(() => {
-    console.log([...data.ingredients].reverse());
-  }, []);
+  let status = '';
+  switch (data.status) {
+    case 'created':
+      status = 'Создан';
+      break;
+    case 'pending':
+      status = 'Готовится';
+      break;
+    case 'done':
+      status = 'Выполнен';
+      break;
+  }
 
   return (
     <li className={`p-6 ${styles.orderCard}`}>
@@ -40,15 +48,28 @@ const OrderCard: FC<IOrder> = ({ withStatus, path, data }) => {
           {data.name}
         </h2>
         {withStatus && (
-          <p className={`text text_type_main-default mt-2 ${styles.subTitle}`}>
-            {data.status}
+          <p
+            className={`text text_type_main-default mt-2 ${
+              data.status === 'done' && styles.subTitle
+            }`}>
+            {status}
           </p>
         )}
         <div className={styles.priceInfo}>
           <ul className={styles.ingredientsList}>
-            {icons.map((icon, i) => (
-              <IngredientIcon img={icon} key={i} />
-            ))}
+            {restIngIcons.length > 4 && (
+              <IngredientIcon
+                img={restIngIcons[4]}
+                extra={restIngIcons.length - 4}
+              />
+            )}
+            {restIngIcons
+              .reverse()
+              .slice(-4)
+              .map((icon, i) => (
+                <IngredientIcon img={icon} key={i} />
+              ))}
+            <IngredientIcon img={bunIcon} />
           </ul>
           <p className={styles.priceWrapper}>
             <span className={`text text_type_digits-default ${styles.price}`}>

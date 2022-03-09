@@ -40,7 +40,6 @@ export const socketMiddleware = (
           const { success, ...restParsedData } = parsedData;
 
           dispatch({ type: onMessage, payload: restParsedData });
-          console.log(parsedData.orders[0]);
         };
 
         socket.onclose = () => {

@@ -65,29 +65,30 @@ export const getIngredientsApi: AppThunk = () => (dispatch: AppDispatch) => {
     });
 };
 
+//returns ingredient by its id
 export const selectIngredientById = (id: string) => (state: any) => {
   return state.ingredients.ingredients.find(
     (ing: TIngredient) => ing._id === id
   );
 };
 
-export const getIconsByIds = (ids: string[]) => (state: any) => {
-  return [...ids]
-    .reverse()
-    .map(
-      id =>
-        state.ingredients.ingredients.find((ing: TIngredient) => ing._id === id)
-          .image_mobile
-    );
-};
-
-export const calcPriceByIds = (ids: string[]) => (state: any) => {
+//returns total price of the order, bun icon and array of the rest of the icons by array of ingredients ids
+export const getOrderData = (ids: string[]) => (state: any) => {
+  //find ingredients by ids
   const ings = ids.map(id =>
     state.ingredients.ingredients.find((ing: TIngredient) => ing._id === id)
   );
-  const totalPrice = ids.reduce((acc, id) => {
-    const ingPrice = ings.find((ing: TIngredient) => ing._id === id).price;
-    return acc + ingPrice;
-  }, ings.find(ing => ing.type === 'bun').price);
-  return totalPrice;
+  return {
+    //return bun icon
+    bunIcon: ings.find(ing => ing.type === 'bun').image_mobile,
+    //return the rest of the icons
+    restIngIcons: ings
+      .filter(ing => ing.type !== 'bun')
+      .map(ing => ing.image_mobile),
+    //return total price of the order
+    totalPrice: ids.reduce((acc, id) => {
+      const ingPrice = ings.find((ing: TIngredient) => ing._id === id).price;
+      return acc + ingPrice;
+    }, ings.find(ing => ing.type === 'bun').price)
+  };
 };

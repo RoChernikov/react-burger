@@ -18,6 +18,10 @@
   align-items: center;
 }
 
+.subTitle {
+  color: #00cccc;
+}
+
 .priceInfo {
   margin-top: 24px;
   display: flex;

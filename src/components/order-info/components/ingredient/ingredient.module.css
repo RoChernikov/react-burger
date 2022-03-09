@@ -1,17 +1,15 @@
 .ingredient {
   display: flex;
   align-items: center;
+  padding-right: 24px;
 }
 
 .title {
   width: 100%;
   max-width: 415px;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
 }
 
 .price {
-  display: flex;
-  align-items: center;
+  text-align: end;
+  width: 50%;
 }

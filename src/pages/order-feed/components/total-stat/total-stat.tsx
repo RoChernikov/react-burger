@@ -2,7 +2,7 @@ import styles from './total-stat.module.css';
 import React, { FC } from 'react';
 //--------------------------------------------------------------------------------
 
-const TotalStat: FC<{ title: string; children: string }> = ({
+const TotalStat: FC<{ title: string; children: string | number }> = ({
   title,
   children
 }) => {

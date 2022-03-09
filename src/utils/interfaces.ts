@@ -99,6 +99,7 @@ export interface IIngIcon {
 export interface IStatusList {
   title: string;
   hightlight?: boolean;
+  orders: number[];
 }
 
 export interface IOrders {
@@ -111,4 +112,11 @@ export interface IOrder {
   path: string;
   data: TWsOrder;
   withStatus?: boolean;
+}
+
+export interface IFeedStats {
+  total: number;
+  totalToday: number;
+  doneOrders: number[];
+  pendingOrders: number[];
 }

@@ -2,20 +2,25 @@ import styles from './feed-stats.module.css';
 import React, { FC } from 'react';
 import StatusList from '../status-list/status-list';
 import TotalStat from '../total-stat/total-stat';
+import { IFeedStats } from '../../../../utils/interfaces';
 //--------------------------------------------------------------------------------
-const number = 28752; //-------------hardcode
 
-const FeedStats: FC = () => {
+const FeedStats: FC<IFeedStats> = ({
+  total,
+  totalToday,
+  doneOrders,
+  pendingOrders
+}) => {
   return (
     <section className={styles.feedStats}>
       <div className={styles.statusLists}>
-        <StatusList title="Готовы:" hightlight />
-        <StatusList title="В работе:" />
+        <StatusList title="Готовы:" orders={doneOrders} hightlight />
+        <StatusList title="В работе:" orders={pendingOrders} />
       </div>
       <TotalStat title="Выполнено за все время:">
-        {number.toLocaleString()}
+        {total.toLocaleString()}
       </TotalStat>
-      <TotalStat title="Выполнено за сегодня:">138</TotalStat>
+      <TotalStat title="Выполнено за сегодня:">{totalToday}</TotalStat>
     </section>
   );
 };

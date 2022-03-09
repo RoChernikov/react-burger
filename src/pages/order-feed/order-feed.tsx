@@ -10,10 +10,16 @@ import DeveloperGuy from '../../components/developer-guy/developer-guy';
 
 const OrderFeedPage: FC = () => {
   const dispatch = useAppDispatch();
-
-  const { wsRequest, wsFailed, orders } = useAppSelector(
+  const { wsRequest, wsFailed, orders, total, totalToday } = useAppSelector(
     state => state.wsOrders
   );
+
+  const pendingOrders = orders
+    .filter(order => order.status === 'pending')
+    .map(order => order.number);
+  const doneOrders = orders
+    .filter(order => order.status === 'done')
+    .map(order => order.number);
 
   useEffect(() => {
     dispatch(wsInit());
@@ -37,7 +43,12 @@ const OrderFeedPage: FC = () => {
             <Orders path="feed/" orders={orders} />
           </section>
           <section className={styles.statsSection}>
-            <FeedStats />
+            <FeedStats
+              total={total}
+              totalToday={totalToday}
+              doneOrders={doneOrders}
+              pendingOrders={pendingOrders}
+            />
           </section>
         </main>
       ) : (

@@ -7,13 +7,17 @@ interface IWsOrdersState {
   wsOpen: boolean;
   wsFailed: boolean;
   orders: TWsOrder[];
+  total: number;
+  totalToday: number;
 }
 
 const initialState: IWsOrdersState = {
   wsRequest: false,
   wsOpen: false,
   wsFailed: false,
-  orders: []
+  orders: [],
+  total: 0,
+  totalToday: 0
 };
 
 export const wsOrdersSlice = createSlice({
@@ -42,6 +46,8 @@ export const wsOrdersSlice = createSlice({
     },
     onMessage(state, action: PayloadAction<TOnMessagePayload>) {
       state.orders = action.payload.orders;
+      state.total = action.payload.total;
+      state.totalToday = action.payload.totalToday;
     },
     wsClose(state) {
       state.wsRequest = false;

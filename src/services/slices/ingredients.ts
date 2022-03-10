@@ -73,10 +73,12 @@ export const selectIngredientById = (id: string) => (state: any) => {
 };
 
 export const getOrderDataByIds = (ids: string[]) => (state: any) => {
-  const allIngs = ids.map(id =>
-    state.ingredients.ingredients.find((ing: TIngredient) => ing._id === id)
-  );
-  const uniqIngs = allIngs
+  const allIngs = ids
+    .filter(id => typeof id === 'string')
+    .map(id =>
+      state.ingredients.ingredients.find((ing: TIngredient) => ing._id === id)
+    );
+  const uniqueIngs = allIngs
     .filter(function (item, pos) {
       return allIngs.indexOf(item) === pos;
     })
@@ -90,13 +92,17 @@ export const getOrderDataByIds = (ids: string[]) => (state: any) => {
       }, 0)
     }));
 
+  const reorderedUniqueIngs = uniqueIngs
+    .filter(ing => ing.type !== 'bun')
+    .reverse()
+    .concat(uniqueIngs.filter(ing => ing.type === 'bun'));
+
   const totalPrice = allIngs.reduce((acc, ing) => {
     acc += ing.price;
     return acc;
-  }, allIngs.find(ing => ing.type === 'bun').price);
-
+  }, 0);
   return {
-    ingredients: uniqIngs,
+    ingredients: reorderedUniqueIngs,
     totalPrice: totalPrice
   };
 };

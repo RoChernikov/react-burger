@@ -8,9 +8,7 @@ import Message from '../../components/message/message';
 //--------------------------------------------------------------------------------
 
 const OrderInfoPage: FC = () => {
-  const { wsRequest, wsFailed, wsOpen, orders } = useAppSelector(
-    state => state.wsOrders
-  );
+  const { wsFailed, orders } = useAppSelector(state => state.wsOrders);
   const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(wsInit());

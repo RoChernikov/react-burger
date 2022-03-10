@@ -34,7 +34,9 @@ const OrderInfo: FC = () => {
   return (
     <div className={styles.orderInfo}>
       <p className="text text_type_digits-default mt-5">#{order.number}</p>
-      <h1 className="text text_type_main-medium mt-10">{order.name}</h1>
+      <h1 className={`text text_type_main-medium mt-10 ${styles.title}`}>
+        {order.name}
+      </h1>
       <p className="text text_type_main-default mt-2" style={hightlight}>
         {status}
       </p>

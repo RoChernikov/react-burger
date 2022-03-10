@@ -25,8 +25,9 @@ import { useAppSelector, useAppDispatch } from '../../services/hooks';
 import { patchUser } from '../../services/slices/user';
 import { Route } from 'react-router-dom';
 import Orders from '../../components/orders/orders';
-import { wsInit, wsClose } from '../../services/slices/ws-orders';
+import { wsInitWithCustomUrl, wsClose } from '../../services/slices/ws-orders';
 import Message from '../../components/message/message';
+import { getCookie } from '../../utils/cookie';
 //--------------------------------------------------------------------------------
 
 const Profile: FC = () => {
@@ -52,13 +53,17 @@ const Profile: FC = () => {
     () => name !== user.name || email !== user.email || pass !== '',
     [user, name, email, pass]
   );
-  const { wsRequest, wsFailed, orders } = useAppSelector(
-    state => state.wsOrders
-  );
+  const { orders } = useAppSelector(state => state.wsOrders);
   //-------------------------------------------------------------------------------
 
   useEffect(() => {
-    dispatch(wsInit());
+    dispatch(
+      wsInitWithCustomUrl(
+        `wss://norma.nomoreparties.space/orders?token=${getCookie(
+          'accessToken'
+        )}`
+      )
+    );
 
     return () => {
       dispatch(wsClose());
@@ -214,7 +219,11 @@ const Profile: FC = () => {
           </Route>
           <Route path="/profile/orders">
             <section className={styles.section}>
-              <Orders path="/profile/orders/" withStatus orders={orders} />
+              <Orders
+                path="/profile/orders/"
+                withStatus
+                orders={[...orders].reverse()}
+              />
             </section>
           </Route>
         </main>

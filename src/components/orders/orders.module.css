@@ -25,3 +25,8 @@
 .orders::-webkit-scrollbar-thumb:hover {
   background: #8282da;
 }
+
+.title {
+  overflow-y: scroll;
+  max-height: 100px;
+}

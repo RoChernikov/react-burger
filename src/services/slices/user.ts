@@ -76,6 +76,7 @@ export const updateToken: AppThunk = () => (dispatch: AppDispatch) => {
     })
     .catch(err => {
       dispatch(setStatusFailed());
+      dispatch(signOut());
       console.log(err.message);
     });
 };
@@ -108,7 +109,7 @@ export const signOut: AppThunk =
         dispatch(setUser({ name: '', email: '' }));
         dispatch(setStatusSuccess());
         dispatch(setAuth(false));
-        cb();
+        cb && cb();
       })
       .catch(err => {
         dispatch(setStatusFailed());
@@ -140,9 +141,10 @@ export const getUser: AppThunk = () => (dispatch: AppDispatch) => {
       dispatch(setStatusSuccess());
     })
     .catch(err => {
-      if (err.message === 'jwt expired') {
+      if (err.message === 'jwt expired' || 'jwt malformed') {
         dispatch(updateToken());
       } else {
+        dispatch(setStatusFailed());
         return Promise.reject(err.message);
       }
     });

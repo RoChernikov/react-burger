@@ -31,7 +31,6 @@ export const wsOrdersSlice = createSlice({
     },
     sendMessage(state, action: PayloadAction) {},
     onOpen(state) {
-      state.wsRequest = false;
       state.wsOpen = true;
       state.wsFailed = false;
     },
@@ -45,6 +44,7 @@ export const wsOrdersSlice = createSlice({
       state.wsFailed = true;
     },
     onMessage(state, action: PayloadAction<TOnMessagePayload>) {
+      state.wsRequest = false;
       state.orders = action.payload.orders;
       state.total = action.payload.total;
       state.totalToday = action.payload.totalToday;

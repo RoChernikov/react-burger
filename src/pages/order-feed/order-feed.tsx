@@ -5,13 +5,16 @@ import Orders from '../../components/orders/orders';
 import { useAppDispatch, useAppSelector } from '../../services/hooks';
 import { wsInit, wsClose } from '../../services/slices/ws-orders';
 import Loader from '../../components/loader/loader';
-import DeveloperGuy from '../../components/developer-guy/developer-guy';
+import Message from '../../components/message/message';
 //--------------------------------------------------------------------------------
 
 const OrderFeedPage: FC = () => {
   const dispatch = useAppDispatch();
   const { wsRequest, wsFailed, orders, total, totalToday } = useAppSelector(
     state => state.wsOrders
+  );
+  const { ingredientsFailed, ingredientsRequest } = useAppSelector(
+    state => state.ingredients
   );
 
   const pendingOrders = orders
@@ -33,7 +36,7 @@ const OrderFeedPage: FC = () => {
     <Loader />
   ) : (
     <>
-      {!wsFailed ? (
+      {!wsFailed && !ingredientsFailed && orders.length > 0 ? (
         <main className={styles.main}>
           <h1
             className={`text text_type_main-large mt-10 mb-5 ml-2 ${styles.title}`}>
@@ -52,9 +55,7 @@ const OrderFeedPage: FC = () => {
           </section>
         </main>
       ) : (
-        <main className={styles.errorMain}>
-          <DeveloperGuy>Не удалось загрузить данные!</DeveloperGuy>
-        </main>
+        <Message>Не удалось загрузить данные!</Message>
       )}
     </>
   );

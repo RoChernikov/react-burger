@@ -40,7 +40,8 @@ const App: FC = () => {
 
   const location = useLocation<ILocationParams>();
 
-  const background = location.state && location.state.background;
+  const background =
+    history.action === 'PUSH' && location.state && location.state.background;
 
   return (
     <>

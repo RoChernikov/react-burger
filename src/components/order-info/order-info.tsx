@@ -40,7 +40,7 @@ const OrderInfo: FC = () => {
       </p>
       <p className="text text_type_main-medium mt-15">Состав:</p>
       <ul className={`mt-6 ${styles.list}`}>
-        {ingredients.map((ing: IWsIngredient, idx: number) => {
+        {ingredients.reverse().map((ing: IWsIngredient, idx: number) => {
           return <Ingredient ingredient={ing} key={idx} />;
         })}
       </ul>

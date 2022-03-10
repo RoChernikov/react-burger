@@ -58,16 +58,19 @@ const OrderCard: FC<IOrder> = ({ withStatus, path, data }) => {
           <ul className={styles.ingredientsList}>
             {ingredients.length > 5 && (
               <IngredientIcon
-                img={ingredients[5].image_mobile}
+                img={ingredients[ingredients.length - 6].image_mobile}
                 extra={ingredients.length - 5}
               />
             )}
-            {ingredients
-              .reverse()
-              .slice(-5)
-              .map((ing, i) => {
-                return <IngredientIcon img={ing.image_mobile} key={i} />;
-              })}
+            {ingredients.slice(-5).map((ing, i) => {
+              return (
+                <IngredientIcon
+                  img={ing.image_mobile}
+                  key={i}
+                  count={ing.qty}
+                />
+              );
+            })}
           </ul>
           <p className={styles.priceWrapper}>
             <span className={`text text_type_digits-default ${styles.price}`}>

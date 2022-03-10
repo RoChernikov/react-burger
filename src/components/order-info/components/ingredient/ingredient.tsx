@@ -14,7 +14,7 @@ const Ingredient: FC<{ ingredient: IWsIngredient }> = ({ ingredient }) => {
       </p>
       <p className={styles.price}>
         <span className="text text_type_digits-default mr-2">
-          {ingredient.type === 'bun' ? 2 : ingredient.qty} x {ingredient.price}
+          {ingredient.qty} x {ingredient.price}
         </span>{' '}
         <CurrencyIcon type="primary" />
       </p>

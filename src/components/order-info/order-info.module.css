@@ -4,6 +4,8 @@
   align-items: flex-start;
   width: 100%;
   max-width: 640px;
+  height: 100%;
+  max-height: 600px;
 }
 
 .list {
@@ -31,6 +33,24 @@
 }
 
 .list::-webkit-scrollbar-thumb:hover {
+  background: #8282da;
+}
+
+.title {
+  overflow-y: scroll;
+  min-height: 60px;
+}
+
+.title::-webkit-scrollbar {
+  width: 8px;
+  background: #2f2f37;
+}
+
+.title::-webkit-scrollbar-thumb {
+  background: #8585ad;
+}
+
+.title::-webkit-scrollbar-thumb:hover {
   background: #8282da;
 }
 

@@ -13,6 +13,7 @@ import { useAppSelector, useAppDispatch } from '../../services/hooks';
 import { burgerConstructorSlice } from '../../services/slices/constructor';
 import { IBurgerConstructor } from '../../utils/interfaces';
 import Loader from '../loader/loader';
+import Submit from '../submit/submit';
 //--------------------------------------------------------------------------------
 
 const BurgerConstructor = forwardRef<
@@ -141,16 +142,16 @@ const BurgerConstructor = forwardRef<
         <span className="ml-2 mr-10">
           <CurrencyIcon type="primary" />
         </span>
-        <Button
-          type="primary"
+        <Submit
           size="large"
+          disabled={orderNumberRequest}
           onClick={isAuth ? handleSubmit : handleSignIn}>
           {orderNumberRequest
             ? 'Загрузка...'
             : isAuth
             ? 'Оформить заказ'
             : 'Войти'}
-        </Button>
+        </Submit>
       </div>
     </section>
   );

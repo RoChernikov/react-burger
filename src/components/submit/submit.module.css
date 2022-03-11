@@ -7,7 +7,7 @@
   user-select: none;
 }
 
-.wrapper > button[disabled] {
+.btnDisable > button {
   filter: grayscale(0.7);
   opacity: 30%;
   pointer-events: none;

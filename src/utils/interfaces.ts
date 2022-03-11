@@ -60,6 +60,8 @@ export interface ISubmit {
   disabled?: boolean;
   onClick?: (evt: React.SyntheticEvent) => void;
   wrapStyles?: React.CSSProperties;
+  type?: 'primary' | 'secondary';
+  size?: 'small' | 'medium' | 'large';
 }
 
 export interface IFormHint {

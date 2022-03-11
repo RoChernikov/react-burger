@@ -4,7 +4,7 @@ import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import { IIngIcon } from '../../utils/interfaces';
 //--------------------------------------------------------------------------------
 
-const IngredientIcon: FC<IIngIcon> = ({ img, extra, count, isDiv = false }) => {
+const IngredientIcon: FC<IIngIcon> = ({ img, extra, count, isDiv }) => {
   return !isDiv ? (
     <li className={styles.ingredient}>
       <img className={styles.image} src={img} alt="ингредиент" />

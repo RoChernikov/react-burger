@@ -10,6 +10,11 @@
   animation: appearance 0.4s forwards;
 }
 
+.ordersSection {
+  opacity: 0;
+  animation: appearance 0.3s forwards;
+}
+
 .title {
   grid-row: 1;
   grid-column: 1/3;

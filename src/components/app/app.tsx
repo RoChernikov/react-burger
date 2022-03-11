@@ -57,7 +57,7 @@ const App: FC = () => {
         <Route exact path="/feed/:id" children={<OrderInfoPage />} />
         <ProtectedRoute
           path="/profile/orders/:id"
-          children={<OrderInfoPage />}
+          children={<OrderInfoPage pty />}
         />
         <ProtectedRoute path="/profile" children={<ProfilePage />} />
         <Route children={<NotFound404 />} />

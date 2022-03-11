@@ -36,24 +36,6 @@
   background: #8282da;
 }
 
-.title {
-  overflow-y: scroll;
-  min-height: 60px;
-}
-
-.title::-webkit-scrollbar {
-  width: 8px;
-  background: #2f2f37;
-}
-
-.title::-webkit-scrollbar-thumb {
-  background: #8585ad;
-}
-
-.title::-webkit-scrollbar-thumb:hover {
-  background: #8282da;
-}
-
 .footer {
   width: 100%;
   margin-top: 48px;

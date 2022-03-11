@@ -42,9 +42,13 @@ const OrderFeedPage: FC = () => {
             className={`text text_type_main-large mt-10 mb-5 ml-2 ${styles.title}`}>
             Лента заказов
           </h1>
-          <section className={styles.ordersSection}>
-            <Orders path="feed/" orders={orders} />
-          </section>
+          {orders.length === 50 ? (
+            <section className={styles.ordersSection}>
+              <Orders path="feed/" orders={orders} />
+            </section>
+          ) : (
+            <Loader />
+          )}
           <section className={styles.statsSection}>
             <FeedStats
               total={total}

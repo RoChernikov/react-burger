@@ -6,17 +6,18 @@ import HomePage from '../../pages/home/home';
 import LoginPage from '../../pages/login/login';
 import RegisterPage from '../../pages/register/register';
 import ProfilePage from '../../pages/profile/profile';
-import OrdersPage from '../../pages/orders/orders';
-import FeedPage from '../../pages/feed/feed';
+import OrderFeedPage from '../../pages/order-feed/order-feed';
 import ForgotPassPage from '../../pages/forgot-password/forgot-password';
 import ResetPassPage from '../../pages/reset-password/reset-password';
 import IngredientPage from '../../pages/ingredient/ingredient-page';
+import OrderInfoPage from '../../pages/order-info/order-info';
 import NotFound404 from '../../pages/not-found-404/not-found-404';
 import { Switch, Route, useLocation, useHistory } from 'react-router-dom';
 import ProtectedRoute from '../protected-route/protected-route';
 import { ILocationParams } from '../../utils/interfaces';
 import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
+import OrderInfo from '../order-info/order-info';
 //--------------------------------------------------------------------------------
 
 const App: FC = () => {
@@ -52,19 +53,33 @@ const App: FC = () => {
         <Route exact path="/forgot-password" children={<ForgotPassPage />} />
         <Route exact path="/reset-password" children={<ResetPassPage />} />
         <Route exact path="/ingredients/:id" children={<IngredientPage />} />
-        <ProtectedRoute exact path="/profile" children={<ProfilePage />} />
+        <Route exact path="/feed" children={<OrderFeedPage />} />
+        <Route exact path="/feed/:id" children={<OrderInfoPage />} />
         <ProtectedRoute
-          exact
-          path="/profile/orders"
-          children={<OrdersPage />}
+          path="/profile/orders/:id"
+          children={<OrderInfoPage pty />}
         />
-        <ProtectedRoute exact path="/feed" children={<FeedPage />} />
+        <ProtectedRoute path="/profile" children={<ProfilePage />} />
         <Route children={<NotFound404 />} />
       </Switch>
       {background && (
         <Route path="/ingredients/:id">
           <Modal closeModal={() => closeModal('/')}>
             <IngredientDetails />
+          </Modal>
+        </Route>
+      )}
+      {background && (
+        <Route path="/feed/:id">
+          <Modal closeModal={() => closeModal('/feed')}>
+            <OrderInfo />
+          </Modal>
+        </Route>
+      )}
+      {background && (
+        <Route path="/profile/orders/:id">
+          <Modal closeModal={() => closeModal('/profile/orders')}>
+            <OrderInfo />
           </Modal>
         </Route>
       )}

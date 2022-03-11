@@ -2,6 +2,34 @@
   width: 100%;
   padding-top: 180px;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.errorTitle {
+  color: red;
+  white-space: nowrap;
+  text-align: center;
+  opacity: 0;
+  animation: appearance 5s forwards;
+}
+
+@keyframes appearance {
+  0% {
+    height: 0px;
+    opacity: 0;
+  }
+  10% {
+    height: 24px;
+    opacity: 1;
+  }
+  80% {
+    height: 24px;
+    opacity: 1;
+  }
+  100% {
+    height: 0px;
+    opacity: 0%;
+  }
 }

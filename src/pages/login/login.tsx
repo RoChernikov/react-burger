@@ -8,7 +8,7 @@ import {
 } from '../../validations/user-validation';
 import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import Form from '../../components/form/form';
-import Submit from '../../components/form/components/submit/submit';
+import Submit from '../../components/submit/submit';
 import InputWrapper from '../../components/form/components/input-wrapper/input-wrapper';
 import FormHint from '../../components/form/components/form-hint/form-hint';
 import { useAppDispatch, useAppSelector } from '../../services/hooks';
@@ -25,7 +25,8 @@ const LoginPage: FC = () => {
   const [password, setPassword] = useState('');
   const [passErr, setPassErr] = useState(false);
   const [showPass, setShowPass] = useState(false);
-  const { isAuth } = useAppSelector(state => state.user);
+  const disable = emailErr || passErr || email === '' || password === '';
+  const { isAuth, loginError } = useAppSelector(state => state.user);
   //-------------------------------------------------------------------------------
 
   const handleSubmit = useCallback(
@@ -49,6 +50,11 @@ const LoginPage: FC = () => {
   return (
     <main className={styles.main}>
       <Form onSubmit={handleSubmit} title="Вход">
+        {loginError === 'email or password are incorrect' && (
+          <p className={`text text_type_main-default ${styles.errorTitle}`}>
+            Нeверный e-mail или пароль
+          </p>
+        )}
         <InputWrapper>
           <Input
             name="email"
@@ -56,7 +62,9 @@ const LoginPage: FC = () => {
             type="text"
             placeholder="E-mail"
             error={emailErr}
-            errorText="Некорректный формат e-mail"
+            errorText={
+              email === '' ? 'Заполните поле' : 'Некорректный формат e-mail'
+            }
             onChange={e => {
               setEmail(e.target.value);
               checkValidate(emailSchema, setEmailErr, e.target.value);
@@ -69,7 +77,9 @@ const LoginPage: FC = () => {
             placeholder="Пароль"
             value={password}
             error={passErr}
-            errorText="Некорректный пароль"
+            errorText={
+              password === '' ? 'Заполните поле' : 'Некорректный пароль'
+            }
             name={'password'}
             size="default"
             icon="ShowIcon"
@@ -80,7 +90,9 @@ const LoginPage: FC = () => {
             }}
           />
         </InputWrapper>
-        <Submit>Войти</Submit>
+        <Submit disabled={disable} wrapStyles={{ marginBottom: '80px' }}>
+          Войти
+        </Submit>
         <FormHint link="/register" caption="Зарегистрироваться">
           Вы - новый пользователь?
         </FormHint>

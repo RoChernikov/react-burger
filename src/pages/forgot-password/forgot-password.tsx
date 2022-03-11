@@ -4,7 +4,7 @@ import { useHistory, Redirect } from 'react-router-dom';
 import { checkValidate, emailSchema } from '../../validations/user-validation';
 import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import Form from '../../components/form/form';
-import Submit from '../../components/form/components/submit/submit';
+import Submit from '../../components/submit/submit';
 import InputWrapper from '../../components/form/components/input-wrapper/input-wrapper';
 import FormHint from '../../components/form/components/form-hint/form-hint';
 import { useAppSelector, useAppDispatch } from '../../services/hooks';
@@ -16,6 +16,7 @@ const ForgotPassPage: FC = () => {
   const history = useHistory();
   const [email, setEmail] = useState('');
   const [emailErr, setEmailErr] = useState(false);
+  const disable = emailErr || email === '';
   const { isAuth } = useAppSelector(state => state.user);
   //-------------------------------------------------------------------------------
 
@@ -51,14 +52,18 @@ const ForgotPassPage: FC = () => {
             type="text"
             placeholder="E-mail"
             error={emailErr}
-            errorText="Некорректный формат e-mail"
+            errorText={
+              email === '' ? 'Заполните поле' : 'Некорректный формат e-mail'
+            }
             onChange={e => {
               setEmail(e.target.value);
               checkValidate(emailSchema, setEmailErr, e.target.value);
             }}
           />
         </InputWrapper>
-        <Submit>Восстановить</Submit>
+        <Submit disabled={disable} wrapStyles={{ marginBottom: '80px' }}>
+          Восстановить
+        </Submit>
         <FormHint link="/login" caption="Войти">
           Вспомнили пароль?
         </FormHint>

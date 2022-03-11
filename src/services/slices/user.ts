@@ -11,6 +11,7 @@ interface IUserState {
   user: TUser;
   isAuth: boolean;
   canResetPwd: boolean;
+  loginError: string;
 }
 
 const initialState: IUserState = {
@@ -20,7 +21,8 @@ const initialState: IUserState = {
     email: ''
   },
   isAuth: !!getCookie('accessToken'),
-  canResetPwd: false
+  canResetPwd: false,
+  loginError: ''
 };
 
 export const userSlice = createSlice({
@@ -44,6 +46,9 @@ export const userSlice = createSlice({
     },
     setResetPwdStatus(state, action: PayloadAction<boolean>) {
       state.canResetPwd = action.payload;
+    },
+    setLoginError(state, action: PayloadAction<string>) {
+      state.loginError = action.payload;
     }
   }
 });
@@ -54,7 +59,8 @@ export const {
   setStatusFailed,
   setUser,
   setAuth,
-  setResetPwdStatus
+  setResetPwdStatus,
+  setLoginError
 } = userSlice.actions;
 
 export const updateToken: AppThunk = () => (dispatch: AppDispatch) => {
@@ -70,6 +76,7 @@ export const updateToken: AppThunk = () => (dispatch: AppDispatch) => {
     })
     .catch(err => {
       dispatch(setStatusFailed());
+      dispatch(signOut());
       console.log(err.message);
     });
 };
@@ -83,9 +90,11 @@ export const signIn: AppThunk = (data: IForm) => (dispatch: AppDispatch) => {
       dispatch(setUser(res.user));
       dispatch(setAuth(true));
       dispatch(setStatusSuccess());
+      dispatch(setLoginError(''));
     })
     .catch(err => {
       dispatch(setStatusFailed());
+      dispatch(setLoginError(err.message));
       console.log(err.message);
     });
 };
@@ -100,7 +109,7 @@ export const signOut: AppThunk =
         dispatch(setUser({ name: '', email: '' }));
         dispatch(setStatusSuccess());
         dispatch(setAuth(false));
-        cb();
+        cb && cb();
       })
       .catch(err => {
         dispatch(setStatusFailed());
@@ -132,9 +141,10 @@ export const getUser: AppThunk = () => (dispatch: AppDispatch) => {
       dispatch(setStatusSuccess());
     })
     .catch(err => {
-      if (err.message === 'jwt expired') {
+      if (err.message === 'jwt expired' || 'jwt malformed') {
         dispatch(updateToken());
       } else {
+        dispatch(setStatusFailed());
         return Promise.reject(err.message);
       }
     });

@@ -8,6 +8,7 @@
   background: none;
   border: none;
   text-decoration: none;
+  transition: all 0.2s ease;
 }
 
 .link_active {
@@ -32,4 +33,10 @@
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
+}
+
+.link > svg {
+  transition: all 0.2s ease;
+  width: 24px;
+  height: 24px;
 }

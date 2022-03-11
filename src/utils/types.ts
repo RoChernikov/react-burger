@@ -37,3 +37,20 @@ export type TUser = {
 };
 
 export type TStatus = 'pending' | 'success' | 'failed';
+
+export type TWsOrder = {
+  _id: string;
+  status: string | 'pending' | 'done';
+  name: string;
+  createdAt: string;
+  updatedAt: string;
+  number: number;
+  ingredients: string[];
+};
+
+export type TOnMessagePayload = {
+  success: boolean;
+  orders: TWsOrder[];
+  total: number;
+  totalToday: number;
+};

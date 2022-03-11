@@ -1,6 +1,7 @@
 .wrapper {
   max-width: 320px;
-  margin-right: 60px;
+  opacity: 0;
+  animation: appearance 0.45s forwards cubic-bezier(0.3, 0.22, 0.42, 0.86);
 }
 
 .tabs {
@@ -13,9 +14,14 @@
   display: block;
   color: #8585ad;
   text-decoration: none;
+  transition: all 0.2s ease;
 }
 
 .link_active {
+  color: white;
+}
+
+.link:hover {
   color: white;
 }
 
@@ -23,6 +29,7 @@
   border: none;
   margin: 0;
   background: transparent;
+  transition: all 0.2s ease;
 }
 
 .button:hover {
@@ -32,4 +39,13 @@
 
 .hint {
   opacity: 40%;
+}
+
+@keyframes appearance {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }

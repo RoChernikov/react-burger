@@ -1,5 +1,5 @@
 import { ReactNode, SyntheticEvent } from 'react';
-import { TIngredient, TMeal } from './types';
+import { TIngredient, TMeal, TWsOrder } from './types';
 import { Location } from 'history';
 
 export interface IHeaderLink {
@@ -57,6 +57,9 @@ export interface IInputWrapper {
 
 export interface ISubmit {
   children: ReactNode;
+  disabled?: boolean;
+  onClick?: (evt: React.SyntheticEvent) => void;
+  wrapStyles?: React.CSSProperties;
 }
 
 export interface IFormHint {
@@ -85,4 +88,40 @@ export interface IForm {
 export interface ICookieProps {
   [name: string]: string | number | boolean | Date | undefined;
   expires?: Date | number | string;
+}
+
+export interface IIngIcon {
+  img: string;
+  count?: number;
+  extra?: number;
+  isDiv?: boolean;
+}
+
+export interface IStatusList {
+  title: string;
+  hightlight?: boolean;
+  orders: number[];
+}
+
+export interface IOrders {
+  path: string;
+  orders: TWsOrder[];
+  withStatus?: boolean;
+}
+
+export interface IOrder {
+  path: string;
+  data: TWsOrder;
+  withStatus?: boolean;
+}
+
+export interface IFeedStats {
+  total: number;
+  totalToday: number;
+  doneOrders: number[];
+  pendingOrders: number[];
+}
+
+export interface IWsIngredient extends TIngredient {
+  qty: number;
 }

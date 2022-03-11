@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import styles from './profile-nav.module.css';
 import { NavLink } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../../services/hooks';
+import { useAppDispatch } from '../../services/hooks';
 import { signOut } from '../../services/slices/user';
 //--------------------------------------------------------------------------------
 
@@ -30,6 +30,7 @@ const ProfileNav = () => {
           <NavLink
             className={`text text_type_main-medium pt-4 pb-5 ${styles.link}`}
             activeClassName={styles.link_active}
+            exact
             to="/profile">
             Профиль
           </NavLink>
@@ -38,6 +39,7 @@ const ProfileNav = () => {
           <NavLink
             className={`text text_type_main-medium pt-4 pb-5 ${styles.link}`}
             activeClassName={styles.link_active}
+            exact
             to="/profile/orders">
             История заказов
           </NavLink>

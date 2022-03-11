@@ -8,7 +8,7 @@ import {
 } from '../../validations/user-validation';
 import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import Form from '../../components/form/form';
-import Submit from '../../components/form/components/submit/submit';
+import Submit from '../../components/submit/submit';
 import InputWrapper from '../../components/form/components/input-wrapper/input-wrapper';
 import FormHint from '../../components/form/components/form-hint/form-hint';
 import { useAppDispatch, useAppSelector } from '../../services/hooks';
@@ -24,6 +24,7 @@ const ResetPassPage: FC = () => {
   const [showPass, setShowPass] = useState(false);
   const [code, setCode] = useState('');
   const [codeErr, setCodeErr] = useState(false);
+  const disable = passErr || codeErr || password === '' || code === '';
   const { isAuth, canResetPwd } = useAppSelector(state => state.user);
   //-------------------------------------------------------------------------------
   const handleSubmit = useCallback(
@@ -67,7 +68,9 @@ const ResetPassPage: FC = () => {
             placeholder="Пароль"
             value={password}
             error={passErr}
-            errorText="Некорректный пароль"
+            errorText={
+              password === '' ? 'Заполните поле' : 'Некорректный пароль'
+            }
             name={'password'}
             size="default"
             icon="ShowIcon"
@@ -89,10 +92,12 @@ const ResetPassPage: FC = () => {
             type="text"
             placeholder="Введите код из письма"
             error={codeErr}
-            errorText="Неверный формат кода"
+            errorText={code === '' ? 'Заполните поле' : 'Неверный формат кода'}
           />
         </InputWrapper>
-        <Submit>Сохранить</Submit>
+        <Submit disabled={disable} wrapStyles={{ marginBottom: '80px' }}>
+          Сохранить
+        </Submit>
         <FormHint link="/login" caption="Войти">
           Вспомнили пароль?
         </FormHint>

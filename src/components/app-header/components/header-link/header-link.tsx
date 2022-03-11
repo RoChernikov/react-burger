@@ -1,7 +1,7 @@
 import styles from './header-link.module.css';
 import React, { FC } from 'react';
 import { IHeaderLink } from '../../../../utils/interfaces';
-import { NavLink, BrowserRouter as Router } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 //--------------------------------------------------------------------------------
 
 const HeaderLink: FC<IHeaderLink> = ({ to, icon, children }) => {

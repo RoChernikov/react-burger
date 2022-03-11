@@ -5,6 +5,12 @@
 <p align="Left"> "Stellar Burgers" - одностраничное приложение, позволяющее собрать и заказать свой уникальный межгалактический бургер</p>
 
 [Открыть в браузере](https://stellarburgers.vercel.app/)
+<br>
+Для полноценного тестирования необходимо зарегистрироваться или авторизоваться. Тестовые данные для авторизации: 
+<br>
+e-mail: stellarburgers@test.com 
+<br>
+Пароль: password
 
 ### Функционал:
 
@@ -13,20 +19,13 @@
 - регистрация/авторизация пользователя, восстановление пароля
 - Хранение токенов в cookie
 - Защищенный роутинг
-
-### Функционал в разработке:
-
-- Лента заказов (WebSocket)
-
-### Функцианал в разработке:
-
-- регистрация/авторизация пользователя
-- Защищенный роутинг
 - Лента заказов (WebSocket)
 
 <a  href="https://stellarburgers.vercel.app/" target="_blank" align="center"><img src="./readme_src/demo.gif" width="100%" alt="Демо"></a>
-<br>
+
 <a  href="https://stellarburgers.vercel.app/" target="_blank" align="center"><img src="./readme_src/demo2.gif" width="100%" alt="Демо2"></a>
+
+<a  href="https://stellarburgers.vercel.app/" target="_blank" align="center"><img src="./readme_src/demo3.gif" width="100%" alt="Демо3"></a>
 
 ### Технологии, использованные при создании:
 
@@ -37,6 +36,7 @@
 - React Router
 - Работа с публичным API
 - JWT Token
+- WebSocket
 - Flexbox
 - Grid Layout
 - CSS - animation

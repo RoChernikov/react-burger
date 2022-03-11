@@ -28,7 +28,10 @@ class Api {
   sendOrder(ingredients: string[]) {
     return fetch(`${BASE_URL}/orders`, {
       method: 'POST',
-      headers: this._headers,
+      headers: {
+        ...this._headers,
+        authorization: `Bearer ${getCookie('accessToken')}`
+      },
       body: JSON.stringify({ ingredients })
     }).then(this._getResponseData);
   }

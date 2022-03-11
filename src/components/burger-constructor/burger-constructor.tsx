@@ -12,6 +12,7 @@ import IngredientsPlug from './components/ingredients-plug/ingredients-plug';
 import { useAppSelector, useAppDispatch } from '../../services/hooks';
 import { burgerConstructorSlice } from '../../services/slices/constructor';
 import { IBurgerConstructor } from '../../utils/interfaces';
+import Loader from '../loader/loader';
 //--------------------------------------------------------------------------------
 
 const BurgerConstructor = forwardRef<
@@ -20,12 +21,13 @@ const BurgerConstructor = forwardRef<
 >(({ openModal, isHover }, ref) => {
   const dispatch = useAppDispatch();
   const history = useHistory();
-
   const { deleteIngredient } = burgerConstructorSlice.actions;
 
   const { selectedIngredients, selectedBun } = useAppSelector(
     state => state.burgerConstructor
   );
+
+  const { orderNumberRequest } = useAppSelector(state => state.order);
 
   const { isAuth } = useAppSelector(state => state.user);
 
@@ -55,7 +57,7 @@ const BurgerConstructor = forwardRef<
       }, 400);
       return;
     }
-    openModal(selectedIngredients.concat(selectedBun));
+    openModal(selectedIngredients.concat(selectedBun, selectedBun));
   }, [openModal, selectedIngredients, selectedBun]);
 
   const handleSignIn = useCallback(() => {
@@ -74,60 +76,66 @@ const BurgerConstructor = forwardRef<
     <section
       className={`mr-5 pl-4 ${styles.constructor}`}
       aria-label="Конструктор бургера">
-      <ul
-        className={`mt-25 ${styles.partsList}`}
-        style={{ background }}
-        ref={ref}>
-        <li className={`mr-4 ${styles.part}`}>
-          {!selectedBun ? (
-            <BunPlug position="top" border={bunPlugBorder}>
-              Добавьте булочку
-            </BunPlug>
-          ) : (
-            <ConstructorElement
-              isLocked={true}
-              type="top"
-              text={`${selectedBun.name ? selectedBun.name : 'булка'} (верх)`}
-              price={selectedBun.price ? selectedBun.price : 0}
-              thumbnail={selectedBun.image ? selectedBun.image : 'Изображение'}
-            />
-          )}
-        </li>
-        <li className={styles.container}>
-          {selectedIngredients.length === 0 ? (
-            <IngredientsPlug>Добавьте начинку</IngredientsPlug>
-          ) : (
-            <ul className={`mt-4 mb-4 ${styles.partsListScroll}`}>
-              {selectedIngredients
-                ? selectedIngredients.map((ingredient, index) => {
-                    return (
-                      <ConstructorItemDndWrapper
-                        ingredient={ingredient}
-                        handleDelete={handleDelete}
-                        key={ingredient.uid}
-                        index={index}
-                      />
-                    );
-                  })
-                : null}
-            </ul>
-          )}
-        </li>
+      {orderNumberRequest ? (
+        <Loader />
+      ) : (
+        <ul
+          className={`mt-25 ${styles.partsList}`}
+          style={{ background }}
+          ref={ref}>
+          <li className={`mr-4 ${styles.part}`}>
+            {!selectedBun ? (
+              <BunPlug position="top" border={bunPlugBorder}>
+                Добавьте булочку
+              </BunPlug>
+            ) : (
+              <ConstructorElement
+                isLocked={true}
+                type="top"
+                text={`${selectedBun.name ? selectedBun.name : 'булка'} (верх)`}
+                price={selectedBun.price ? selectedBun.price : 0}
+                thumbnail={
+                  selectedBun.image ? selectedBun.image : 'Изображение'
+                }
+              />
+            )}
+          </li>
+          <li className={styles.container}>
+            {selectedIngredients.length === 0 ? (
+              <IngredientsPlug>Добавьте начинку</IngredientsPlug>
+            ) : (
+              <ul className={`mt-4 mb-4 ${styles.partsListScroll}`}>
+                {selectedIngredients
+                  ? selectedIngredients.map((ingredient, index) => {
+                      return (
+                        <ConstructorItemDndWrapper
+                          ingredient={ingredient}
+                          handleDelete={handleDelete}
+                          key={ingredient.uid}
+                          index={index}
+                        />
+                      );
+                    })
+                  : null}
+              </ul>
+            )}
+          </li>
 
-        <li className={`mr-4 ${styles.part}`}>
-          {!selectedBun ? (
-            <BunPlug position="bottom" border={bunPlugBorder} />
-          ) : (
-            <ConstructorElement
-              type="bottom"
-              isLocked={true}
-              text={`${selectedBun ? selectedBun.name : 'булка'} (низ)`}
-              price={selectedBun ? selectedBun.price : 0}
-              thumbnail={selectedBun ? selectedBun.image : 'Изображение'}
-            />
-          )}
-        </li>
-      </ul>
+          <li className={`mr-4 ${styles.part}`}>
+            {!selectedBun ? (
+              <BunPlug position="bottom" border={bunPlugBorder} />
+            ) : (
+              <ConstructorElement
+                type="bottom"
+                isLocked={true}
+                text={`${selectedBun ? selectedBun.name : 'булка'} (низ)`}
+                price={selectedBun ? selectedBun.price : 0}
+                thumbnail={selectedBun ? selectedBun.image : 'Изображение'}
+              />
+            )}
+          </li>
+        </ul>
+      )}
       <div className={`mt-10 mr-4 ${styles.order}`}>
         <p className="text text_type_digits-medium">{totalSum}</p>
         <span className="ml-2 mr-10">
@@ -136,8 +144,13 @@ const BurgerConstructor = forwardRef<
         <Button
           type="primary"
           size="large"
-          onClick={isAuth ? handleSubmit : handleSignIn}>
-          {isAuth ? 'Оформить заказ' : 'Войти'}
+          onClick={isAuth ? handleSubmit : handleSignIn}
+          disabled={orderNumberRequest}>
+          {orderNumberRequest
+            ? 'Загрузка...'
+            : isAuth
+            ? 'Оформить заказ'
+            : 'Войти'}
         </Button>
       </div>
     </section>

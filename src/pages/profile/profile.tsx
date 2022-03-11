@@ -222,7 +222,7 @@ const Profile: FC = () => {
               <Orders
                 path="/profile/orders/"
                 withStatus
-                orders={[...orders].reverse()}
+                orders={orders && [...orders].reverse()}
               />
             </section>
           </Route>

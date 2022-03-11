@@ -10,6 +10,17 @@
   list-style: none;
   margin-bottom: 0;
   padding: 0;
+  opacity: 0;
+  animation: appearance 0.5s forwards;
+}
+
+@keyframes appearance {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 .partsListScroll {

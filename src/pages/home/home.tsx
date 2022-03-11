@@ -19,7 +19,7 @@ const HomePage: FC = () => {
     state => state.ingredients
   );
 
-  const { order, orderNumberRequest } = useAppSelector(state => state.order);
+  const { order } = useAppSelector(state => state.order);
 
   const openOrderDetailsModal = useCallback(
     selectedIngredients => {
@@ -38,7 +38,7 @@ const HomePage: FC = () => {
     dispatch(deleteOrder());
   }, [dispatch]);
 
-  return ingredientsRequest || orderNumberRequest ? (
+  return ingredientsRequest ? (
     <Loader />
   ) : (
     <>

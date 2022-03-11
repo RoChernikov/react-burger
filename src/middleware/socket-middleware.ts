@@ -14,7 +14,6 @@ export const socketMiddleware = (
       const {
         wsInit,
         wsInitWithCustomUrl,
-        wsSendMessage,
         onOpen,
         onClose,
         onError,
@@ -54,10 +53,6 @@ export const socketMiddleware = (
           dispatch({ type: onClose });
         };
 
-        if (type === wsSendMessage) {
-          const message = { ...payload, token: accessToken };
-          socket.send(JSON.stringify(message));
-        }
         if (type === wsClose) {
           socket.close();
         }

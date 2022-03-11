@@ -144,8 +144,7 @@ const BurgerConstructor = forwardRef<
         <Button
           type="primary"
           size="large"
-          onClick={isAuth ? handleSubmit : handleSignIn}
-          disabled={orderNumberRequest}>
+          onClick={isAuth ? handleSubmit : handleSignIn}>
           {orderNumberRequest
             ? 'Загрузка...'
             : isAuth

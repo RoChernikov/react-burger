@@ -34,7 +34,6 @@ export const wsOrdersSlice = createSlice({
       state.wsOpen = false;
       state.wsFailed = false;
     },
-    sendMessage(state, action: PayloadAction) {},
     onOpen(state) {
       state.wsOpen = true;
       state.wsFailed = false;
@@ -65,7 +64,6 @@ export const wsOrdersSlice = createSlice({
 export const {
   wsInit,
   wsInitWithCustomUrl,
-  sendMessage,
   onOpen,
   onClose,
   onError,
@@ -76,7 +74,6 @@ export const {
 export const WS_ORDER_ACTION_TYPES = {
   wsInit: wsInit.type,
   wsInitWithCustomUrl: wsInitWithCustomUrl.type,
-  wsSendMessage: sendMessage.type,
   onOpen: onOpen.type,
   onClose: onClose.type,
   onError: onError.type,

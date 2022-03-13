@@ -1,4 +1,4 @@
-import styles from './bun-plug.module.css';
+import styles from './bun-plug.module.scss';
 import React, { FC } from 'react';
 import { IBunBlug } from '../../../../utils/interfaces';
 //--------------------------------------------------------------------------------

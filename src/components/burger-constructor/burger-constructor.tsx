@@ -1,8 +1,7 @@
-import styles from './burger-constructor.module.css';
+import styles from './burger-constructor.module.scss';
 import React, { useCallback, useMemo, forwardRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import {
-  Button,
   CurrencyIcon,
   ConstructorElement
 } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -81,10 +80,10 @@ const BurgerConstructor = forwardRef<
         <Loader />
       ) : (
         <ul
-          className={`mt-25 ${styles.partsList}`}
+          className={`mt-25 ${styles.constructor__partsList}`}
           style={{ background }}
           ref={ref}>
-          <li className={`mr-4 ${styles.part}`}>
+          <li className={`mr-4 ${styles.constructor__part}`}>
             {!selectedBun ? (
               <BunPlug position="top" border={bunPlugBorder}>
                 Добавьте булочку
@@ -101,11 +100,12 @@ const BurgerConstructor = forwardRef<
               />
             )}
           </li>
-          <li className={styles.container}>
+          <li className={styles.constructor__wrapper}>
             {selectedIngredients.length === 0 ? (
               <IngredientsPlug>Добавьте начинку</IngredientsPlug>
             ) : (
-              <ul className={`mt-4 mb-4 ${styles.partsListScroll}`}>
+              <ul
+                className={`mt-4 mb-4 ${styles.constructor__partsListScroll}`}>
                 {selectedIngredients
                   ? selectedIngredients.map((ingredient, index) => {
                       return (
@@ -122,7 +122,7 @@ const BurgerConstructor = forwardRef<
             )}
           </li>
 
-          <li className={`mr-4 ${styles.part}`}>
+          <li className={`mr-4 ${styles.constructor__part}`}>
             {!selectedBun ? (
               <BunPlug position="bottom" border={bunPlugBorder} />
             ) : (
@@ -137,7 +137,7 @@ const BurgerConstructor = forwardRef<
           </li>
         </ul>
       )}
-      <div className={`mt-10 mr-4 ${styles.order}`}>
+      <div className={`mt-10 mr-4 ${styles.constructor__order}`}>
         <p className="text text_type_digits-medium">{totalSum}</p>
         <span className="ml-2 mr-10">
           <CurrencyIcon type="primary" />

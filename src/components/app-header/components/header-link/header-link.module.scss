@@ -1,0 +1,35 @@
+.link {
+  display: flex;
+  align-items: center;
+  padding-top: 14px;
+  padding-bottom: 14px;
+  cursor: pointer;
+  color: #8585ad;
+  background: none;
+  border: none;
+  text-decoration: none;
+  transition: all 0.2s ease;
+
+  &_active {
+    color: #f2f2f3;
+  }
+
+  &:hover {
+    color: #f2f2f3;
+    & svg {
+      fill: #f2f2f3;
+    }
+  }
+
+  & > p {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  & > svg {
+    transition: all 0.2s ease;
+    width: 24px;
+    height: 24px;
+  }
+}

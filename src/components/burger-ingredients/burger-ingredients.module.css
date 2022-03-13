@@ -22,16 +22,3 @@
   width: 100%;
   max-height: calc(100vh - 242px);
 }
-
-.ingredients::-webkit-scrollbar {
-  width: 8px;
-  background: #2f2f37;
-}
-
-.ingredients::-webkit-scrollbar-thumb {
-  background: #8585ad;
-}
-
-.ingredients::-webkit-scrollbar-thumb:hover {
-  background: #8282da;
-}

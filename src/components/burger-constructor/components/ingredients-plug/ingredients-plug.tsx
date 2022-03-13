@@ -1,4 +1,4 @@
-import styles from './ingredients-plug.module.css';
+import styles from './ingredients-plug.module.scss';
 import React, { FC } from 'react';
 import { IIngredientsPlug } from '../../../../utils/interfaces';
 //--------------------------------------------------------------------------------

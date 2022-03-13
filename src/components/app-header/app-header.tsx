@@ -1,4 +1,4 @@
-import styles from './app-header.module.css';
+import styles from './app-header.module.scss';
 import React, { FC, useMemo, useEffect } from 'react';
 import {
   Logo,
@@ -24,8 +24,8 @@ const AppHeader: FC = () => {
 
   return (
     <header className={`pt-4 pb-4 ${styles.header}`}>
-      <nav className={styles.navigation}>
-        <ul className={styles.list}>
+      <nav className={styles.header__navigation}>
+        <ul className={styles.header__list}>
           <li className="mr-2">
             <HeaderLink
               to="/"
@@ -45,14 +45,14 @@ const AppHeader: FC = () => {
             </HeaderLink>
           </li>
         </ul>
-        <NavLink to="/" className={styles.logoWrapper}>
+        <NavLink to="/" className={styles.header__logoWrapper}>
           <Logo />
         </NavLink>
         <div
           className={
             isAuth && status !== 'pending'
-              ? `${styles.profileLinkWrapper} ${styles.loggedIn}`
-              : `${styles.profileLinkWrapper}`
+              ? `${styles.header__profileLinkWrapper} ${styles.loggedIn}`
+              : `${styles.header__profileLinkWrapper}`
           }>
           <HeaderLink
             to="/profile"

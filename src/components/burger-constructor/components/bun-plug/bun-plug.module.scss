@@ -14,12 +14,13 @@
   justify-content: center;
   align-items: center;
   background: var(--background-element);
-}
 
-.plug_pos_top {
-  border-radius: var(--top-constructor-item-border-radius);
-}
-
-.plug_pos_bottom {
-  border-radius: var(--bottom-constructor-item-border-radius);
+  &_pos {
+    &_top {
+      border-radius: var(--top-constructor-item-border-radius);
+    }
+    &_bottom {
+      border-radius: var(--bottom-constructor-item-border-radius);
+    }
+  }
 }

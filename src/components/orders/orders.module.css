@@ -12,16 +12,3 @@
   width: 100%;
   max-height: calc(100vh - 186px);
 }
-
-.orders::-webkit-scrollbar {
-  width: 8px;
-  background: #2f2f37;
-}
-
-.orders::-webkit-scrollbar-thumb {
-  background: #8585ad;
-}
-
-.orders::-webkit-scrollbar-thumb:hover {
-  background: #8282da;
-}

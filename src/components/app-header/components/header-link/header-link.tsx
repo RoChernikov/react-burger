@@ -1,4 +1,4 @@
-import styles from './header-link.module.css';
+import styles from './header-link.module.scss';
 import React, { FC } from 'react';
 import { IHeaderLink } from '../../../../utils/interfaces';
 import { NavLink } from 'react-router-dom';

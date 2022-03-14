@@ -1,0 +1,48 @@
+.orderCard {
+  width: 100%;
+  border-radius: 40px;
+  box-sizing: border-box;
+  background-color: #1c1c21;
+
+  &__link {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__subTitle {
+    color: #00cccc;
+  }
+
+  &__priceInfo {
+    margin-top: 24px;
+    display: flex;
+    align-items: center;
+  }
+
+  &__ingredientsList {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: row-reverse;
+  }
+
+  &__priceWrapper {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+  }
+
+  &__price {
+    margin-right: 9px;
+  }
+}

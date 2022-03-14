@@ -1,4 +1,4 @@
-import styles from './BurgerIngredient.module.css';
+import styles from './BurgerIngredient.module.scss';
 import React, { forwardRef } from 'react';
 import {
   Counter,
@@ -22,7 +22,7 @@ const BurgerIngredient = forwardRef<
         }}
         className={
           isDragging
-            ? `${styles.ingredient} ${styles.dragging}`
+            ? `${styles.ingredient} ${styles.ingredient_dragging}`
             : `${styles.ingredient}`
         }>
         {count > 0 ? <Counter count={count} size="default" /> : null}
@@ -31,7 +31,7 @@ const BurgerIngredient = forwardRef<
           alt={ingredient.name}
           className="ml-4 mr-4"
         />
-        <div className={`mt-2 mb-2 ${styles.priceContainer}`}>
+        <div className={`mt-2 mb-2 ${styles.ingredient__priceContainer}`}>
           <p className="text text_type_digits-default pr-2">
             {ingredient.price}
           </p>

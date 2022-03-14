@@ -1,4 +1,5 @@
-import styles from './burger-ingredients.module.css';
+// import styles from './';
+import styles from './burger-ingredients.module.scss';
 import React, { FC, useEffect, useMemo, useCallback } from 'react';
 import { useInView } from 'react-intersection-observer';
 import NavBar from './components/nav-bar/nav-bar';
@@ -82,7 +83,7 @@ const BurgerIngredients: FC = () => {
         Соберите бургер
       </h1>
       <NavBar handleSelect={handleMealChange} selectedMeal={selectedMeal} />
-      <ul className={` ${styles.ingredients}`} id="scrollBox">
+      <ul className={` ${styles.constructor__ingredients}`} id="scrollBox">
         <IngredientsCategory
           id="bun"
           title="Булки"

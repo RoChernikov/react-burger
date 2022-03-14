@@ -1,0 +1,15 @@
+.ingredient {
+  display: flex;
+  align-items: center;
+  padding-right: 24px;
+
+  &__title {
+    width: 100%;
+    max-width: 415px;
+  }
+
+  &__price {
+    text-align: end;
+    width: 50%;
+  }
+}

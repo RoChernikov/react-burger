@@ -1,4 +1,4 @@
-import styles from './order-info.module.css';
+import styles from './order-info.module.scss';
 import React, { FC } from 'react';
 import { useParams } from 'react-router-dom';
 import { useAppSelector } from '../../services/hooks';
@@ -41,16 +41,16 @@ const OrderInfo: FC = () => {
         {status}
       </p>
       <p className="text text_type_main-medium mt-15">Состав:</p>
-      <ul className={`mt-6 ${styles.list}`}>
+      <ul className={`mt-6 ${styles.orderInfo__list}`}>
         {ingredients.reverse().map((ing: IWsIngredient, idx: number) => {
           return <Ingredient ingredient={ing} key={idx} />;
         })}
       </ul>
-      <div className={styles.footer}>
+      <div className={styles.orderInfo__footer}>
         <time className="text text_type_main-default text_color_inactive">
           {formatDate(order.createdAt)} i-GMT+3
         </time>
-        <div style={{ marginLeft: 'auto' }} className={styles.price}>
+        <div style={{ marginLeft: 'auto' }} className={styles.orderInfo__price}>
           <span className="text text_type_digits-default mr-2">
             {totalPrice}
           </span>{' '}

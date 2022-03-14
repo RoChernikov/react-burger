@@ -1,4 +1,4 @@
-import styles from './IngredientsCategory.module.css';
+import styles from './IngredientsCategory.module.scss';
 import React, { forwardRef } from 'react';
 import BurgerIngredientsDndWrapper from '../burger-ingredients-dnd-wrapper/burger-ingredients-dnd-wrapper';
 import { IIngredientsCategory } from '../../../../utils/interfaces';

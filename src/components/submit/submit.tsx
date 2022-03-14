@@ -1,6 +1,6 @@
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import React, { FC } from 'react';
-import styles from './submit.module.css';
+import styles from './submit.module.scss';
 import { ISubmit } from '../../utils/interfaces';
 //--------------------------------------------------------------------------------
 

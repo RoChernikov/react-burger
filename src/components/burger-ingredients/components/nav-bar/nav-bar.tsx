@@ -1,4 +1,4 @@
-import styles from './nav-bar.module.css';
+import styles from './nav-bar.module.scss';
 import React, { FC } from 'react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link } from 'react-scroll';

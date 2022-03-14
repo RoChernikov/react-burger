@@ -1,5 +1,5 @@
-import styles from './message.module.css';
-import React, { Children, FC } from 'react';
+import styles from './message.module.scss';
+import React, { FC } from 'react';
 import DeveloperGuy from '../developer-guy/developer-guy';
 //--------------------------------------------------------------------------------
 

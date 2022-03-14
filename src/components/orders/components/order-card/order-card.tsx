@@ -1,4 +1,4 @@
-import styles from './order-card.module.css';
+import styles from './order-card.module.scss';
 import React, { FC } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { ILocationParams } from '../../../../utils/interfaces';
@@ -36,8 +36,9 @@ const OrderCard: FC<IOrder> = ({ withStatus, path, data }) => {
           pathname: `${path}${data._id}`,
           state: { background: location }
         }}
-        className={styles.link}>
-        <p className={`text text_type_digits-default ${styles.header}`}>
+        className={styles.orderCard__link}>
+        <p
+          className={`text text_type_digits-default ${styles.orderCard__header}`}>
           #{data.number}{' '}
           <time className="text text_type_main-default text_color_inactive">
             {formatDate(data.createdAt)} i-GMT+3
@@ -49,13 +50,13 @@ const OrderCard: FC<IOrder> = ({ withStatus, path, data }) => {
         {withStatus && (
           <p
             className={`text text_type_main-default mt-2 ${
-              data.status === 'done' && styles.subTitle
+              data.status === 'done' && styles.orderCard__subTitle
             }`}>
             {status}
           </p>
         )}
-        <div className={styles.priceInfo}>
-          <ul className={styles.ingredientsList}>
+        <div className={styles.orderCard__priceInfo}>
+          <ul className={styles.orderCard__ingredientsList}>
             {ingredients.length > 5 && (
               <IngredientIcon
                 img={ingredients[ingredients.length - 6].image_mobile}
@@ -66,8 +67,9 @@ const OrderCard: FC<IOrder> = ({ withStatus, path, data }) => {
               return <IngredientIcon img={ing.image} key={i} count={ing.qty} />;
             })}
           </ul>
-          <p className={styles.priceWrapper}>
-            <span className={`text text_type_digits-default ${styles.price}`}>
+          <p className={styles.orderCard__priceWrapper}>
+            <span
+              className={`text text_type_digits-default ${styles.orderCard__price}`}>
               {totalPrice}
             </span>
             <CurrencyIcon type="primary" />

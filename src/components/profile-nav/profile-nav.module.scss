@@ -1,0 +1,46 @@
+@import '../../scss/mixins';
+
+.wrapper {
+  max-width: 320px;
+  opacity: 0;
+  animation: appearance 0.45s forwards cubic-bezier(0.3, 0.22, 0.42, 0.86);
+
+  &__tabs {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  &__link {
+    display: block;
+    color: #8585ad;
+    text-decoration: none;
+    transition: all 0.2s ease;
+
+    &_active {
+      color: white;
+    }
+
+    &:hover {
+      color: white;
+    }
+  }
+
+  &__button {
+    border: none;
+    margin: 0;
+    background: transparent;
+    transition: all 0.2s ease;
+
+    &:hover {
+      color: white;
+      cursor: pointer;
+    }
+  }
+
+  &__hint {
+    opacity: 40%;
+  }
+}
+
+@include appearance;

@@ -1,0 +1,57 @@
+@import '../../scss/mixins';
+
+.constructor {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 600px;
+
+  &__wrapper {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  &__partsList {
+    list-style: none;
+    margin-bottom: 0;
+    padding: 0;
+    opacity: 0;
+    animation: appearance 0.5s forwards;
+  }
+
+  &__partsListScroll {
+    padding-left: 0;
+    list-style: none;
+    line-height: 0;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    display: flex;
+    row-gap: 16px;
+    flex-direction: column;
+    width: 100%;
+    max-height: calc(100vh - 534px);
+  }
+
+  &__part {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    column-gap: 8px;
+  }
+
+  &__order {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-bottom: 52px;
+
+    & svg {
+      width: 36px;
+      height: auto;
+    }
+  }
+}
+
+@include appearance;

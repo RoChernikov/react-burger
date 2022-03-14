@@ -1,0 +1,29 @@
+@mixin media($screenSize) {
+  @media (max-width: $screenSize) {
+    @content;
+  }
+}
+
+@mixin appearance {
+  @keyframes appearance {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+}
+
+@mixin appearanceWithScale {
+  @keyframes appearanceWithScale {
+    0% {
+      opacity: 0;
+      transform: scale(0.7);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+}

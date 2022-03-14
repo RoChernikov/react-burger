@@ -1,4 +1,4 @@
-import styles from './form-hint.module.css';
+import styles from './form-hint.module.scss';
 import React, { FC } from 'react';
 import { Link } from 'react-router-dom';
 import { IFormHint } from '../../../../utils/interfaces';

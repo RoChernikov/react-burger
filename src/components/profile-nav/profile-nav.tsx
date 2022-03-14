@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import styles from './profile-nav.module.css';
+import styles from './profile-nav.module.scss';
 import { NavLink } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 import { useAppDispatch } from '../../services/hooks';
@@ -25,11 +25,11 @@ const ProfileNav = () => {
 
   return (
     <aside className={styles.wrapper}>
-      <ul className={styles.tabs}>
+      <ul className={styles.wrapper__tabs}>
         <li>
           <NavLink
-            className={`text text_type_main-medium pt-4 pb-5 ${styles.link}`}
-            activeClassName={styles.link_active}
+            className={`text text_type_main-medium pt-4 pb-5 ${styles.wrapper__link}`}
+            activeClassName={styles.wrapper__link_active}
             exact
             to="/profile">
             Профиль
@@ -37,8 +37,8 @@ const ProfileNav = () => {
         </li>
         <li>
           <NavLink
-            className={`text text_type_main-medium pt-4 pb-5 ${styles.link}`}
-            activeClassName={styles.link_active}
+            className={`text text_type_main-medium pt-4 pb-5 ${styles.wrapper__link}`}
+            activeClassName={styles.wrapper__link_active}
             exact
             to="/profile/orders">
             История заказов
@@ -47,13 +47,13 @@ const ProfileNav = () => {
         <li>
           <button
             onClick={handleLogoutClick}
-            className={`text text_type_main-medium text_color_inactive pt-4 pb-5 ${styles.button}`}>
+            className={`text text_type_main-medium text_color_inactive pt-4 pb-5 ${styles.wrapper__button}`}>
             Выход
           </button>
         </li>
       </ul>
       <p
-        className={`text text_type_main-default text_color_inactive mt-20 ${styles.hint}`}>
+        className={`text text_type_main-default text_color_inactive mt-20 ${styles.wrapper__hint}`}>
         В этом разделе вы можете изменить свои персональные данные
       </p>
     </aside>

@@ -1,4 +1,4 @@
-import styles from './constructor-item.module.css';
+import styles from './constructor-item.module.scss';
 import React from 'react';
 import { forwardRef, useCallback } from 'react';
 import {
@@ -21,7 +21,7 @@ const ConstructorItem = forwardRef<
 
   return (
     <li className={`mr-2 ${styles.item}`} ref={ref} style={{ opacity }}>
-      <button className={styles.dragIcon}>
+      <button className={styles.item__dragIcon}>
         <DragIcon type="primary" />
       </button>
       <ConstructorElement

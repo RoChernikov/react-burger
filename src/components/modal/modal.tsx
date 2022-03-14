@@ -1,4 +1,4 @@
-import styles from './modal.module.css';
+import styles from './modal.module.scss';
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -24,10 +24,10 @@ const Modal: FC<TCloseModal> = ({ closeModal, children }) => {
 
   return createPortal(
     <div className={styles.popup}>
-      <div className={`pb-15 ${styles.popupContainer}`}>
+      <div className={`pb-15 ${styles.popup__wrapper}`}>
         <button
           onClick={closeModal}
-          className={`mt-15 mr-10 ${styles.closeButton}`}
+          className={`mt-15 mr-10 ${styles.popup__closeButton}`}
           onMouseEnter={() => setCloseIconState(true)}
           onMouseLeave={() => setCloseIconState(false)}>
           <CloseIcon type={closeIconState ? 'secondary' : 'primary'} />

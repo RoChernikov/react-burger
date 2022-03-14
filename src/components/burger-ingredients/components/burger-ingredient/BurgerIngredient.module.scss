@@ -10,20 +10,20 @@
   transition: all 0.2s;
   text-decoration: none;
   color: inherit;
-}
 
-.ingredient:hover {
-  transform: scale(1.04);
-}
+  &:hover {
+    transform: scale(1.04);
+  }
 
-.priceContainer {
-  display: flex;
-}
+  &__priceContainer {
+    display: flex;
+  }
 
-.dragging {
-  background: radial-gradient(
-    circle,
-    rgba(87, 0, 255, 0.35) 0%,
-    rgba(19, 19, 22, 1) 65%
-  );
+  &_dragging {
+    background: radial-gradient(
+      circle,
+      rgba(87, 0, 255, 0.35) 0%,
+      rgba(19, 19, 22, 1) 65%
+    );
+  }
 }

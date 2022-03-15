@@ -2,10 +2,10 @@ import styles from './ingredient.module.scss';
 import React, { FC } from 'react';
 import IngredientIcon from '../../../ingredient-icon/ingredient-icon';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { IWsIngredient } from '../../../../utils/interfaces';
+import { TWsIngredient } from '../../../../utils/types';
 //--------------------------------------------------------------------------------
 
-const Ingredient: FC<{ ingredient: IWsIngredient }> = ({ ingredient }) => {
+const Ingredient: FC<{ ingredient: TWsIngredient }> = ({ ingredient }) => {
   return (
     <li className={styles.ingredient}>
       <IngredientIcon img={ingredient.image_mobile} isDiv />

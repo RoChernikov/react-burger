@@ -16,6 +16,10 @@ export type TIngredient = {
   uid?: string;
 };
 
+export type TWsIngredient = TIngredient & {
+  qty: number;
+};
+
 export type TMeal = 'bun' | 'sauce' | 'main';
 
 export type TOrder = {

@@ -1,5 +1,4 @@
-import { Middleware } from 'redux';
-import { getCookie } from '../utils/cookie';
+import { AnyAction, Middleware } from 'redux';
 
 export const socketMiddleware = (
   wsUrl: string,
@@ -7,10 +6,9 @@ export const socketMiddleware = (
 ): Middleware => {
   return store => {
     let socket: WebSocket | null = null;
-    return next => (action: any) => {
+    return next => (action: AnyAction) => {
       const { dispatch } = store;
       const { type, payload } = action;
-      const accessToken = getCookie('accessToken');
       const {
         wsInit,
         wsInitWithCustomUrl,

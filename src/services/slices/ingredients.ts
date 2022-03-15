@@ -1,3 +1,4 @@
+import { RootState } from './../store';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AppThunk, AppDispatch } from '../../services/store';
 import Api from '../../utils/api';
@@ -66,7 +67,7 @@ export const getIngredientsApi: AppThunk = () => (dispatch: AppDispatch) => {
 };
 
 //returns ingredient by its id
-export const selectIngredientById = (id: string) => (state: any) => {
+export const selectIngredientById = (id: string) => (state: RootState) => {
   return state.ingredients.ingredients.find(
     (ing: TIngredient) => ing._id === id
   );

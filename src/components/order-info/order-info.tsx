@@ -7,7 +7,7 @@ import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components
 import { selectOrderById } from '../../services/slices/ws-orders';
 import { getOrderDataByIds } from '../../services/slices/ingredients';
 import formatDate from '../../utils/format-date';
-import { IWsIngredient } from '../../utils/interfaces';
+import { TWsIngredient } from '../../utils/types';
 //--------------------------------------------------------------------------------
 
 const OrderInfo: FC = () => {
@@ -42,7 +42,7 @@ const OrderInfo: FC = () => {
       </p>
       <p className="text text_type_main-medium mt-15">Состав:</p>
       <ul className={`mt-6 ${styles.orderInfo__list}`}>
-        {ingredients.reverse().map((ing: IWsIngredient, idx: number) => {
+        {ingredients.reverse().map((ing: TWsIngredient, idx: number) => {
           return <Ingredient ingredient={ing} key={idx} />;
         })}
       </ul>

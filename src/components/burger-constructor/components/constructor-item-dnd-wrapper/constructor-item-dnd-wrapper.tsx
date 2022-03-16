@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, FC } from 'react';
 import { useDrag, useDrop, DragPreviewImage } from 'react-dnd';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '../../../../services/hooks';
 import ConstructorItem from '../constructor-item/constructor-item';
 import { reorderIngredient } from '../../../../services/slices/constructor';
 import { IConstructorItem } from '../../../../utils/interfaces';
@@ -11,7 +11,7 @@ const ConstructorItemDndWrapper: FC<IConstructorItem> = ({
   index,
   handleDelete
 }) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const ref = useRef(null);
 

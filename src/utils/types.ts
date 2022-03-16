@@ -16,8 +16,21 @@ export type TIngredient = {
   uid?: string;
 };
 
-export type TWsIngredient = TIngredient & {
-  qty: number;
+export type TWsIngredient = {
+  _id?: string;
+  name?: string;
+  type?: TMeal;
+  proteins?: number;
+  fat?: number;
+  carbohydrates?: number;
+  calories?: number;
+  price?: number;
+  image?: string;
+  image_mobile?: string;
+  image_large?: string;
+  __v?: number;
+  uid?: string;
+  qty?: number;
 };
 
 export type TMeal = 'bun' | 'sauce' | 'main';

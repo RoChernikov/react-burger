@@ -29,6 +29,10 @@ const OrderCard: FC<IOrder> = ({ withStatus, path, data }) => {
       break;
   }
 
+  if (!ingredients) {
+    return null;
+  }
+
   return (
     <li className={`p-6 ${styles.orderCard}`}>
       <Link

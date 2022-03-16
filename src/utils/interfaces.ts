@@ -93,7 +93,7 @@ export interface ICookieProps {
 }
 
 export interface IIngIcon {
-  img: string;
+  img: string | undefined;
   count?: number;
   extra?: number;
   isDiv?: boolean;

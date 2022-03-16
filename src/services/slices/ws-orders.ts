@@ -1,3 +1,4 @@
+import { RootState } from './../store';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { TWsOrder, TOnMessagePayload } from './../../utils/types';
 //--------------------------------------------------------------------------------
@@ -82,6 +83,19 @@ export const WS_ORDER_ACTION_TYPES = {
 };
 
 //returns order by its id
-export const selectOrderById = (id: string) => (state: any) => {
-  return state.wsOrders.orders.find((order: TWsOrder) => order._id === id);
+export const selectOrderById = (id: string) => (state: RootState) => {
+  const order = state.wsOrders.orders.find(
+    (order: TWsOrder) => order._id === id
+  );
+  return order
+    ? order
+    : {
+        _id: '',
+        status: '',
+        name: '',
+        createdAt: '',
+        updatedAt: '',
+        number: 0,
+        ingredients: ['']
+      };
 };

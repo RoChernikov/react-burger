@@ -4,8 +4,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import { rootReducer } from './slices';
 import { socketMiddleware } from '../middleware/socket-middleware';
 import { WS_ORDER_ACTION_TYPES } from './slices/ws-orders';
-
-import { getCookie } from '../utils/cookie';
+//--------------------------------------------------------------------------------
 
 export type RootState = ReturnType<typeof state.getState>;
 export type AppThunk<TReturn = void> = ActionCreator<

@@ -93,7 +93,7 @@ export interface ICookieProps {
 }
 
 export interface IIngIcon {
-  img: string;
+  img: string | undefined;
   count?: number;
   extra?: number;
   isDiv?: boolean;
@@ -122,8 +122,4 @@ export interface IFeedStats {
   totalToday: number;
   doneOrders: number[];
   pendingOrders: number[];
-}
-
-export interface IWsIngredient extends TIngredient {
-  qty: number;
 }

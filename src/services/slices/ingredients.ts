@@ -1,3 +1,4 @@
+import { RootState } from './../store';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AppThunk, AppDispatch } from '../../services/store';
 import Api from '../../utils/api';
@@ -66,13 +67,13 @@ export const getIngredientsApi: AppThunk = () => (dispatch: AppDispatch) => {
 };
 
 //returns ingredient by its id
-export const selectIngredientById = (id: string) => (state: any) => {
+export const selectIngredientById = (id: string) => (state: RootState) => {
   return state.ingredients.ingredients.find(
     (ing: TIngredient) => ing._id === id
   );
 };
 
-export const getOrderDataByIds = (ids: string[]) => (state: any) => {
+export const getOrderDataByIds = (ids: string[]) => (state: RootState) => {
   const allIngs = ids
     .filter(id => typeof id === 'string')
     .map(id =>
@@ -85,7 +86,7 @@ export const getOrderDataByIds = (ids: string[]) => (state: any) => {
     .map(ing => ({
       ...ing,
       qty: allIngs.reduce((acc, item) => {
-        if (ing._id === item._id) {
+        if (ing?._id === item?._id) {
           acc++;
         }
         return acc;
@@ -98,7 +99,7 @@ export const getOrderDataByIds = (ids: string[]) => (state: any) => {
     .concat(uniqueIngs.filter(ing => ing.type === 'bun'));
 
   const totalPrice = allIngs.reduce((acc, ing) => {
-    acc += ing.price;
+    if (ing) acc += ing.price;
     return acc;
   }, 0);
   return {

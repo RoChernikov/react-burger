@@ -1,0 +1,18 @@
+@import '../../scss/mixins';
+
+.content {
+  width: 100%;
+  padding-top: 120px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transform: scale(0.8);
+  animation: appearanceWithScale 0.3s forwards;
+
+  &__ingredient > h2 {
+    text-align: center;
+  }
+}
+
+@include appearanceWithScale;

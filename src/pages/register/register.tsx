@@ -1,4 +1,4 @@
-import styles from './register.module.css';
+import styles from './register.module.scss';
 import React, { FC, useCallback, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import {
@@ -54,7 +54,7 @@ const RegisterPage: FC = () => {
   }
 
   return (
-    <main className={styles.main}>
+    <main className={styles.content}>
       <Form onSubmit={handleSubmit} title="Регистрация">
         <InputWrapper>
           <Input

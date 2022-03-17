@@ -1,0 +1,47 @@
+@import '../../scss/mixins';
+
+.content {
+  display: flex;
+  gap: 60px;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  max-width: 1920px;
+  padding-left: 340px;
+
+  & aside {
+    padding-top: 120px;
+  }
+
+  &__section {
+    width: 100%;
+    max-width: 844px;
+    padding-right: 100px;
+    padding-top: 40px;
+    opacity: 0;
+    transform: translate(0, -100vh);
+    animation: appearanceWithTranslate 0.45s forwards
+      cubic-bezier(0.3, 0.22, 0.42, 0.86);
+
+    & > ul {
+      max-height: calc(100vh - 126px);
+      gap: 24px;
+    }
+
+    & > form {
+      padding-top: 80px;
+    }
+  }
+
+  &__form {
+    width: 100%;
+    max-width: 480px;
+  }
+
+  &__buttons {
+    display: flex;
+    justify-content: flex-end;
+  }
+}
+
+@include appearanceWithTranslate;

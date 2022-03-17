@@ -1,4 +1,4 @@
-import styles from './order-feed.module.css';
+import styles from './order-feed.module.scss';
 import React, { FC, useEffect } from 'react';
 import FeedStats from './components/feed-stats/feed-stats';
 import Orders from '../../components/orders/orders';
@@ -37,19 +37,19 @@ const OrderFeedPage: FC = () => {
   ) : (
     <>
       {!wsFailed && !ingredientsFailed && orders.length > 0 ? (
-        <main className={styles.main}>
+        <main className={styles.content}>
           <h1
-            className={`text text_type_main-large mt-10 mb-5 ml-2 ${styles.title}`}>
+            className={`text text_type_main-large mt-10 mb-5 ml-2 ${styles.content__title}`}>
             Лента заказов
           </h1>
           {orders.length === 50 ? (
-            <section className={styles.ordersSection}>
+            <section className={styles.content__ordersSection}>
               <Orders path="feed/" orders={orders} />
             </section>
           ) : (
             <Loader />
           )}
-          <section className={styles.statsSection}>
+          <section className={styles.content__statsSection}>
             <FeedStats
               total={total}
               totalToday={totalToday}

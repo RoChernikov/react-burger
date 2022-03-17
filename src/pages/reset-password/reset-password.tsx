@@ -1,4 +1,4 @@
-import styles from './reset-password.module.css';
+import styles from './reset-password.module.scss';
 import React, { FC, useState, useCallback } from 'react';
 import { useHistory, Redirect } from 'react-router-dom';
 import {
@@ -60,7 +60,7 @@ const ResetPassPage: FC = () => {
   }
 
   return (
-    <main className={styles.main}>
+    <main className={styles.content}>
       <Form onSubmit={handleSubmit} title="Восстановление пароля">
         <InputWrapper>
           <Input

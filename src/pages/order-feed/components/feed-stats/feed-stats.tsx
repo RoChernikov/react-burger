@@ -1,4 +1,4 @@
-import styles from './feed-stats.module.css';
+import styles from './feed-stats.module.scss';
 import React, { FC } from 'react';
 import StatusList from '../status-list/status-list';
 import TotalStat from '../total-stat/total-stat';
@@ -13,7 +13,7 @@ const FeedStats: FC<IFeedStats> = ({
 }) => {
   return (
     <section className={styles.feedStats}>
-      <div className={styles.statusLists}>
+      <div className={styles.feedStats__statusLists}>
         <StatusList title="Готовы:" orders={doneOrders} hightlight />
         <StatusList title="В работе:" orders={pendingOrders} />
       </div>

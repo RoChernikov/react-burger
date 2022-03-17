@@ -1,4 +1,4 @@
-import styles from './ingredient-page.module.css';
+import styles from './ingredient-page.module.scss';
 import React, { FC } from 'react';
 import { useParams } from 'react-router-dom';
 import IngredientDetails from '../../components/ingredient-details/ingredient-details';
@@ -17,13 +17,13 @@ const IngredientPage: FC = () => {
   const mainStyle =
     !ingredient && !ingredientsRequest ? { justifyContent: 'flex-start' } : {};
   return (
-    <main className={styles.main} style={mainStyle}>
+    <main className={styles.content} style={mainStyle}>
       {ingredientsRequest && !ingredient ? (
         <div style={{ paddingTop: 220 }}>
           <Loader />
         </div>
       ) : ingredient ? (
-        <div className={styles.ingredient}>
+        <div className={styles.content__ingredient}>
           <IngredientDetails />
         </div>
       ) : !ingredientsFailed ? (

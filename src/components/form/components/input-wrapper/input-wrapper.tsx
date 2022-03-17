@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import styles from './input-wrapper.module.css';
+import styles from './input-wrapper.module.scss';
 import { IInputWrapper } from '../../../../utils/interfaces';
 //--------------------------------------------------------------------------------
 

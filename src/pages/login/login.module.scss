@@ -1,18 +1,18 @@
-.main {
+.content {
   width: 100%;
   padding-top: 180px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-}
 
-.errorTitle {
-  color: red;
-  white-space: nowrap;
-  text-align: center;
-  opacity: 0;
-  animation: appearance 5s forwards;
+  &__errorTitle {
+    color: red;
+    white-space: nowrap;
+    text-align: center;
+    opacity: 0;
+    animation: appearance 5s forwards;
+  }
 }
 
 @keyframes appearance {

@@ -1,4 +1,4 @@
-import styles from './home.module.css';
+import styles from './home.module.scss';
 import React, { useCallback, FC } from 'react';
 import Loader from '../../components/loader/loader';
 import BurgerIngredients from '../../components/burger-ingredients/burger-ingredients';
@@ -43,7 +43,7 @@ const HomePage: FC = () => {
   ) : (
     <>
       {!ingredientsFailed ? (
-        <main className={styles.main}>
+        <main className={styles.content}>
           <DndProvider backend={HTML5Backend}>
             <BurgerIngredients />
             <BurgerConstructorDndWrapper openModal={openOrderDetailsModal} />

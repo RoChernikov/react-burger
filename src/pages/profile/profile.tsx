@@ -1,4 +1,4 @@
-import styles from './profile.module.css';
+import styles from './profile.module.scss';
 import React, {
   FC,
   useState,
@@ -105,11 +105,11 @@ const Profile: FC = () => {
   ) : (
     <>
       {status !== 'failed' ? (
-        <main className={styles.main}>
+        <main className={styles.content}>
           <ProfileNav />
           <Route exact path="/profile">
-            <section className={styles.section}>
-              <form onSubmit={handleSubmit} className={styles.form}>
+            <section className={styles.content__section}>
+              <form onSubmit={handleSubmit} className={styles.content__form}>
                 <InputWrapper>
                   <Input
                     name="name"
@@ -207,7 +207,7 @@ const Profile: FC = () => {
                   />
                 </InputWrapper>
                 {shouldShowBtns && (
-                  <div className={styles.buttons}>
+                  <div className={styles.content__buttons}>
                     <Button type="secondary" size="small" onClick={handleReset}>
                       Отмена
                     </Button>
@@ -218,7 +218,7 @@ const Profile: FC = () => {
             </section>
           </Route>
           <Route path="/profile/orders">
-            <section className={styles.section}>
+            <section className={styles.content__section}>
               <Orders
                 path="/profile/orders/"
                 withStatus

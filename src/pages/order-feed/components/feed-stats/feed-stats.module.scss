@@ -4,10 +4,10 @@
   gap: 60px;
   width: 100%;
   box-sizing: border-box;
-}
 
-.statusLists {
-  display: flex;
-  justify-content: space-between;
-  gap: 36px;
+  &__statusLists {
+    display: flex;
+    justify-content: space-between;
+    gap: 36px;
+  }
 }

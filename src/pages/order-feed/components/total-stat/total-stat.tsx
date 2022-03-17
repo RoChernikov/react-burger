@@ -1,4 +1,4 @@
-import styles from './total-stat.module.css';
+import styles from './total-stat.module.scss';
 import React, { FC } from 'react';
 //--------------------------------------------------------------------------------
 

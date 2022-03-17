@@ -1,4 +1,4 @@
-import styles from './order-history.module.css';
+import styles from './order-history.module.scss';
 import React, { FC, useEffect } from 'react';
 import ProfileNav from '../../components/profile-nav/profile-nav';
 import Orders from '../../components/orders/orders';
@@ -9,9 +9,7 @@ import { wsInit, wsClose } from '../../services/slices/ws-orders';
 const OrderHistoryPage: FC = () => {
   const dispatch = useAppDispatch();
 
-  const { wsRequest, wsFailed, orders } = useAppSelector(
-    state => state.wsOrders
-  );
+  const { orders } = useAppSelector(state => state.wsOrders);
 
   useEffect(() => {
     dispatch(wsInit());
@@ -21,9 +19,9 @@ const OrderHistoryPage: FC = () => {
     };
   }, [dispatch]);
   return (
-    <main className={styles.main}>
+    <main className={styles.content}>
       <ProfileNav />
-      <section className={styles.section}>
+      <section className={styles.content__section}>
         <Orders path="profile/orders/" withStatus orders={orders} />
       </section>
     </main>

@@ -1,4 +1,4 @@
-import styles from './login.module.css';
+import styles from './login.module.scss';
 import React, { FC, useState, useCallback } from 'react';
 import { useHistory, Redirect } from 'react-router-dom';
 import {
@@ -48,10 +48,11 @@ const LoginPage: FC = () => {
   }
 
   return (
-    <main className={styles.main}>
+    <main className={styles.content}>
       <Form onSubmit={handleSubmit} title="Вход">
         {loginError === 'email or password are incorrect' && (
-          <p className={`text text_type_main-default ${styles.errorTitle}`}>
+          <p
+            className={`text text_type_main-default ${styles.content__errorTitle}`}>
             Нeверный e-mail или пароль
           </p>
         )}

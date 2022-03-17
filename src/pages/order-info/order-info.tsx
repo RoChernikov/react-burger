@@ -1,4 +1,4 @@
-import styles from './order-info.module.css';
+import styles from './order-info.module.scss';
 import React, { FC, useEffect } from 'react';
 import {
   wsInit,

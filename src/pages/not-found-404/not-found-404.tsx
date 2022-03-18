@@ -1,4 +1,4 @@
-import styles from './not-found-404.module.scss';
+import styles from './not-found-404.module.css';
 import React, { FC, useCallback } from 'react';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useHistory } from 'react-router-dom';

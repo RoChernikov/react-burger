@@ -15,3 +15,23 @@
     background: url(../../images/order_done.svg) center no-repeat;
   }
 }
+
+.checkMark {
+  transform-origin: center;
+  transform: scale(0.1);
+  animation: appearance 1s forwards ease-in-out;
+}
+
+@keyframes appearance {
+  0% {
+    opacity: 0;
+    transform: scale(0.1);
+  }
+  60% {
+    transform: scale(1.2);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

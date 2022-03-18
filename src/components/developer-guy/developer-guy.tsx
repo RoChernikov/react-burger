@@ -1,4 +1,4 @@
-import styles from './developer-guy.module.css';
+import styles from './developer-guy.module.scss';
 import React, { FC } from 'react';
 import img from '../../images/Developer.png';
 //--------------------------------------------------------------------------------

@@ -1,19 +1,19 @@
 import styles from './login.module.scss';
-import React, { FC, useState, useCallback } from 'react';
-import { useHistory, Redirect } from 'react-router-dom';
+import React, {FC, useState, useCallback} from 'react';
+import {useHistory, Redirect} from 'react-router-dom';
 import {
   checkValidate,
   emailSchema,
   passSchema
 } from '../../validations/user-validation';
-import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
+import {Input} from '@ya.praktikum/react-developer-burger-ui-components';
 import Form from '../../components/form/form';
 import Submit from '../../components/submit/submit';
 import InputWrapper from '../../components/form/components/input-wrapper/input-wrapper';
 import FormHint from '../../components/form/components/form-hint/form-hint';
-import { useAppDispatch, useAppSelector } from '../../services/hooks';
-import { signIn } from '../../services/slices/user';
-import { ILocationParams } from '../../utils/interfaces';
+import {useAppDispatch, useAppSelector} from '../../services/hooks';
+import {signIn} from '../../services/slices/user';
+import {ILocationParams} from '../../utils/interfaces';
 //--------------------------------------------------------------------------------
 
 const LoginPage: FC = () => {
@@ -26,13 +26,13 @@ const LoginPage: FC = () => {
   const [passErr, setPassErr] = useState(false);
   const [showPass, setShowPass] = useState(false);
   const disable = emailErr || passErr || email === '' || password === '';
-  const { isAuth, loginError } = useAppSelector(state => state.user);
+  const {isAuth, loginError} = useAppSelector(state => state.user);
   //-------------------------------------------------------------------------------
 
   const handleSubmit = useCallback(
     (evt: React.SyntheticEvent) => {
       evt.preventDefault();
-      dispatch(signIn({ email, password }));
+      dispatch(signIn({email, password}));
     },
     [dispatch, email, password]
   );
@@ -91,7 +91,7 @@ const LoginPage: FC = () => {
             }}
           />
         </InputWrapper>
-        <Submit disabled={disable} wrapStyles={{ marginBottom: '80px' }}>
+        <Submit disabled={disable} wrapStyles={{marginBottom: '80px'}}>
           Войти
         </Submit>
         <FormHint link="/register" caption="Зарегистрироваться">

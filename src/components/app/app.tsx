@@ -1,6 +1,6 @@
-import React, { FC, useEffect, useCallback } from 'react';
-import { useAppDispatch, useAppSelector } from '../../services/hooks';
-import { getIngredientsApi } from '../../services/slices/ingredients';
+import React, {FC, useEffect, useCallback} from 'react';
+import {useAppDispatch, useAppSelector} from '../../services/hooks';
+import {getIngredientsApi} from '../../services/slices/ingredients';
 import AppHeader from '../app-header/app-header';
 import HomePage from '../../pages/home/home';
 import LoginPage from '../../pages/login/login';
@@ -12,9 +12,9 @@ import ResetPassPage from '../../pages/reset-password/reset-password';
 import IngredientPage from '../../pages/ingredient/ingredient-page';
 import OrderInfoPage from '../../pages/order-info/order-info';
 import NotFound404 from '../../pages/not-found-404/not-found-404';
-import { Switch, Route, useLocation, useHistory } from 'react-router-dom';
+import {Switch, Route, useLocation, useHistory} from 'react-router-dom';
 import ProtectedRoute from '../protected-route/protected-route';
-import { ILocationParams } from '../../utils/interfaces';
+import {ILocationParams} from '../../utils/interfaces';
 import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import OrderInfo from '../order-info/order-info';
@@ -30,7 +30,7 @@ const App: FC = () => {
   );
   const dispatch = useAppDispatch();
 
-  const { ingredientsSuccess } = useAppSelector(state => state.ingredients);
+  const {ingredientsSuccess} = useAppSelector(state => state.ingredients);
 
   useEffect(() => {
     if (!ingredientsSuccess) {

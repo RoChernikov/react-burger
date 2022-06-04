@@ -1,111 +1,51 @@
-import { IForm } from './interfaces';
-import { getCookie } from './cookie';
-const BASE_URL = 'https://norma.nomoreparties.space/api';
-
-type TBaseUrl = { baseUrl: string };
+import {IForm} from './interfaces';
+import request from './api-client';
+import {getCookie} from './cookie';
 
 class Api {
-  _baseUrl: string;
-  _headers: { [key: string]: string };
-  constructor({ baseUrl }: TBaseUrl) {
-    this._baseUrl = baseUrl;
-    this._headers = {
-      'Content-Type': 'application/json'
-    };
-  }
-
-  _getResponseData(res: Response) {
-    return res.ok ? res.json() : res.json().then(err => Promise.reject(err));
-  }
-
   getIngredients() {
-    return fetch(`${BASE_URL}/ingredients`, {
-      method: 'GET',
-      headers: this._headers
-    }).then(this._getResponseData);
+    return request.get('/ingredients').then(res => res.data);
   }
 
   sendOrder(ingredients: string[]) {
-    return fetch(`${BASE_URL}/orders`, {
-      method: 'POST',
-      headers: {
-        ...this._headers,
-        authorization: `Bearer ${getCookie('accessToken')}`
-      },
-      body: JSON.stringify({ ingredients })
-    }).then(this._getResponseData);
+    return request.post('/orders', {ingredients}).then(res => res.data);
   }
 
   register(data: IForm) {
-    return fetch(`${BASE_URL}/auth/register`, {
-      method: 'POST',
-      headers: this._headers,
-      body: JSON.stringify(data)
-    }).then(this._getResponseData);
+    return request.post('/auth/register', data).then(res => res.data);
   }
 
   signIn(data: IForm) {
-    return fetch(`${BASE_URL}/auth/login`, {
-      method: 'POST',
-      headers: this._headers,
-      body: JSON.stringify(data)
-    }).then(this._getResponseData);
+    return request.post('/auth/login', data).then(res => res.data);
   }
 
   updateToken() {
-    return fetch(`${BASE_URL}/auth/token`, {
-      method: 'POST',
-      headers: this._headers,
-      body: JSON.stringify({ token: getCookie('refreshToken') })
-    }).then(this._getResponseData);
+    return request
+      .post('/auth/token', {token: getCookie('refreshToken')})
+      .then(res => res.data);
   }
 
   getUser() {
-    return fetch(`${BASE_URL}/auth/user`, {
-      method: 'GET',
-      headers: {
-        ...this._headers,
-        Authorization: `Bearer ${getCookie('accessToken')}`
-      }
-    }).then(this._getResponseData);
+    return request.get('/auth/user').then(res => res.data);
   }
 
-  patchUser(data: { name: string; email: string }) {
-    return fetch(`${BASE_URL}/auth/user`, {
-      method: 'PATCH',
-      headers: {
-        ...this._headers,
-        Authorization: `Bearer ${getCookie('accessToken')}`
-      },
-      body: JSON.stringify(data)
-    }).then(this._getResponseData);
+  patchUser(data: {name: string; email: string}) {
+    return request.patch('/auth/user', data).then(res => res.data);
   }
 
   signOut() {
-    return fetch(`${BASE_URL}/auth/logout`, {
-      method: 'POST',
-      headers: this._headers,
-      body: JSON.stringify({ token: getCookie('refreshToken') })
-    }).then(this._getResponseData);
+    return request
+      .post('/auth/logout', {token: getCookie('refreshToken')})
+      .then(res => res.data);
   }
 
   forgotPassword(email: string) {
-    return fetch(`${BASE_URL}/password-reset`, {
-      method: 'POST',
-      headers: this._headers,
-      body: JSON.stringify({ email })
-    }).then(this._getResponseData);
+    return request.post('/auth/user', email).then(res => res.data);
   }
 
-  resetPassword(data: { password: string; token: string }) {
-    return fetch(`${BASE_URL}/password-reset/reset`, {
-      method: 'POST',
-      headers: this._headers,
-      body: JSON.stringify(data)
-    }).then(this._getResponseData);
+  resetPassword(data: {password: string; token: string}) {
+    return request.post('/auth/user', data).then(res => res.data);
   }
 }
 
-export default new Api({
-  baseUrl: BASE_URL
-});
+export default new Api();

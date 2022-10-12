@@ -20,7 +20,7 @@ const Submit: FC<ISubmit> = ({
           : `${styles.wrapper} ${styles.btnDisable}`
       }
       style={wrapStyles}>
-      <Button type={type} size={size} onClick={onClick}>
+      <Button type={type} size={size} onClick={onClick} htmlType={'submit'}>
         {children}
       </Button>
     </div>

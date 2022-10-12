@@ -208,7 +208,7 @@ const Profile: FC = () => {
                 </InputWrapper>
                 {shouldShowBtns && (
                   <div className={styles.content__buttons}>
-                    <Button type="secondary" size="small" onClick={handleReset}>
+                    <Button type="secondary" size="small" onClick={handleReset} htmlType={'button'}>
                       Отмена
                     </Button>
                     <Submit disabled={disable}>Сохранить</Submit>

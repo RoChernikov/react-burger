@@ -39,7 +39,7 @@ const NotFound404: FC = () => {
             <p className={styles.messageText}>404</p>
           </div>
           <div className={`${styles.errorNav} ${styles.eNav}`}>
-            <Button onClick={goHome}>Вернуться на главную</Button>
+            <Button onClick={goHome} htmlType={'button'}>Вернуться на главную</Button>
           </div>
         </div>
       </section>
